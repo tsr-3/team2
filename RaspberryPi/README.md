@@ -1,6 +1,6 @@
 # on RaspberryPi
 
-変更点とかゐ件あればガンガン直してって
+変更点とか意見あればガンガン直してって
 
 ### files
 
@@ -16,3 +16,7 @@
 ### last
 
 開発中は./functions/*はimportして実行するけど、最終的に速度を気にするならmain.pyに埋め込んでもいいかもしれない
+
+### 必要な関数類
+
+- readFileData(filepath)
