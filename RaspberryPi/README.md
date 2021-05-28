@@ -20,3 +20,11 @@
 ### 必要な関数類
 
 - readFileData(filepath)
+- await readCardInfo()
+- checkLectureData(id, time)
+- displayCheckResult(response_of_checkLectureData)
+- addAttendance()
+- writeAttendanceData()
+
+### 暗号化方式
+暗号化zipでいいのでは
