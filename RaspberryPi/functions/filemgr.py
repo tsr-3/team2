@@ -3,12 +3,11 @@ import os
 class AttendanceFile:
   
   # field
-  _filepath
-  _
+  _filepath : str
 
   def __init__(self): # constructor
     if os.path.exists('.tempfiles'): pass
-    else os.mkdir('.tempfiles')
+    else: os.mkdir('.tempfiles')
 
   def __del__(self): # destructor
     # zip作成
