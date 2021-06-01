@@ -1,6 +1,8 @@
 # crypto class
 
 import base64
+import random
+import string
 from Crypto import Random
 from Crypto.Cipher import AES
 
@@ -40,7 +42,7 @@ if __name__ == '__main__':
     print('key: ' + key)
     print('txt: ' + text + '\n')
     b = AESCipher(key)
-    encoded = b.encrypt()
+    encoded = b.encrypt("hogehuga")
     printf('enc: ' + encoded)
 
 
