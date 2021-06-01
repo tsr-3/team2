@@ -1,4 +1,8 @@
 # AES Cipher
+# written by AdmHatena (https://github.com/AdmHatena/)
+# version Python 3.9.0 64-bit
+
+# need `npm install pycryptodome`
 
 import base64
 from Crypto.Cipher import AES
@@ -13,10 +17,16 @@ class AESCipher:
     # - tag:str - base64変換されたエンコードに利用したタグ
     # - nonce:str - base64変換されたエンコードで生成されたnonce
     def enc(target:str):
+        result = {}
         key = get_random_bytes(16)
         cipher = AES.new(key, AES.MODE_EAX)
         encoded, tag = cipher.encrypt_and_digest(target.encode('utf-8'))
-        return base64.b64encode(encoded), base64.b64encode(key), base64.b64encode(tag), base64.b64encode(cipher.nonce)
+        result.encoded = base64.b64encode(encoded)
+        result.key = base64.b64encode(key)
+        result.tag = base64.b64encode(tag)
+        result.nonce = base64.b64encode(nonce)
+        
+        return result
     
     # dec(target:str, key:str, tag:str, nonce:str)
     # - target:str - デコードするデータ(base64)
@@ -27,7 +37,7 @@ class AESCipher:
     # - decoded:str - デコードされたデータ
     def dec(target:str, key:str, tag:str, nonce:str):
         cipher = AES.new(base64.b64decode(key), AES.MODE_EAX, base64.b64decode(nonce))
-        data = cipher.decrypt_ans_verify(base64.b64decode(target), base64.b64decode(tag))
+        data = cipher.decrypt_and_verify(base64.b64decode(target), base64.b64decode(tag))
         return data
 
 if __name__ == '__main__':
@@ -36,4 +46,4 @@ if __name__ == '__main__':
     print(encoded)
     print(decoded)
 
-
+# ref: https://pycryptodome.readthedocs.io/en/latest/src/examples.html#encrypt-data-with-aes
