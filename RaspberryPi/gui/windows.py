@@ -85,7 +85,8 @@ class Start():
         form = App()
         form.attendUI()
         app.setStyleSheet(style2)
-        form.show()
+        # form.show()
+        form.showFullScreen()
 
         # なんかここが滅茶苦茶汚い
         def pudate():

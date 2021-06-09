@@ -71,7 +71,7 @@ def test():
     print(B.name, B.sub, B.id)
 
     C = Subject()
-    st = C.StartTime("18:18")
+    st = C.StartTime("21:57")
     print("現在時刻 = ", now)
     print(C.sub, "の開始時刻は", C.StartTime)
     if(now <= st): #開始時刻に間に合った場合
