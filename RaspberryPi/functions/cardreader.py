@@ -1,5 +1,5 @@
 import binascii
-# import nfc
+import nfc
 from time import time
 import sys
 # from types import LambdaType#時間のインポート

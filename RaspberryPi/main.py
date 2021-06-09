@@ -28,14 +28,16 @@ def NFCread():
     i = 0
     while(True):
         i += 1
-        #time.sleep(1)
+        time.sleep(1)
 
         idm, now = cardreader.printidm()
         define.nfcdata = str(idm) # nfcのIDです
+        #define.nfcdata = str(i) # nfcのIDです
         define.studentname = str(-1 * i) # 上記IDに対応する生徒の名前です str(-1 * 1)を生徒名に変更してください
 
         # タッチした時刻と登録された時刻の比較を行い(出席/遅刻/欠席)
         define.attendcheck = time_attend.time(t1, t2, t3)
+        
 
 
 

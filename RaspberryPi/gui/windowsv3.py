@@ -251,7 +251,7 @@ class WinMake(QMainWindow):
                 # self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
                 self.idlb.setText("nfcのIDは" + define.nfcdata +",利用者名は" + define.studentname)
-                # self.attendlb.setText("出席判定の結果は " + define.attendcheck)
+                self.attendlb.setText("出席判定の結果は " + define.attendcheck)
         except:
             self.close()
             print('Something Happened')
