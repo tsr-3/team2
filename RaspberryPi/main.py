@@ -3,12 +3,19 @@
 import datetime
 import dateutil.praser
 
+# --- import functions --- #
+from ./function/time_re,py import time
+
 # -- main function -- #
 def main():
+    # object
+    lect_dat = {}
+    result = {}
     # read save file
     while True:
-        idm = cardreader()
-        result = comp(idm, students, lect_time)
+        idm, now = cardreader()
+        result['time'] = time(now, lect_dat['time'])
+        result['inStudent'] = studentof(idm, lect_dat['students']['idms'])
         # comp(idm:str, students:[str], lect_time:{start:datetime,end:datetime,late:datetime})
         # monitor
         # datawrite()
