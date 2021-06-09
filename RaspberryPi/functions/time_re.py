@@ -1,9 +1,9 @@
-from types import LambdaType
+# from types import LambdaType
 import datetime
 #def comp(idm:str,students,lect_time):
 
 
-def my_time(now, lect_time):
+def my_time(now: datetime, lect_time):
     if now < lect_time['late']:
         return '出席'
     if now < lect_time['end']:
