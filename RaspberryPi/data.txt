@@ -1,0 +1,15 @@
+lect_dat
+- time
+  - start : datetime
+  - late : datetime
+  - end : datetime
+- student
+  - Array
+    - idm
+    - student-id
+    - name
+- 
+result
+- attendance : '出席'/'遅刻'/'欠席'
+- instudent : true/false
+- time : datetime (time when scan card)
