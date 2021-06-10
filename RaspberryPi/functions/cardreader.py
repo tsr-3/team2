@@ -2,8 +2,10 @@ import binascii
 import nfc
 from time import time
 import sys
-from types import LambdaType#時間のインポート
+# from types import LambdaType#時間のインポート
 import datetime#時間のインポート
+
+# -- global --
 idm= ""
 
 
