@@ -4,7 +4,7 @@ import datetime
 import dateutil.praser
 
 # --- import functions --- #
-from .functions import time_re as time # これどうやってやるん => できたわ
+from .functions.attendance import attendance
 
 # -- main function -- #
 def main():
@@ -14,7 +14,7 @@ def main():
     # read save file
     while True:
         idm, result['time'] = cardreader()
-        result['attendance'] = time.my_time(result['time'], lect_dat['time'])
+        result['attendance'] = attendance(result['time'], lect_dat['time'])
         result['inStudent'] = studentof(idm, lect_dat['students']['idms'])
         # comp(idm:str, students:[str], lect_time:{start:datetime,end:datetime,late:datetime})
         # monitor

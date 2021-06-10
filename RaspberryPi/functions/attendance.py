@@ -3,7 +3,7 @@ import datetime
 #def comp(idm:str,students,lect_time):
 
 
-def my_time(now: datetime, lect_time):
+def attendance(now: datetime, lect_time):
     if now < lect_time['late']:
         return '出席'
     if now < lect_time['end']:
@@ -19,4 +19,4 @@ if __name__ == '__main__':
     lect_time['start'] =datetime.datetime(2021,6,2,16,00)
     lect_time['end'] =datetime.datetime(2021,6,2,19,00)
     lect_time['late']=datetime.datetime(2021,6,2,18,00)
-    print(my_time(time, lect_time))
+    print(attendance(time, lect_time))
