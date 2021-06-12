@@ -1,7 +1,7 @@
 # --- RaspberryPi main script --- #
 
 import datetime
-import dateutil.praser
+import dateutil.parser
 
 # --- import functions --- #
 from .functions.attendance import attendance
