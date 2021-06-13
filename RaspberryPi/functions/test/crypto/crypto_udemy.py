@@ -20,6 +20,6 @@ with open('plaintext', 'r') as f, open('encode.dat', 'wb'), as e:
     padding_length = AES.block_size - len(plaintext) % AES.block_size
     plaintext += chr(padding_length) * padding_length
     cipher_text = cipher.encrypt(plaintext)
-    e.write(cipher_text)]
+    e.write(cipher_text)
 
 ##### 動くとは言っていない
