@@ -7,6 +7,7 @@ document.querySelector('#json-reader').addEventListener('change', async (event)=
   var reader = new FileReader();
   reader.onload = (event)=>{
     global.json = event.target.result;
+    maketable(JSON.parse(event.target.result));
   };
   reader.readAsText(event.target.files[0]);
 });
