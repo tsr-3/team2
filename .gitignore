@@ -1,4 +1,6 @@
 *.exe
 *.o
 
+gakusei-list.json
+
 __pycache__
