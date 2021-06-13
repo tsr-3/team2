@@ -2,17 +2,18 @@
 
 /**
  * send message to 
- * @param {string} msg message what you want to send to main process (node.js)
- * @param {object}
- * @return {string} message that from 
+ * @param {string} msg message what you want to send to main process (node.js).
+ * @param {object} properties
+ * - isWaitResponse {bool|undefined} - if you don't want to wait response, set this false. default: true
+ * - callback {function(response:text) => void | undefined} - if this setted, 
+ * @return {string} message that from main process (node.js).
  */
-async function sendmsg(msg, {isWaitResponse, callback} = void 0){
+async function sendmsg(msg, properties = void 0){
+  // deploy properties
+  const {isWaitResponse, callback} = properties;
+
+  // 
   if(isWaitResponse === void 0 || typeof(isWaitResponse) == 'boolean' && isWaitResponse == false){
     // normal
   }
 }
-/**
- * @callback callback
- * @param {string} msg message from main process (node.js)
- * @return {void}
- */
