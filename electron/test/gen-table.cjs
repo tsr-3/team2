@@ -18,9 +18,9 @@ function generateTable() {
 
   //ここからjson読み込みとその他諸々
 
-  const fs = require('fs');
+  // const fs = require('fs');
 
-  let attendData = JSON.parse(fs.readFileSync('./gakusei-list.json', 'utf8'));
+  // let attendData = JSON.parse(fs.readFileSync('./gakusei-list.json', 'utf8'));
   //ここまで
 
 
