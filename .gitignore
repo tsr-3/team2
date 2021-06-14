@@ -1,6 +1,8 @@
 *.exe
 *.o
+*.zipex
 
 gakusei-list.json
 
 __pycache__
+data
