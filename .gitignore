@@ -1,6 +1,6 @@
 *.exe
 *.o
-*.zipex
+*.zip
 
 gakusei-list.json
 
