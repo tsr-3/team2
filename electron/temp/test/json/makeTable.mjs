@@ -5,23 +5,15 @@ function maketable(gakusei_list){
 
   let table = document.createElement("table");
   let tableBody = document.createElement("tbody");
-  //console.log(gakusei_list.length);
 
-  //console.log(gakusei_list)
+  let object_keys = Object.keys(gakusei_list[0]);//この書き方よろしくない気がする
 
   for (let i = 0; i < gakusei_list.length; i++){
     let row = document.createElement("tr");
 
-    let object_keys = Object.keys(gakusei_list[i]);
-    //console.log(object_keys);//1からn人までの数値
-
     for (let j = 0; j < object_keys.length; j++){
-      let object_keys_keys = object_keys[j];//各キーの中のキーを取得
-      console.log(object_keys_keys); // => 学籍番号，名前，ふりがな，性別，IDm が出る
-      //console.log(gakusei_list[i].object_keys_keys);
-
       let cell = document.createElement("td");
-      let cellText = document.createTextNode(gakusei_list[i][object_keys_keys]);
+      let cellText = document.createTextNode(gakusei_list[i][object_keys[j]]);
       cell.appendChild(cellText);
       row.appendChild(cell);
     }
