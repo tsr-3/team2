@@ -40,7 +40,7 @@ exports.CSV = class{
     object.push(rows);
     return object;
   };
-  static stringify(value){
-    //
+  static stringify(value, direction = 'row'){
+    if(!direction.match(/^(row|column)$/)) throw new Error('direction needs "row" or "column"');
   }
 };
