@@ -42,32 +42,27 @@ exports.CSV = class{
   };
   static stringify(value, direction = 'row'){
     if(!direction.match(/^(row|column)$/)) throw new Error('direction needs "row" or "column"');
-    if(typeof(value) != 'object'){
+    if(typeof(value) != 'object' || !Array.isArray(value)){
       // not object
       if(typeof(value) == 'function') value = '[function]' + value.name;
       return '' + value;
     }
     let dat = [];
-    if(Array.isArray(value)){
-      // array
-      let isarr = true;
-      for(let val of value)
-        if(!Array.isArray(val)){
-          isarr = false;
-          break;
-        }
-      if(isarr){
-        //  over 2 demention array
-        for(let temp of value){
-          let line = [];
-          for(let val of temp){
-            line.push(this.stringify(val, direction).replace(/"/g, '"""'));
-          }
-          dat.push(line)
-        }
+    let isarr = true;
+    for(let val of value)
+      if(!Array.isArray(val)){
+        isarr = false;
+        break;
       }
-    } else{
-      // object
+    if(isarr){
+      //  over 2 demention array
+      for(let temp of value){
+        let line = [];
+        for(let val of temp){
+          line.push(this.stringify(val, direction).replace(/"/g, '"""'));
+        }
+        dat.push(line)
+      }
     }
     // to string
     let string = '';

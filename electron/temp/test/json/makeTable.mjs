@@ -1,7 +1,7 @@
 function maketable(gakusei_list){
   // この部分に表を作るやつ書いて
   // jsonから読み取ったobjectはgakusei_listに入れたから
-  let body = document.getElementByIdTagName("body");
+  let body = document.getElementsByTagName("body")[0];
 
   let tbl = document.createElement("table");
   let tblBody = document.createElement("tbody");
