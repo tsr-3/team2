@@ -36,18 +36,18 @@ app.on('ready', function() {
 function initWindowMenu(){
   const template = [
     {
-      label: 'メニュー変更の練習',
+      label: 'メニュー',
       submenu: [
         {
-          label: '1',
+          label: 'メインページ',
+          click () { mainWindow.loadURL(`file://${__dirname}/index.html`); }
         },{
-          label: '2',
-        },{
-          label: '3',
+          label: '成績表示',
+          click () { mainWindow.loadURL(`file://${__dirname}/index.html`); }
         }
       ]
     },{
-      label: 'BBB',
+      label: 'Webbb',
       submenu: [
         {
           label: 'Google',
@@ -55,6 +55,14 @@ function initWindowMenu(){
         },{
           label: 'Yahoo',
             click () { mainWindow.loadURL('http://www.yahoo.co.jp/'); }
+        }
+      ]
+    },{
+      label: '印刷(未実装)',
+      submenu: [
+        {
+          label: '印刷',
+          click() { window.print();}
         }
       ]
     }
