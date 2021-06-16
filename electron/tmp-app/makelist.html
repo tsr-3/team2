@@ -5,16 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="test.css">
-  <title class="maintitle">出席管理システム</title>
+  <title class="maintitle">Attendance Management System</title>
 </head>
 <body>
-  <p>json作成ツール</p>
+  <h2 class="MainTitle">CSV to JSON</h2>
+  <hr class="line">
   <input id="json-reader" type="file" accept=".csv">
   <div id="scripts">
     <script src="./csvToJson.mjs"></script>
     <script src="./index.mjs"></script>
   </div>
-  <button id="back" class="button" onclick="location.href='./index.html'">戻る</button>
-  <button id="back" class="button" onclick="location.href='./sub.html'">出席状況表示機能？</button>
+  <button id="back" class="button" onclick="location.href='./menu.html'">Back to Menu</button>
+  <button id="back" class="button" onclick="location.href='./readjson.html'">readjson</button>
 </body>
 </html>

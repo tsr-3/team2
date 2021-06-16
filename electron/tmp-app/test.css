@@ -1,11 +1,65 @@
 /* head内はcss効かないの？ */
-html > head > .maintitle{
+head > .maintitle{
   color: rgba(255,0, 0, 0.5);
   font-weight: bold;
 }
 
 /* for button */
+/* common buttons */
 .button {
   background: rgba(0, 255, 255, 0.5);
   border-radius: 4px;
+  width: auto;
+  height: 100%;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  font-size: larger;
+}
+
+/* for login button */
+.button1 {
+  background: rgba(0, 255, 255, 0.5);
+  border-radius: 4px;
+  width: auto;
+  height: max-content;
+  display: block;
+  margin: 0 auto;
+  font-size: large;
+}
+
+/* for menu page's button */
+.menu {
+  position: relative;
+}
+
+/* for maintitle */
+/* for h1 maintitle (index.html) */
+h1.MainTitle {
+  font-size: xx-large;
+  color: rgba(0, 100, 255, 0.8);
+  text-align: center;
+}
+
+/* for h2 maintitle (index.html) */
+h2.MainTitle {
+  font-size: x-large;
+  color: rgba(0, 100, 255, 0.8);
+  text-align: center;
+}
+
+/* for hr line */
+.line {
+  border: 0;
+  background-color: #09f;
+  background-image: -webkit-linear-gradient(left,#fff,#09f,#FFF);
+  height: 2px;
+}
+
+/* for index.html start */
+div.start {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
