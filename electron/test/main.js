@@ -43,7 +43,10 @@ function initWindowMenu(){
           click () { mainWindow.loadURL(`file://${__dirname}/index.html`); }
         },{
           label: '成績表示',
-          click () { mainWindow.loadURL(`file://${__dirname}/index.html`); }
+          click () { mainWindow.loadURL(`file://${__dirname}/sub.html`); }
+        },{
+          label: 'json作成ツール',
+          click () { mainWindow.loadURL(`file://${__dirname}/makelist.html`); }
         }
       ]
     },{
