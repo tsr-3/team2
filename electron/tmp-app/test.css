@@ -1,0 +1,11 @@
+/* head内はcss効かないの？ */
+html > head > .maintitle{
+  color: rgba(255,0, 0, 0.5);
+  font-weight: bold;
+}
+
+/* for button */
+.button {
+  background: rgba(0, 255, 255, 0.5);
+  border-radius: 4px;
+}
