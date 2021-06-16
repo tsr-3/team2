@@ -1,0 +1,16 @@
+QMainWindow{
+  background-color: rgb(197, 208, 218);
+    color: rgb(183, 198, 209);
+}
+QLabel{
+    color: green;
+    font-size: 70pt;
+}
+
+QPushButton{
+  position: absolute;
+  left: -10000px;
+  font-weight: 700;
+  background-color: rgb(107, 125, 141);
+
+}
