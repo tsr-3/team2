@@ -1,7 +1,7 @@
 // https://garafu.blogspot.com/2020/07/interprocess-communication-electron.html
 
 /**
- * send message to 
+ * send message to main process(node.js)
  * @param {string} msg message what you want to send to main process (node.js).
  * @param {object} properties
  * - isWaitResponse {bool|undefined} - if you don't want to wait response, set this false. default: true
