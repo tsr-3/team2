@@ -1,4 +1,4 @@
-from os import name
+import os
 import sys
 import os.path
 from PyQt5.QtCore import QThread, QTimer, showbase
@@ -8,22 +8,25 @@ from concurrent.futures.thread import ThreadPoolExecutor
 # from util import (call_slow_request, processing_time)
 import datetime
 import threading
-import timeget
 
 
 
 class WinMake(QMainWindow):
 
-    def __init__(self, parent=None) -> None:
+
+    def __init__(self, app, parent=None) -> None:
         # super().__init__()
         super(WinMake, self).__init__(parent)
 
+        # 実行ファイルの移動
+        move_current_dir()
         # 窓の設定
         self.height_c = int(app.desktop().height() / 2.0)
         self.width_c = int(app.desktop().width() / 2.0)
         self.winw = self.width_c
         self.winh = self.height_c
         self.showFullScreen()
+
 
         # ステータスバーの設定
         self.statusBar().showMessage("現在時刻が表示されるはずです テナント募集")
@@ -125,16 +128,17 @@ class WinMake(QMainWindow):
         self.attendlb.setGeometry(self.width_c - int(self.width_c * 0.6), int(self.idlb.y() +300), self.width_c * 2, 200)
 
 
-        # QTimerの設定
-        timer = QTimer()
-        timer.timeout.connect(self.WinUpdate)
-        timer.start(1000)
 
         # スタイルの呼び出し
         self.win_menuUI()
 
         self.show()
         app.exec_()
+
+        # QTimerの設定
+        timer = QTimer()
+        timer.timeout.connect(self.WinUpdate)
+        timer.start(1000)
 
     def showfd(self):
         # fn = QFileDialog.getOpenFileName(self,str("用いたいファイルを選んでください"), "/home/deskTop", str("Image Files (*.png *.jpg *.bmp)"))
@@ -166,7 +170,8 @@ class WinMake(QMainWindow):
         # Attendのデザイン読み込み
         with open('attendsyl.css') as f:
             css = f.read()
-        app.setStyleSheet(css)
+        # app.setStyleSheet(css)
+        self.setStyleSheet(css)
 
     def win_menuUI(self):
         self.status = 0
@@ -182,7 +187,9 @@ class WinMake(QMainWindow):
         # Menuのデザイン読み込み
         with open('menusyl.css') as f:
             css = f.read()
-        app.setStyleSheet(css)
+        # app.setStyleSheet(css)
+        self.setStyleSheet(css)
+
 
     def WinHide(self):
         '''要素を全て非表示にする'''
@@ -202,7 +209,8 @@ class WinMake(QMainWindow):
         try:
             with open('menusyl.css') as f:
                 css = f.read()
-            app.setStyleSheet(css)
+            # app.setStyleSheet(css)
+            self.setStyleSheet(css)
             self.timelb.setText(str(datetime.datetime.now()))
             if self.status == 0:
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None    メインウィンドウ※開発中Windowです")
@@ -237,10 +245,16 @@ class FileOpe():
 #         # App = QApplication(sys.argv).WinMake()
 
 
+def move_current_dir():
+    #print(os.getcwd())
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    #print(os.getcwd())
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    win = WinMake()
+    win = WinMake(app)
+
+    #print(app)
     # win.WinUpdate("hello")
     # run_concurrent()
-    print ('hello world')
-
+    #print ('hello world')
