@@ -1,7 +1,6 @@
-/* head内はcss効かないの？ */
-head > .maintitle{
-  color: rgba(255,0, 0, 0.5);
-  font-weight: bold;
+/* for app's background-color */
+body {
+  background-color:lightgray;
 }
 
 /* for button */
@@ -9,8 +8,8 @@ head > .maintitle{
 .button {
   background: rgba(0, 255, 255, 0.5);
   border-radius: 4px;
-  width: auto;
-  height: 100%;
+  width: max-content;
+  height: 50px;
   position: relative;
   display: block;
   margin: 0 auto;
@@ -21,11 +20,18 @@ head > .maintitle{
 .button1 {
   background: rgba(0, 255, 255, 0.5);
   border-radius: 4px;
-  width: auto;
-  height: max-content;
+  width: 50%;
+  height: auto;
   display: block;
   margin: 0 auto;
   font-size: large;
+}
+
+/* for buttonarea (not so good) */
+.buttonarea {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* for menu page's button */
@@ -34,18 +40,24 @@ head > .maintitle{
 }
 
 /* for maintitle */
+.MainTitle {
+  color: rgba(14, 30, 34, 0.8);
+  text-align: center;
+  text-shadow:
+  -1px -1px 0 rgba(241, 225, 221, 0.8),
+  -1px -1px 0 rgba(241, 225, 221, 0.8),
+  -1px -1px 0 rgba(241, 225, 221, 0.8),
+  -1px -1px 0 rgba(241, 225, 221, 0.8);
+}
+
 /* for h1 maintitle (index.html) */
 h1.MainTitle {
   font-size: xx-large;
-  color: rgba(0, 100, 255, 0.8);
-  text-align: center;
 }
 
 /* for h2 maintitle (index.html) */
 h2.MainTitle {
   font-size: x-large;
-  color: rgba(0, 100, 255, 0.8);
-  text-align: center;
 }
 
 /* for hr line */
