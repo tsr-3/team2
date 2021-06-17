@@ -4,9 +4,6 @@ const BrowserWindow = electron.BrowserWindow;
 
 let config = require('./package.json');
 
-const path = require('path');
-const url = require('url');
-
 let mainWindow;
 
 function createWindow() {
