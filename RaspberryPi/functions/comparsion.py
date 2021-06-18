@@ -1,7 +1,6 @@
 #学生リスト.csvから
 #
 
-
 from types import LambdaType
 import datetime
 import csv
@@ -18,13 +17,11 @@ idm=str('a012')
 #students=('b012')
 
 #returnするなら関数化しましょう
-
-with open('学生リスト.csv',newline='') as f:
-    reader=csv.DictReader(f)
-    for row in reader:
-        if idm!=row['IDm']:
-            print('履修者ではありません')
-        number=(row['学籍番号'])
-return number
-
-
+def comparsion():
+    with open('学生リスト.csv',newline='') as f:
+        reader=csv.DictReader(f)
+        for row in reader:
+            if idm!=row['IDm']:
+                print('履修者ではありません')
+            number=(row['学籍番号'])
+    return number
