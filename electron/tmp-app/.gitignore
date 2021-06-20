@@ -1,8 +1,0 @@
-.gitignore
-
-*.json
-!package.json
-
-/node_modules/
-
-*.csv
