@@ -23,6 +23,7 @@ def main():
          #comp(idm:str, students:[str], lect_time:{start:datetime,end:datetime,late:datetime})
         # monitor
          #datawrite()
+        time.sleep(1)
         print("Done mainfunc")
 
 # -- onexec -- #
@@ -39,3 +40,5 @@ if __name__ == '__main__':
     # GUIの起動
     app=QApplication(sys.argv)
     win = windowsv3.WinMake(app)
+
+

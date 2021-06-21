@@ -1,3 +1,30 @@
+'''
+GUIを表示するプログラム
+
+app = QApplication(sys.argv)
+win = WinMake(app)
+で実行出来る
+
+WinMake()
+    __inti__(引数:QApplication型):GUIの初期設定(笑)が入力されている
+
+    showfd():ファイル選択ダイアログボックスを表示する
+
+    win_attendUI():UIを出席判別UIに変更する
+
+    win_menuUI():UIをメインUIに変更する
+
+    win_hide():UIに表示されている要素全てを非表示にする
+
+    win_update():UIを再描写する
+
+FileOpe():
+    save_file():ファイルの保存処理を行う(予定)
+
+    read_file():ファイルの読込処理を行う(予定)
+
+'''
+
 import os
 import sys
 import os.path
@@ -8,6 +35,7 @@ from concurrent.futures.thread import ThreadPoolExecutor
 # from util import (call_slow_request, processing_time)
 import datetime
 import threading
+
 
 
 
@@ -42,13 +70,13 @@ class WinMake(QMainWindow):
         self.export = QAction("名前を付けて保存", self)
         self.export.setShortcut("Ctrl+s")
         self.export.setStatusTip("保存します")
-        self.export.triggered.connect(FileOpe.SaveFile)
+        self.export.triggered.connect(FileOpe.save_file)
         self.file.addAction(self.export)
         #File 読込
         self.inport = QAction("時刻の読み込み", self)
         self.inport.setShortcut("Ctrl+o")
         self.inport.setStatusTip("出力します")
-        self.inport.triggered.connect(FileOpe.ReadFile)
+        self.inport.triggered.connect(FileOpe.read_file)
         self.inport.triggered.connect(self.showfd)
         self.file.addAction(self.inport)
         #File 退出
@@ -73,7 +101,7 @@ class WinMake(QMainWindow):
         #メニュバーの設定 Help
         self.help = self.bar.addMenu("ヘルプ(&H)")
         self.help1 = QAction("ヘルプ１", self)
-        self.help1.triggered.connect(self.WinUpdate)
+        self.help1.triggered.connect(self.win_update)
         self.help.addAction(self.help1)
          ###
 
@@ -128,6 +156,10 @@ class WinMake(QMainWindow):
         self.attendlb.setGeometry(self.width_c - int(self.width_c * 0.6), int(self.idlb.y() +300), self.width_c * 2, 200)
 
 
+        # QTimerの設定
+        timer = QTimer()
+        timer.timeout.connect(self.win_update)
+        timer.start(1000)
 
         # スタイルの呼び出し
         self.win_menuUI()
@@ -135,10 +167,6 @@ class WinMake(QMainWindow):
         self.show()
         app.exec_()
 
-        # QTimerの設定
-        timer = QTimer()
-        timer.timeout.connect(self.WinUpdate)
-        timer.start(1000)
 
     def showfd(self):
         # fn = QFileDialog.getOpenFileName(self,str("用いたいファイルを選んでください"), "/home/deskTop", str("Image Files (*.png *.jpg *.bmp)"))
@@ -160,7 +188,7 @@ class WinMake(QMainWindow):
     def win_attendUI(self):
         self.status = 1
         '''AttendUIの表示'''
-        self.WinHide()
+        self.win_hide()
         # AttendUIに用いる要素の表示
         self.returnmenubt.show()
         self.attendlb.show()
@@ -176,7 +204,7 @@ class WinMake(QMainWindow):
     def win_menuUI(self):
         self.status = 0
         '''MenuUIの表示'''
-        self.WinHide()
+        self.win_hide()
         # MenuUIに用いる要素の表示
         self.attendbt.show()
         self.exitbt.show()
@@ -191,7 +219,7 @@ class WinMake(QMainWindow):
         self.setStyleSheet(css)
 
 
-    def WinHide(self):
+    def win_hide(self):
         '''要素を全て非表示にする'''
         self.attendbt.hide()
         self.exitbt.hide()
@@ -204,7 +232,7 @@ class WinMake(QMainWindow):
         self.timelb.hide()
 
 
-    def WinUpdate(self):
+    def win_update(self):
         '''指定ms毎に行われる処理'''
         try:
             with open('menusyl.css') as f:
@@ -224,10 +252,12 @@ class WinMake(QMainWindow):
 
 class FileOpe():
     '''ファイル操作'''
-    def SaveFile(self):
+    def save_file(self):
         print("Saved!!")
-    def ReadFile(self):
+        return "Saved!!"
+    def read_file(self):
         print("Read!!")
+        return "Read!!"
 
 
 # def run_concurrent():
@@ -239,9 +269,9 @@ class FileOpe():
 #         app = QApplication(sys.argv)
 #         win = None
 #         features = executor.submit(win = WinMake())
-#         features.WinUpdate()
+#         features.win_update()
 #         # features.WinMake()
-#         # features.WinUpdate("hello")
+#         # features.win_update("hello")
 #         # App = QApplication(sys.argv).WinMake()
 
 
@@ -255,6 +285,6 @@ if __name__ == "__main__":
     win = WinMake(app)
 
     #print(app)
-    # win.WinUpdate("hello")
+    # win.win_update("hello")
     # run_concurrent()
     #print ('hello world')
