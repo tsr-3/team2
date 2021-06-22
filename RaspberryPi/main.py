@@ -3,23 +3,45 @@
 import datetime
 import dateutil.parser
 
-# --- import functions --- #
-from .functions.attendance import attendance
+#GUI表示に必要なもの
+from gui import windowsv3 #./gui/windowsv3 をimportしている
+import sys
+from PyQt5.QtWidgets import *
 
-# -- main function -- #
-def main():
-    # object
-    lect_dat = {}
-    result = {}
-    # read save file
-    while True:
-        idm, result['time'] = cardreader()
-        result['attendance'] = attendance(result['time'], lect_dat['time'])
-        result['inStudent'] = studentof(idm, lect_dat['students']['idms'])
-        # comp(idm:str, students:[str], lect_time:{start:datetime,end:datetime,late:datetime})
+
+import threading
+import concurrent.futures
+import time
+
+# windowsv3と値をやり取りするための苦渋の策
+from functions import define
+
+
+
+# -- NFCread function -- #
+def NFCread():
+    for i in range(10): # NFC処理は知らないのでFor文で代用しました
+        #idm = cardreader()
+        #result = comp(idm students, lect_time)
+         #comp(idm:str, students:[str], lect_time:{start:datetime,end:datetime,late:datetime})
         # monitor
-        # datawrite()
+         #datawrite()
+        time.sleep(1)
+
+        define.nfcdata = str(i) # nfcのIDです str(i)を読み取ったIDｍに変更してください
+        define.studentname = str(-1 * i) # 上記IDに対応する生徒の名前です str(-1 * 1)を生徒名に変更してください
+
 
 # -- onexec -- #
 if __name__ == '__main__':
-    main()
+
+
+    #スレッド作成
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+    # 繰り返し行う処理
+    executor.submit(NFCread)
+
+    # GUI処理(mainに無いと警告が出る)
+    app=QApplication(sys.argv)
+    win = windowsv3.WinMake(app)
+    print(define.nfcdata)
