@@ -82,3 +82,10 @@ table {
   margin-right: auto;
   text-align: center;
 }
+
+/* for timesetting class */
+form.timesetting {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}

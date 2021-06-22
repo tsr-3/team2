@@ -15,6 +15,14 @@
     <script src="./csvToJson.mjs"></script>
     <script src="./index.mjs"></script>
   </div>
+  <form class="timesetting">
+    <label for="starttiem">開始時刻</label>
+    <input type="time" id="starttime"><br>
+    <label for="starttiem">遅刻</label>
+    <input type="time" id="delaytime"><br>
+    <label for="starttiem">受付終了(欠席判定)時刻</label>
+    <input type="time" id="endtime">
+  </form>
   <div class="buttonarea">
     <button id="back" class="button" onclick="location.href='./menu.html'">戻る</button>
     <button id="back" class="button" onclick="location.href='./readjson.html'">読み込む</button>
