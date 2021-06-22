@@ -1,0 +1,21 @@
+
+/* formの中央揃え */
+form{
+    text-align:center;
+}
+/* pの中央揃え */
+p{
+    text-align:center;
+}
+/* 個別幅指定 */
+.button{
+    letter-spacing:100px;
+}
+.left{
+    margin:auto 30% auto auto;
+}
+
+/* for body */
+body {
+  text-align: center;
+}

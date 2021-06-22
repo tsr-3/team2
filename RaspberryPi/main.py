@@ -13,14 +13,20 @@ import threading
 import concurrent.futures
 import time
 
+
 # -- main function -- #
 def main():
+    # object
+    lect_dat = {}
+    result = {}
     # read save file
+
     for i in range(10):
 
         #idm = cardreader()
         #result = comp(idm students, lect_time)
          #comp(idm:str, students:[str], lect_time:{start:datetime,end:datetime,late:datetime})
+
         # monitor
          #datawrite()
         time.sleep(1)
