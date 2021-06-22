@@ -35,7 +35,10 @@ from concurrent.futures.thread import ThreadPoolExecutor
 # from util import (call_slow_request, processing_time)
 import datetime
 import threading
-
+# windowsv3と値をやり取りするための苦渋の策
+p = os.path.abspath('.')
+sys.path.insert(1, p)
+from functions import define
 
 
 
@@ -159,7 +162,7 @@ class WinMake(QMainWindow):
         # QTimerの設定
         timer = QTimer()
         timer.timeout.connect(self.win_update)
-        timer.start(1000)
+        timer.start(int(1000/120))
 
         # スタイルの呼び出し
         self.win_menuUI()
@@ -244,7 +247,9 @@ class WinMake(QMainWindow):
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None    メインウィンドウ※開発中Windowです")
                 # self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は" + str(self.))
             elif self.status == 1:
+                # self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
+                self.idlb.setText("nfcのIDは" + define.nfcdata +"利用者名は" + define.studentname)
         except:
             self.close()
             print('Something Happened')
@@ -288,3 +293,4 @@ if __name__ == "__main__":
     # win.win_update("hello")
     # run_concurrent()
     #print ('hello world')
+
