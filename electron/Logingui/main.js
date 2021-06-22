@@ -2,10 +2,7 @@ const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
-var config = require('../package.json');
-
-const path = require('path');
-const url = require('url');
+let config = require('./package.json');
 
 let mainWindow;
 
@@ -13,15 +10,11 @@ function createWindow() {
   mainWindow = new BrowserWindow(
     {
       title: config.name,
-      width: 800, 
+      width: 800,
       height: 600
     });
 
-  mainWindow.loadURL(url.format({
-      pathname: path.join(__dirname, '/login.html'),
-      protocol: 'file:',
-      slashes: true
-  }));
+  mainWindow.loadFile('.login.html');
 
   mainWindow.openDevTools();
 

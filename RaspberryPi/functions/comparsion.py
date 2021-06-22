@@ -16,4 +16,3 @@ def comp(studentID,studentName)
         if studentID==v['学籍番号']:
             studentName=v['名前']
             return studentName
-        

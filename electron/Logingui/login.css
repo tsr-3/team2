@@ -14,3 +14,8 @@ p{
 .left{
     margin:auto 30% auto auto;
 }
+
+/* for body */
+body {
+  text-align: center;
+}

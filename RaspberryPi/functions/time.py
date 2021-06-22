@@ -1,19 +1,17 @@
 from types import LambdaType
 import datetime
-#def comp(idm:str,students,lect_time):
-    
-time = datetime.datetime.now()
-print(time)
-#time ="06/02 15:15"
-start_time =datetime.datetime(2021,6,2,16,00)
-end_time =datetime.datetime(2021,6,2,19,00)
-late_time=datetime.datetime(2021,6,2,18,00)
 
+#入力(start_time,late_time,end_time):
+#入力（出席の時間、遅刻の時間、欠席の時間）
 
-if time < late_time:
-    print('出席')
-elif time < end_time:
-    print('遅刻')
-else:
-    print('欠席')
+#出力　文字列（出席、遅刻、欠席）
+def time(start_time,late_time,end_time):
+    time = datetime.datetime.now()
+
+    if time < late_time:
+        return "出席"
+    elif time < end_time:
+        return "遅刻"
+    else:
+        return "欠席"
 

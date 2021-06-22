@@ -2,44 +2,43 @@
 <!-- 新規登録画面 -->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.css">
-    <script src="psw.js"></script>
-    <title>新規登録</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="login.css">
+  <script src="psw.js"></script>
+  <title>新規登録</title>
 </head>
 <body>
-    <div align="center">
-    <!-- このページの存在意義 -->
-    <h1>新規登録</h1>
-    
-    <!-- 教師ID一覧どうせある -->
-    <p>教員IDを入力してください</p>
-    <p><form>
-        ID:<input type="text" maxlength="20" id="ID1"/>
-    </form></p>
+  <h1>新規登録</h1>
 
-    <!-- 暗号化，めんどくさい -->
-    <p>パスワードは6文字以上20文字以内で設定してください</p>
-    <p>
+  <!-- ID入力部 -->
+  <p>教員IDを入力してください</p>
+  <p>
     <form>
-        Password:<input type="password" style="ime-mode:disabled;" minlength="6" maxlength="20" id="psw">
+      ID:<input type="text" maxlength="20" id="ID1"/>
     </form>
-    </p>
-    <p>もう一度上と同じパスワードを入力してください</p>
-    <p>
+  </p>
+
+  <!-- パスワード設定部 -->
+  <p>パスワードは6文字以上20文字以内で設定してください</p>
+  <p>
     <form>
-        Password:<input type="password" style="ime-mode:disabled;" minlength="6" maxlength="20" id="psw2">
+      Password:<input type="password" style="ime-mode:disabled;" minlength="6" maxlength="20" id="psw">
     </form>
-    </p>
-    <p>
-        <!-- 仮 -->
-        <button onclick="location.href='login.html'">戻る</button>
-        
-        <!--<button onclick="touroku()">登録</button>-->
-        <button onclick="location.href='login.html'">登録</button>
-    </p>
-    </div>
+  </p>
+  <p>もう一度上と同じパスワードを入力してください</p>
+  <p>
+    <form>
+      Password:<input type="password" style="ime-mode:disabled;" minlength="6" maxlength="20" id="psw2">
+    </form>
+  </p>
+  <p>
+    <!-- 仮 -->
+    <button onclick="location.href='login.html'">戻る</button>
+
+    <!--<button onclick="touroku()">登録</button>-->
+    <button onclick="location.href='login.html'">登録</button>
+  </p>
 </body>
 </html>

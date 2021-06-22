@@ -21,8 +21,8 @@ app.on('window-all-closed', function() {
 // Electronの初期化完了後に実行
 app.on('ready', function() {
     // メイン画面の表示。ウィンドウの幅、高さを指定できる
-    mainWindow = new BrowserWindow({width: 800, height: 600});
-    mainWindow.loadFile('./index.html');
+  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  mainWindow.loadURL('file://' + __dirname + '/index.html');
     // ウィンドウメニューをカスタマイズ
     initWindowMenu();
 
@@ -36,36 +36,44 @@ app.on('ready', function() {
 function initWindowMenu(){
   const template = [
     {
-      label: 'メニュー',
+      label: 'Menu',
       submenu: [
         {
-          label: 'メインページ',
+          label: 'start page',
           click () { mainWindow.loadURL(`file://${__dirname}/index.html`); }
         },{
-          label: '成績表示',
-          click () { mainWindow.loadURL(`file://${__dirname}/sub.html`); }
+          label: 'show list',
+          click () { mainWindow.loadURL(`file://${__dirname}/readjson.html`); }
         },{
-          label: 'json作成ツール',
+          label: 'make json',
           click () { mainWindow.loadURL(`file://${__dirname}/makelist.html`); }
         }
       ]
     },{
-      label: 'Webbb',
+      label: 'Web',
       submenu: [
         {
           label: 'Google',
           click () { mainWindow.loadURL('https://www.google.co.jp/'); }
         },{
           label: 'Yahoo',
-            click () { mainWindow.loadURL('http://www.yahoo.co.jp/'); }
+          click () { mainWindow.loadURL('http://www.yahoo.co.jp/'); }
         }
       ]
     },{
-      label: '印刷(未実装)',
+      label: 'Print(unimplemented)',
       submenu: [
         {
-          label: '印刷',
+          label: 'Print to PDF',
           click() { window.print();}
+        }
+      ]
+    },{
+      label: 'Exit',
+      submenu: [
+        {
+          label: 'exit app',
+          click() { app.quit(); }
         }
       ]
     }
