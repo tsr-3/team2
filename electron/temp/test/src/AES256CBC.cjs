@@ -14,7 +14,7 @@ exports.AES256CBC = class{
     if(typeof(key) !== 'string' || typeof(iv) !== 'string' || typeof(text) !== 'string') return null;
     key = Buffer.from(key, 'base64');
     iv = Buffer.from(iv, 'base64');
-    const decipher = crypto.createDecipheriv(text, key, iv);
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
     let decode = decipher.update(text, 'base64', 'utf-8');
     decode += decipher.final('utf-8');
     return decode;
