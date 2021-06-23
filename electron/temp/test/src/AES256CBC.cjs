@@ -20,7 +20,7 @@ exports.AES256CBC = class{
     key = Buffer.from(key, 'base64');
     iv = Buffer.from(iv, 'base64');
     const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
-    decipher.setAutoPadding(false);
+    decipher.setAutoPadding(false); // !!!!! If you have the same implementation in different languages, make sure to set AutoPadding to false because the padding method is different. !!!!!
     await new Promise((resolve, reject)=>{
       decipher.on('readable', ()=>{
         let chunk;
