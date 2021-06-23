@@ -8,16 +8,24 @@
   <title class="maintitle">出席管理システム</title>
 </head>
 <body>
-  <h2 class="MainTitle">イィクセルからジェイソンを作る</h2>
+  <h2 class="MainTitle">csvデータからjson形式を作成するツール(仮称)</h2>
   <hr class="line">
   <input id="json-reader" type="file" accept=".csv">
   <div id="scripts">
     <script src="./csvToJson.mjs"></script>
     <script src="./index.mjs"></script>
   </div>
+  <form class="timesetting">
+    <label for="starttiem">開始時刻</label>
+    <input type="time" id="starttime"><br>
+    <label for="starttiem">遅刻</label>
+    <input type="time" id="delaytime"><br>
+    <label for="starttiem">受付終了(欠席判定)時刻</label>
+    <input type="time" id="endtime">
+  </form>
   <div class="buttonarea">
     <button id="back" class="button" onclick="location.href='./menu.html'">戻る</button>
-    <button id="back" class="button" onclick="location.href='./readjson.html'">読み込む</button>
+    <button id="back" class="button" onclick="location.href='./readjson.html'">jsonファイルの読み込みツールへ</button>
   </div>
 </body>
 </html>

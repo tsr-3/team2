@@ -18,7 +18,6 @@ from functions import define
 from functions import cardreader
 
 
-
 # -- NFCread function -- #
 def NFCread():
     while(True): 
@@ -31,8 +30,6 @@ def NFCread():
 
         define.nfcdata = str(cardreader.printidm()) # nfcのIDです str(i)を読み取ったIDｍに変更してください
         define.studentname = str(-1 * i) # 上記IDに対応する生徒の名前です str(-1 * 1)を生徒名に変更してください
-        
-
 
 # -- onexec -- #
 if __name__ == '__main__':
@@ -46,4 +43,5 @@ if __name__ == '__main__':
     # GUI処理(mainに無いと警告が出る)
     app=QApplication(sys.argv)
     win = windowsv3.WinMake(app)
+
     print(define.nfcdata)

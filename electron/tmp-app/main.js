@@ -36,7 +36,7 @@ app.on('ready', function() {
 function initWindowMenu(){
   const template = [
     {
-      label: 'Menu',
+      label: 'メニュー',
       submenu: [
         {
           label: 'start page',
@@ -47,17 +47,6 @@ function initWindowMenu(){
         },{
           label: 'make json',
           click () { mainWindow.loadURL(`file://${__dirname}/makelist.html`); }
-        }
-      ]
-    },{
-      label: 'Web',
-      submenu: [
-        {
-          label: 'Google',
-          click () { mainWindow.loadURL('https://www.google.co.jp/'); }
-        },{
-          label: 'Yahoo',
-          click () { mainWindow.loadURL('http://www.yahoo.co.jp/'); }
         }
       ]
     },{
@@ -73,7 +62,7 @@ function initWindowMenu(){
       submenu: [
         {
           label: 'exit app',
-          click() { app.quit(); }
+          click() { quit(); }
         }
       ]
     }

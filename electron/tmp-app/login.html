@@ -8,10 +8,20 @@
   <title>出席管理システム</title>
 </head>
 <body>
-  <h2 class="MainTitle">あなたの</h2>
+  <h2 class="MainTitle">アカウントにログイン</h2>
   <hr class="line">
   <!--ログイン画面の実装は波間さんが担当なのでここは適当に-->
   <!--もしかするとここも...-->
-  <button type="button" class="button" onclick="location.href='./menu.html'">認証</button>
+  <!--仮フォーム-->
+  <form class="IDpasswd">
+    <label for="ID">ID</label>
+    <input type="text" id="ID"><br>
+    <label for="passwd">パスワード</label>
+    <input type="password" id="passwd">
+  </form>
+  <div class="buttonarea">
+    <button type="button" class="button">アカウント作成</button><!--押してもなにも起こらないよ-->
+    <button type="button" class="button" onclick="location.href='./menu.html'">認証</button>
+  </div>
 </body>
 </html>
