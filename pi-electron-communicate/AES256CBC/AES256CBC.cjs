@@ -7,16 +7,15 @@ exports.AES256CBC = class{
     const key = crypto.scryptSync('', crypto.randomBytes(32), 32);
     const iv = crypto.randomBytes(16);
     const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
-    let decoded = cipher.update(plaintext, 'utf-8', 'base64');
-    return {body: decoded + cipher.final('base64'), key: key.toString('base64'), iv: iv.toString('base64')};
+    let encoded = Buffer.concat([cipher.update(plaintext, 'utf-8'), cipher.final()]).toString('base64');
+    return {body: encoded, key: key.toString('base64'), iv: iv.toString('base64')};
   }
   static decode(key, iv, text){
     if(typeof(key) !== 'string' || typeof(iv) !== 'string' || typeof(text) !== 'string') return null;
     key = Buffer.from(key, 'base64');
     iv = Buffer.from(iv, 'base64');
     const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
-    let decode = decipher.update(text, 'base64', 'utf-8');
-    decode += decipher.final('utf-8');
+    let decode = Buffer.concat([decipher.update(text, 'base64'),decipher.final()]).toString('utf-8');
     return decode;
   }
 };
