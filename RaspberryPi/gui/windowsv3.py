@@ -36,7 +36,8 @@ from concurrent.futures.thread import ThreadPoolExecutor
 import datetime
 import threading
 # windowsv3と値をやり取りするための苦渋の策
-p = os.path.abspath('.')
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+p = os.path.abspath('..')
 sys.path.insert(1, p)
 from functions import define
 
@@ -249,7 +250,8 @@ class WinMake(QMainWindow):
             elif self.status == 1:
                 # self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
-                self.idlb.setText("nfcのIDは" + define.nfcdata +"利用者名は" + define.studentname)
+                self.idlb.setText("nfcのIDは" + define.nfcdata +",利用者名は" + define.studentname)
+                # self.attendlb.setText("出席判定の結果は " + define.attendcheck)
         except:
             self.close()
             print('Something Happened')

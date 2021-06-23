@@ -14,22 +14,30 @@ import concurrent.futures
 import time
 
 # windowsv3と値をやり取りするための苦渋の策
-from functions import define 
+from functions import define
 from functions import cardreader
+from functions import time_attend
 
+
+t1 = datetime.datetime(2021, 6, 2, 16, 00)
+t2 = datetime.datetime(2021, 6, 2, 17, 00)
+t3 = datetime.datetime(2021, 6, 2, 18, 00)
 
 # -- NFCread function -- #
 def NFCread():
-    while(True): 
-        #idm = cardreader()
-        #result = comp(idm students, lect_time)
-         #comp(idm:str, students:[str], lect_time:{start:datetime,end:datetime,late:datetime})
-        # monitor
-         #datawrite()
-        time.sleep(1)
+    i = 0
+    while(True):
+        i += 1
+        #time.sleep(1)
 
-        define.nfcdata = str(cardreader.printidm()) # nfcのIDです str(i)を読み取ったIDｍに変更してください
+        idm, now = cardreader.printidm()
+        define.nfcdata = str(idm) # nfcのIDです
         define.studentname = str(-1 * i) # 上記IDに対応する生徒の名前です str(-1 * 1)を生徒名に変更してください
+
+        # タッチした時刻と登録された時刻の比較を行い(出席/遅刻/欠席)
+        define.attendcheck = time_attend.time(t1, t2, t3)
+
+
 
 # -- onexec -- #
 if __name__ == '__main__':

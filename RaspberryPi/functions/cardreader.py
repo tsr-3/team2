@@ -1,5 +1,5 @@
 import binascii
-import nfc
+# import nfc
 from time import time
 import sys
 # from types import LambdaType#時間のインポート
@@ -21,7 +21,7 @@ def read_id():
         clf.connect(rdwr={'on-connect': on_connect})
     finally:
         clf.close()
-    
+
 
 def printidm():
     read_id()
@@ -30,6 +30,6 @@ def printidm():
 
 
 if __name__ == '__main__':
-    print(printidm())        
-        
+    print(printidm())
+
 

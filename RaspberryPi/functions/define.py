@@ -12,3 +12,6 @@ nfcdata = "NFCのID"
 global studentname
 studentname = "生徒の名前"
 
+# 出席/遅刻/欠席
+global attendcheck
+touchtime = "出席かどうかを判別"
