@@ -28,13 +28,12 @@ FileOpe():
 import os
 import sys
 import os.path
-from PyQt5.QtCore import QThread, QTimer, showbase
+from PyQt5.QtCore import  Qt, QTimer
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from concurrent.futures.thread import ThreadPoolExecutor
 # from util import (call_slow_request, processing_time)
 import datetime
-import threading
 # windowsv3と値をやり取りするための苦渋の策
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 p = os.path.abspath('..')
@@ -71,20 +70,20 @@ class WinMake(QMainWindow):
         self.file.setStatusTip("ファイル操作をまとめたものです")
          ###
         #File 保存
-        self.export = QAction("名前を付けて保存", self)
+        self.export = QAction(QIcon("icon/save2.png"), "名前を付けて保存", self)
         self.export.setShortcut("Ctrl+s")
         self.export.setStatusTip("保存します")
         self.export.triggered.connect(FileOpe.save_file)
         self.file.addAction(self.export)
         #File 読込
-        self.inport = QAction("時刻の読み込み", self)
+        self.inport = QAction(QIcon("icon/write.png"), "時刻の読み込み", self)
         self.inport.setShortcut("Ctrl+o")
         self.inport.setStatusTip("出力します")
         self.inport.triggered.connect(FileOpe.read_file)
         self.inport.triggered.connect(self.showfd)
         self.file.addAction(self.inport)
         #File 退出
-        self.exit = QAction("Exit", self)
+        self.exit = QAction(QIcon("icon/exit3.png"), "Exit", self)
         self.exit.setStatusTip("画面を閉じます")
         self.exit.triggered.connect(self.close)
         self.file.addAction(self.exit)
@@ -103,9 +102,10 @@ class WinMake(QMainWindow):
          ###
 
         #メニュバーの設定 Help
-        self.help = self.bar.addMenu("ヘルプ(&H)")
-        self.help1 = QAction("ヘルプ１", self)
-        self.help1.triggered.connect(self.win_update)
+        # self.help = self.bar.addMenu("ヘルプ(&H)")
+        self.help = self.bar.addMenu("インフォメーション(&I)")
+        self.help1 = QAction(QIcon("icon/help2.png"), "情報", self)
+        self.help1.triggered.connect(self.makeWindow)
         self.help.addAction(self.help1)
          ###
 
@@ -236,6 +236,12 @@ class WinMake(QMainWindow):
         self.timelb.hide()
 
 
+    def makeWindow(self):
+        # サブウィンドウの作成
+        subWindow = SubWindow()
+        # サブウィンドウの表示
+        subWindow.show()
+
     def win_update(self):
         '''指定ms毎に行われる処理'''
         try:
@@ -256,6 +262,27 @@ class WinMake(QMainWindow):
             self.close()
             print('Something Happened')
 
+class SubWindow(QWidget):
+    def __init__(self, parent=None):
+        self.w = QDialog(parent)
+        self.w.setWindowTitle("このプロジェクトの情報")
+        self.w.setGeometry(50, 50, 200, 300)
+        label = QLabel('出席管理プロジェクト Team2', self.w)
+        label2 = QLabel("他ファイルから授業の開始時刻,遅刻みなし時刻，欠席時刻等を入力し\nそれに対応することによっていい感じにします", self.w)
+        label3 = QLabel(self.w)
+        label3.setOpenExternalLinks(True)
+        # label3.setTextFormat(Qt.RichText)
+        label3.setText("<a href='http://github.com/tsr-on-github/team2'>GitHubレポジトリ</a>")
+        layout = QVBoxLayout()
+        layout.addWidget(label)
+        layout.addWidget(label2)
+        layout.addWidget(label3)
+        self.w.setLayout(layout)
+
+    def show(self):
+        self.w.exec_()
+
+
 
 class FileOpe():
     '''ファイル操作'''
@@ -267,21 +294,6 @@ class FileOpe():
         return "Read!!"
 
 
-# def run_concurrent():
-#     with ThreadPoolExecutor() as executor:
-#         # features = [executor.submit(call_slow_request) for _ in range(3)]
-#         # for feature in features:
-#             # print(feature.result())
-# #
-#         app = QApplication(sys.argv)
-#         win = None
-#         features = executor.submit(win = WinMake())
-#         features.win_update()
-#         # features.WinMake()
-#         # features.win_update("hello")
-#         # App = QApplication(sys.argv).WinMake()
-
-
 def move_current_dir():
     #print(os.getcwd())
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -290,9 +302,4 @@ def move_current_dir():
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     win = WinMake(app)
-
-    #print(app)
-    # win.win_update("hello")
-    # run_concurrent()
-    #print ('hello world')
 
