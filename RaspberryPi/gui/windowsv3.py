@@ -19,9 +19,9 @@ WinMake()
     win_update():UIを再描写する
 
 FileOpe():
-    save_file():ファイルの保存処理を行う(予定)
+    file_save():ファイルの保存処理を行う(予定)
 
-    read_file():ファイルの読込処理を行う(予定)
+    file_read():ファイルの読込処理を行う(予定)
 
 '''
 
@@ -43,9 +43,11 @@ from functions import define
 
 
 class WinMake(QMainWindow):
+    '''メインウィンドウの生成を行う'''
 
 
     def __init__(self, app, parent=None) -> None:
+        '''メインウィンドウの初期設定を行う'''
         # super().__init__()
         super(WinMake, self).__init__(parent)
 
@@ -57,7 +59,6 @@ class WinMake(QMainWindow):
         self.winw = self.width_c
         self.winh = self.height_c
         self.showFullScreen()
-
 
         # ステータスバーの設定
         self.statusBar().showMessage("現在時刻が表示されるはずです テナント募集")
@@ -73,14 +74,15 @@ class WinMake(QMainWindow):
         self.export = QAction(QIcon("icon/save2.png"), "名前を付けて保存", self)
         self.export.setShortcut("Ctrl+s")
         self.export.setStatusTip("保存します")
-        self.export.triggered.connect(FileOpe.save_file)
+        self.export.triggered.connect(FileOpe.file_save)
+        self.export.triggered.connect(self.fd_save)
         self.file.addAction(self.export)
         #File 読込
         self.inport = QAction(QIcon("icon/write.png"), "時刻の読み込み", self)
         self.inport.setShortcut("Ctrl+o")
         self.inport.setStatusTip("出力します")
-        self.inport.triggered.connect(FileOpe.read_file)
-        self.inport.triggered.connect(self.showfd)
+        self.inport.triggered.connect(FileOpe.file_read)
+        self.inport.triggered.connect(self.fd_read)
         self.file.addAction(self.inport)
         #File 退出
         self.exit = QAction(QIcon("icon/exit3.png"), "Exit", self)
@@ -88,7 +90,6 @@ class WinMake(QMainWindow):
         self.exit.triggered.connect(self.close)
         self.file.addAction(self.exit)
          ###
-
 
         #メニュバーの設定 Operation
         self.ope = self.bar.addMenu("操作(&O)")
@@ -111,10 +112,8 @@ class WinMake(QMainWindow):
 
          ###
 
-
         self.tool = self.bar.addMenu("is(&I)")
         self.tool2 = self.bar.addMenu("God(&G)")
-
 
     # Menu にのせるもの
         # ボタンの設定 ｘボタン
@@ -132,7 +131,7 @@ class WinMake(QMainWindow):
         self.readbt = QPushButton("ファイルの読込", self)
         self.readbt.setToolTip("Ctrl+o")
         self.readbt.setGeometry(int(self.timetablelb.x() - 110), int(self.timetablelb.y() + 30), 100, 50)
-        self.readbt.clicked.connect(self.showfd)
+        self.readbt.clicked.connect(self.fd_read)
         # ボタンの設定 出席ボタン
         self.attendbt = QPushButton("出席をとる", self)
         self.attendbt.setToolTip("出席をとる画面を表示します")
@@ -159,7 +158,6 @@ class WinMake(QMainWindow):
         self.attendlb = QLabel("出席を判別するよ", self)
         self.attendlb.setGeometry(self.width_c - int(self.width_c * 0.6), int(self.idlb.y() +300), self.width_c * 2, 200)
 
-
         # QTimerの設定
         timer = QTimer()
         timer.timeout.connect(self.win_update)
@@ -168,11 +166,13 @@ class WinMake(QMainWindow):
         # スタイルの呼び出し
         self.win_menuUI()
 
+        # 画面の表示とwin_updateの開始
         self.show()
         app.exec_()
 
 
-    def showfd(self):
+    def fd_read(self):
+        '''読み込みファイルを選択するダイアログの表示を行う'''
         # fn = QFileDialog.getOpenFileName(self,str("用いたいファイルを選んでください"), "/home/deskTop", str("Image Files (*.png *.jpg *.bmp)"))
         fn = QFileDialog.getOpenFileName(self,str("用いたいファイルを選んでください"))
         # print(fn)
@@ -185,13 +185,28 @@ class WinMake(QMainWindow):
             self.timetablelb.setText(str(fn))
         else:
             self.timetablelb.setStyleSheet("font-size: 25pt")
-            self.timetablelb.setText(str(fn[0]))
+            self.timetablelb.setText(str(os.path.basename(fn[0])))
 
         return fn
 
+
+    def fd_save(self):
+        '''読み込みファイルを選択するダイアログの表示を行う'''
+        fn = QFileDialog.getSaveFileName(self, str("ファイルを保存します"))
+        #フィルタ
+        if fn[0] == '':
+            fn = "保存に失敗したようです"
+            self.timetablelb.setText(str(fn))
+        else:
+            self.timetablelb.setStyleSheet("font-size: 25pt")
+            self.timetablelb.setText(str(os.path.basename(fn[0])))
+
+        return fn
+
+
     def win_attendUI(self):
+        '''UIを出席判別画面へ変更する'''
         self.status = 1
-        '''AttendUIの表示'''
         self.win_hide()
         # AttendUIに用いる要素の表示
         self.returnmenubt.show()
@@ -204,9 +219,10 @@ class WinMake(QMainWindow):
             css = f.read()
         self.setStyleSheet(css)
 
+
     def win_menuUI(self):
+        '''UIをメイン画面へ変更する'''
         self.status = 0
-        '''MenuUIの表示'''
         self.win_hide()
         # MenuUIに用いる要素の表示
         self.attendbt.show()
@@ -235,17 +251,16 @@ class WinMake(QMainWindow):
 
 
     def makeWindow(self):
+        '''サブウィンドウ(ポップアップウィンドウ)の呼び出しを行う'''
         # サブウィンドウの作成
         subWindow = SubWindow()
         # サブウィンドウの表示
         subWindow.show()
 
+
     def win_update(self):
         '''指定ms毎に行われる処理'''
         try:
-            #with open('menusyl.css') as f:
-                #css = f.read()
-            #self.setStyleSheet(css)
             self.timelb.setText(str(datetime.datetime.now()))
             if self.status == 0:
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None    メインウィンドウ※開発中Windowです")
@@ -260,44 +275,50 @@ class WinMake(QMainWindow):
             self.close()
             print('Something Happened')
 
-    #def win_move(self):
+
 
 class SubWindow(QWidget):
+    '''ポップアップウィンドウの作成を行う'''
+
+
     def __init__(self, parent=None):
+        '''ポップアップウィンドウの初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("このプロジェクトの情報")
         self.w.setGeometry(50, 50, 200, 300)
+
         label = QLabel('出席管理プロジェクト Team2', self.w)
         label2 = QLabel("他ファイルから授業の開始時刻,遅刻みなし時刻，欠席時刻等を入力し\nそれに対応することによっていい感じにします", self.w)
         label3 = QLabel(self.w)
         label3.setOpenExternalLinks(True)
-        # label3.setTextFormat(Qt.RichText)
         label3.setText("<a href='http://github.com/tsr-on-github/team2'>GitHubレポジトリ</a>")
+
         layout = QVBoxLayout()
         layout.addWidget(label)
         layout.addWidget(label2)
         layout.addWidget(label3)
+
         self.w.setLayout(layout)
 
     def show(self):
+        '''ポップアップウィンドウの表示を行う'''
         self.w.exec_()
 
 
 
 class FileOpe():
-    '''ファイル操作'''
-    def save_file(self):
+    '''ファイル操作を行う？'''
+    def file_save(self):
         print("Saved!!")
         return "Saved!!"
-    def read_file(self):
+    def file_read(self):
         print("Read!!")
         return "Read!!"
 
 
 def move_current_dir():
-    #print(os.getcwd())
+    '''カレントディレクトリをこのプログラム(windowsv3)が存在するディレクトリに変更する'''
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    #print(os.getcwd())
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
