@@ -141,7 +141,7 @@ class WinMake(QMainWindow):
         self.attendbt.setStyleSheet("font-size: 50pt")
         self.attendbt.clicked.connect(self.win_attendUI)
 
-	#Attendにのせるもの
+    #Attendにのせるもの
         # ボタンの設定 Menuに戻るボタン
         self.returnmenubt = QPushButton("戻る", self)
         self.returnmenubt.setToolTip("Menuに戻ります")
@@ -202,7 +202,6 @@ class WinMake(QMainWindow):
         # Attendのデザイン読み込み
         with open('attendsyl.css') as f:
             css = f.read()
-        # app.setStyleSheet(css)
         self.setStyleSheet(css)
 
     def win_menuUI(self):
@@ -219,7 +218,6 @@ class WinMake(QMainWindow):
         # Menuのデザイン読み込み
         with open('menusyl.css') as f:
             css = f.read()
-        # app.setStyleSheet(css)
         self.setStyleSheet(css)
 
 
@@ -245,22 +243,24 @@ class WinMake(QMainWindow):
     def win_update(self):
         '''指定ms毎に行われる処理'''
         try:
-            with open('menusyl.css') as f:
-                css = f.read()
-            # app.setStyleSheet(css)
-            self.setStyleSheet(css)
+            #with open('menusyl.css') as f:
+                #css = f.read()
+            #self.setStyleSheet(css)
             self.timelb.setText(str(datetime.datetime.now()))
             if self.status == 0:
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None    メインウィンドウ※開発中Windowです")
-                # self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は" + str(self.))
             elif self.status == 1:
-                # self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
+                with open('menusyl.css') as f:
+                    css = f.read()
+                self.setStyleSheet(css)
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
                 self.idlb.setText("nfcのIDは" + define.nfcdata +",利用者名は" + define.studentname)
                 self.attendlb.setText("出席判定の結果は " + define.attendcheck)
         except:
             self.close()
             print('Something Happened')
+
+    #def win_move(self):
 
 class SubWindow(QWidget):
     def __init__(self, parent=None):
