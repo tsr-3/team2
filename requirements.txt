@@ -1,16 +1,23 @@
-#pip install -r requirements.txt
-# == :インストールバージョンを指定する
-# >= :指定バーション以上をインストールする
-# != :指定バージョン以外をインストールする
-# <= :指定バージョン以下をインストールする
-#    :指定なし常に最新バージョンをインストールする
-#
-###### ラズパイ側の環境設定 ######
-nfcpy>=1.0.3        #カードリーダ制御用
-PyQt5>=5.15.4               #GUI制御
-python-dateutil>=2.8.1     #文字列をdatetime型に変換する
+# ----- team2 python modules ----- #
 
-#なんか動かないわテヘペロ
+# this text is written in utf-8
+# but in windows, default encoding is shift-jis (in japan)
+# so we must use ASCII chars to write this
 
+# how to use?
+#   pip install -r requirements.txt
 
-###### サーバー側の環境設定 ######
+# how to write this?
+#   [module-name] == [version]         : must to use [version]
+#   [module-name] >= [version]         : use [version] or lower
+#   [module-name] <= [version]         : use [version] or higher
+#   [module-name] != [version]         : don't use [version]
+#   [module-name]                      : use latest version
+# 
+#   [mddule-name] >= [ver1], <= [ver2] : use AND for condition
+
+###### on RaspberryPi ######
+nfcpy >= 1.0.3           # cardreader
+PyQt5 >= 5.15.4          # GUI
+python-dateutil >= 2.8.1 # convert string => datetime
+pycryptodome >= 3.10.1   # crypto
