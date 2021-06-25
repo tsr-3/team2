@@ -1,4 +1,10 @@
-function maketable(append_list,filename){
+/**
+ *
+ * @param append_list :object
+ * @param filename :str
+ */
+
+function maketable(append_list, filename) {
   // この部分に表を作るやつ書いて -> 書いた
   // jsonから読み取ったobjectはgakusei_listに入れたから ->　append_list(和訳：出席リスト)とfilenameを入れるように改造したぞ(index.mjsの方も)
 
