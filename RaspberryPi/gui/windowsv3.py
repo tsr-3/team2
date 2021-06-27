@@ -183,9 +183,12 @@ class WinMake(QMainWindow):
         if fn[0] == '':
             fn = "選択に失敗したようです"
             self.timetablelb.setText(str(fn))
+            # define.attendcheck[1] == 2: # 欠席
+            self.statusBar().setStyleSheet("background-color: rgb(196, 114, 141)")
         else:
             self.timetablelb.setStyleSheet("font-size: 25pt")
             self.timetablelb.setText(str(os.path.basename(fn[0])))
+            self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
 
         return fn
 
@@ -197,9 +200,11 @@ class WinMake(QMainWindow):
         if fn[0] == '':
             fn = "保存に失敗したようです"
             self.timetablelb.setText(str(fn))
+            self.statusBar().setStyleSheet("background-color: rgb(196, 114, 141)")
         else:
             self.timetablelb.setStyleSheet("font-size: 25pt")
             self.timetablelb.setText(str(os.path.basename(fn[0])))
+            self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
 
         return fn
 
@@ -213,6 +218,7 @@ class WinMake(QMainWindow):
         self.attendlb.show()
         self.timelb.show()
         self.idlb.show()
+        self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
 
         # Attendのデザイン読み込み
         with open('attendsyl.css') as f:
@@ -264,7 +270,6 @@ class WinMake(QMainWindow):
             self.timelb.setText(str(datetime.datetime.now()))
             if self.status == 0:
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None    メインウィンドウ※開発中Windowです")
-                self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
             elif self.status == 1:
                 with open('menusyl.css') as f:
                     css = f.read()
@@ -273,13 +278,13 @@ class WinMake(QMainWindow):
                 self.idlb.setText("nfcのIDは" + define.nfcdata +"\n利用者名は" + define.studentname)
                 self.attendlb.setText("出席判定の結果は " + define.attendcheck[0])
 
-                if define.attendcheck[1] == 0:
+                if define.attendcheck[1] == 0: # 通常/出席
                     self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
-                elif define.attendcheck[1] == 1:
+                elif define.attendcheck[1] == 1: # 遅刻
                     self.statusBar().setStyleSheet("background-color: rgb(196, 195, 114)")
-                elif define.attendcheck[1] == 2:
+                elif define.attendcheck[1] == 2: # 欠席
                     self.statusBar().setStyleSheet("background-color: rgb(196, 114, 141)")
-                elif define.attendcheck[1] == 3:
+                elif define.attendcheck[1] == 3: # 非履修
                     self.statusBar().setStyleSheet("background-color: rgb(93, 87, 185)")
 
         except:
