@@ -264,13 +264,24 @@ class WinMake(QMainWindow):
             self.timelb.setText(str(datetime.datetime.now()))
             if self.status == 0:
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None    メインウィンドウ※開発中Windowです")
+                self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
             elif self.status == 1:
                 with open('menusyl.css') as f:
                     css = f.read()
                 self.setStyleSheet(css)
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
                 self.idlb.setText("nfcのIDは" + define.nfcdata +"\n利用者名は" + define.studentname)
-                self.attendlb.setText("出席判定の結果は " + define.attendcheck)
+                self.attendlb.setText("出席判定の結果は " + define.attendcheck[0])
+
+                if define.attendcheck[1] == 0:
+                    self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
+                elif define.attendcheck[1] == 1:
+                    self.statusBar().setStyleSheet("background-color: rgb(196, 195, 114)")
+                elif define.attendcheck[1] == 2:
+                    self.statusBar().setStyleSheet("background-color: rgb(196, 114, 141)")
+                elif define.attendcheck[1] == 3:
+                    self.statusBar().setStyleSheet("background-color: rgb(93, 87, 185)")
+
         except:
             self.close()
             print('Something Happened')

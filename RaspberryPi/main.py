@@ -21,7 +21,7 @@ from types import LambdaType
 
 t1 = datetime.datetime(2021, 6, 2, 16, 00)
 t2 = datetime.datetime(2021, 6, 2, 17, 00)
-t3 = datetime.datetime(2021, 6, 2, 18, 00)
+t3 = datetime.datetime(2023, 6, 2, 18, 00)
 
 # -- NFCread function -- #
 def NFCread():
@@ -39,10 +39,20 @@ def NFCread():
         tmp = comparsion.comp(idm, data) # IDmから生徒名を検索
         define.studentname = tmp[0] # IDに対応する生徒の名前をwindowsv3.pyへ渡す
         # タッチした時刻と登録された時刻の比較を行いwindowsv3.pyへ渡す(出席/遅刻/欠席/非履修者)
+
+        check = time_attend.time(t1, t2, t3)
+
         if tmp[2]:
-            define.attendcheck = time_attend.time(t1, t2, t3)
+            if check == "出席":
+                define.attendcheck[1] = 0
+            elif check == "遅刻":
+                define.attendcheck[1] = 1
+            elif check == "欠席":
+                define.attendcheck[1] = 2
+            define.attendcheck[0] = check
         else:
-            define.attendcheck = "非履修者"
+            define.attendcheck[0] = "非履修者"
+            define.attendcheck[1] = 3
 
 
 
