@@ -1,4 +1,4 @@
-# coding: UTF-8
+# -*- coding: utf-8 -*-
 
 '''
 入力：ICカードからIDm，外部入力(ファイル入力側)から学生の情報を集めたオブジェクト(学籍番号と名前が対応していれば可)
@@ -11,7 +11,7 @@ from types import LambdaType
 
 def comp(IDm:str, students_list:list):
     studentData = []
-    warning_text = "あなたは履修者ではありません。退室してください。"
+    warning_text = ["あなたは履修者ではありません。退室してください。", "ERROR"]
     for i in range(len(students_list)):#リストをfor文で回す
         if IDm==students_list[i]['IDm']:#if文でIDmとリストのIDmを比較
             studentData.append(students_list[i]['名前'])
