@@ -11,11 +11,12 @@ from types import LambdaType
 
 def comp(IDm:str, students_list:list):
     studentData = []
-    warning_text = ["あなたは履修者ではありません。退室してください。", "ERROR"]
+    warning_text = ["Undefined Name", "-0000", False]
     for i in range(len(students_list)):#リストをfor文で回す
         if IDm==students_list[i]['IDm']:#if文でIDmとリストのIDmを比較
             studentData.append(students_list[i]['名前'])
             studentData.append(students_list[i]['学籍番号'])
+            studentData.append(True)
             return studentData
     return warning_text
 

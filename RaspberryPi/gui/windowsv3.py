@@ -112,7 +112,7 @@ class WinMake(QMainWindow):
 
          ###
 
-        self.tool = self.bar.addMenu("is(&I)")
+        self.tool = self.bar.addMenu("is(&BBBB)")
         self.tool2 = self.bar.addMenu("God(&G)")
 
     # Menu にのせるもの
@@ -269,7 +269,7 @@ class WinMake(QMainWindow):
                     css = f.read()
                 self.setStyleSheet(css)
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
-                self.idlb.setText("nfcのIDは" + define.nfcdata +",利用者名は" + define.studentname)
+                self.idlb.setText("nfcのIDは" + define.nfcdata +"\n利用者名は" + define.studentname)
                 self.attendlb.setText("出席判定の結果は " + define.attendcheck)
         except:
             self.close()
@@ -285,10 +285,10 @@ class SubWindow(QWidget):
         '''ポップアップウィンドウの初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("このプロジェクトの情報")
-        self.w.setGeometry(50, 50, 200, 300)
+        self.w.setGeometry(500, 500, 200, 300)
 
         label = QLabel('出席管理プロジェクト Team2', self.w)
-        label2 = QLabel("他ファイルから授業の開始時刻,遅刻みなし時刻，欠席時刻等を入力し\nそれに対応することによっていい感じにします", self.w)
+        label2 = QLabel("他ファイルから授業の開始時刻,遅刻みなし時刻，欠席時刻等を入力し\nそれに対応する出力を行うことによっていい感じにします", self.w)
         label3 = QLabel(self.w)
         label3.setOpenExternalLinks(True)
         label3.setText("<a href='http://github.com/tsr-on-github/team2'>GitHubレポジトリ</a>")

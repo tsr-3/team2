@@ -1,23 +1,23 @@
+# -*- coding: utf-8 -*-
 # --- RaspberryPi main script --- #
 
 import datetime
 import dateutil.parser
-
-#GUI表示に必要なもの
-from gui import windowsv3 #./gui/windowsv3 をimportしている
-import sys
-from PyQt5.QtWidgets import *
-
-
 import threading
 import concurrent.futures
 import time
 
-# windowsv3と値をやり取りするための苦渋の策
-from functions import define
-from functions import cardreader
-from functions import time_attend
+#GUI表示に必要なもの
+import sys
+from PyQt5.QtWidgets import *
+from gui import windowsv3 #./gui/windowsv3 をimportしている
+from functions import define # windowsv3と値をやり取りするための苦渋の策
+# from functions import cardreader
+from functions import dummy_cardreader # 上記cardreader の手動入力版(35行目も記載)
+from functions import time_attend # 出席を判定するもの
+from functions import comparsion # IDｍと生徒情報を紐づける
 
+from types import LambdaType
 
 t1 = datetime.datetime(2021, 6, 2, 16, 00)
 t2 = datetime.datetime(2021, 6, 2, 17, 00)
@@ -25,19 +25,25 @@ t3 = datetime.datetime(2021, 6, 2, 18, 00)
 
 # -- NFCread function -- #
 def NFCread():
+
+    data = [{"学籍番号":"S001","名前":"相道森","IDm":"012E44A7A5187429"}] # テスト用データ
+
     i = 0
     while(True):
         i += 1
         time.sleep(1)
 
-        idm, now = cardreader.printidm()
-        define.nfcdata = str(idm) # nfcのIDです
-        #define.nfcdata = str(i) # nfcのIDです
-        define.studentname = str(-1 * i) # 上記IDに対応する生徒の名前です str(-1 * 1)を生徒名に変更してください
+        # idm, now = cardreader.printidm() #カードリーダによる読み取り
+        idm, now = dummy_cardreader.printidm() #手動ID入力
+        define.nfcdata = str(idm) # nfcのIDをwindowsv3.pyへ渡す
+        tmp = comparsion.comp(idm, data) # IDmから生徒名を検索
+        define.studentname = tmp[0] # IDに対応する生徒の名前をwindowsv3.pyへ渡す
+        # タッチした時刻と登録された時刻の比較を行いwindowsv3.pyへ渡す(出席/遅刻/欠席/非履修者)
+        if tmp[2]:
+            define.attendcheck = time_attend.time(t1, t2, t3)
+        else:
+            define.attendcheck = "非履修者"
 
-        # タッチした時刻と登録された時刻の比較を行い(出席/遅刻/欠席)
-        define.attendcheck = time_attend.time(t1, t2, t3)
-        
 
 
 
