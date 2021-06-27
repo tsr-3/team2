@@ -13,5 +13,12 @@ global studentname
 studentname = "生徒の名前"
 
 # 出席/遅刻/欠席
+'''
+0: 出席(通常状態)
+1: 遅刻
+2: 欠席
+3: 非履修者
+
+'''
 global attendcheck
-attendcheck = "出席かどうかを判別"
+attendcheck = ["出席かどうかを判別", 0]
