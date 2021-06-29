@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import *
 from gui import windowsv3 #./gui/windowsv3 をimportしている
 from functions import define # windowsv3と値をやり取りするための苦渋の策
 # from functions import cardreader
-from functions import dummy_cardreader # 上記cardreader の手動入力版(35行目も記載)
+from functions import dummy_cardreader as cardreader # 上記cardreader の手動入力版(35行目も記載)
 from functions import time_attend # 出席を判定するもの
 from functions import comparsion # IDｍと生徒情報を紐づける
 
@@ -36,7 +36,7 @@ def NFCread():
         time.sleep(1)
 
         # idm, now = cardreader.printidm() #カードリーダによる読み取り
-        idm, now = dummy_cardreader.printidm() #手動ID入力
+        idm, now = cardreader.printidm() #手動ID入力
         define.nfcdata = str(idm) # nfcのIDをwindowsv3.pyへ渡す
         tmp = comparsion.comp(idm, data) # IDmから生徒名を検索
         define.studentname = tmp[0] # IDに対応する生徒の名前をwindowsv3.pyへ渡す
