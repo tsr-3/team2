@@ -37,7 +37,7 @@ class Professors:
     @data.getter
     def data(self):
         pass
-    # self._professorsにvalueを設定する、同時にコンストラクタで行ったキーのチェックも行う
+    # self._professorsにvalueを設定する、同時にコンストラクタでも行ったキーのチェックも行う
     @data.setter
     def data(self, value):
         pass
