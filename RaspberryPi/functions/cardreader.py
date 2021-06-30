@@ -26,7 +26,17 @@ def read_id():
 def printidm():
     read_id()
     now= datetime.datetime.now()
-    return idm,now
+    return idm#,now
+
+def second_warm():
+    import comparsion
+    comparsion.comp()
+    if studentData[i]['学籍番号']==students_list[i]['学籍番号']:
+        enter_warnigtext="すでに入室済みです"
+        return enter_warnigtext
+
+
+    
 
 
 if __name__ == '__main__':
