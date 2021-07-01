@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # --- RaspberryPi main script --- #
 
+from RaspberryPi.functions.comparsion import comp
 from RaspberryPi.functions.SaveDataFile import DummySaveDataFile as SaveDataFile # debug
 # from RaspberryPi.functions.SaveDataFile import SaveDataFile
 import datetime
@@ -70,14 +71,21 @@ def mainProcess():
     lecture:dict
     while(True):
         if state == STATE_BEFORE_START:
-            if students == None or professors == None or lecture == None
-            dat = SaveDataFile.read()
-            students = dat['students']
-            professors = dat['professors']
-            lecture = dat['lecture']
+            if students == None or professors == None or lecture == None:
+                dat = SaveDataFile.read()
+            if students == None:
+                students = dat['students']
+            if professors == None:
+                professors = dat['professors']
+            if lecture == None:
+                lecture = dat['lecture']
         elif state == STATE_ACCEPTING:
             idm, now = cardreader.printidm()
-            pass
+            # check if this student is enrolled in lecture
+            if comparsion.comp(idm, lecture.students):
+                pass
+            else:
+                pass
         elif state == STATE_END_ACCEPT:
             pass
 
