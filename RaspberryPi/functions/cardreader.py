@@ -31,9 +31,11 @@ def printidm():
 def second_warm():
     import comparsion
     comparsion.comp()
-    if studentData[i]['学籍番号']==students_list[i]['学籍番号']:
-        enter_warnigtext="すでに入室済みです"
-        return enter_warnigtext
+    new_attender=studentData[i]['学籍番号']
+    for i in range(len(studentData)-1):
+        if new_attender==studentData[i]['学籍番号']:
+            enter_warnigtext="すでに入室済みです"
+            return enter_warnigtext
 
 
     
