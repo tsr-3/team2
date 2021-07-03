@@ -1,15 +1,20 @@
 // Electronのモジュール
+const { webviewTag } = require("electron");
 const electron = require("electron");
 
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 const Menu = electron.Menu;
 
+//ipc
+const ipc = electron.ipcMain;
+
 // ウィンドウを作成するモジュール
 const BrowserWindow = electron.BrowserWindow;
 
 // メインウィンドウはGCされないようにグローバル宣言
 let mainWindow;
+
 
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
@@ -54,7 +59,8 @@ function initWindowMenu(){
       submenu: [
         {
           label: 'Print to PDF',
-          click() { window.print();}
+          acceletor: switchCharactersByOS('Command+P', 'Ctrl+P'),
+          click: function () { printPDF(); }
         }
       ]
     },{
@@ -62,7 +68,8 @@ function initWindowMenu(){
       submenu: [
         {
           label: 'exit app',
-          click() { quit(); }
+          accelerator: switchCharactersByOS('Command+Q', 'Ctrl+Q'),
+          click() { app.quit(); }
         }
       ]
     }
@@ -71,3 +78,31 @@ function initWindowMenu(){
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 }
+
+
+
+
+function printPDF(event) {
+  let dir_home = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
+  const pdfPath = require("path").join(dir_home, "Desktop");
+  mainWindow.webContents.printToPDF({}, function(error, data) {
+    if (error) throw error
+    fs.writeFile(pdfPath, data, function(error) {
+      if (error) {
+        throw error
+      }
+      shell.openExternal('file://' + pdfPath)
+      event.sender.send('wrote-pdf', pdfPath)
+    })
+  })
+}
+
+/**
+ * WindowsとMacで文字を切り替える
+ */
+ function switchCharactersByOS(forMac, forWin) {
+  if (process.platform == 'darwin') {
+    return forMac;
+  }
+  return forWin;
+};
