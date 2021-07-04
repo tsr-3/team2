@@ -24,8 +24,9 @@ WinMake()
     win_hide():UIに表示されている要素全てを非表示にする
     GOwin_hida
 
-    makewindow:サブウィンドウの呼び出しを行う
-    GOmakewindow
+    sub_make:サブウィンドウの呼び出しを行う
+    GOsub_make
+    GOsub_make
 
     win_update():UIを再描写する
     GOwin_update
@@ -132,7 +133,7 @@ class WinMake(QMainWindow):
         # self.help = self.bar.addMenu("ヘルプ(&H)")
         self.help = self.bar.addMenu("インフォメーション(&I)")
         self.help1 = QAction(QIcon("icon/help2.png"), "情報", self)
-        self.help1.triggered.connect(self.makeWindow)
+        self.help1.triggered.connect(self.sub_make)
         self.help.addAction(self.help1)
          ###
 
@@ -287,8 +288,9 @@ class WinMake(QMainWindow):
         self.timelb.hide()
 
 
-    #GOmakewindow
-    def makeWindow(self):
+    #GOsub_make
+    #GOsub_make
+    def sub_make(self):
         '''サブウィンドウ(ポップアップウィンドウ)の呼び出しを行う'''
         # サブウィンドウの作成
         subWindow = SubWindow()
