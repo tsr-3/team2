@@ -6,22 +6,47 @@ win = WinMake(app)
 で実行出来る
 
 WinMake()
-    __inti__(引数:QApplication型):GUIの初期設定(笑)が入力されている
+    __init__(引数:QApplication型):GUIの初期設定(笑)が入力されている
+    GOinit   //push<shift-*>
 
-    showfd():ファイル選択ダイアログボックスを表示する
+    fd_read:読み込み用ファイル選択ダイアログボックスを表示する
+    GOfd_read
+
+    fd_save:書き出しファイル選択ダイアログボックスを表示する
+    GOfd_save
 
     win_attendUI():UIを出席判別UIに変更する
+    GOwin_attendUI
 
     win_menuUI():UIをメインUIに変更する
+    GOwin_menuUI
 
     win_hide():UIに表示されている要素全てを非表示にする
+    GOwin_hida
+
+    makewindow:サブウィンドウの呼び出しを行う
+    GOmakewindow
 
     win_update():UIを再描写する
+    GOwin_update
+
+
+SubWindow()
+    __init__():初期設定
+    GOsubinit
+
+    show():サブウィンドウの表示する
+    GOshow
 
 FileOpe():
     file_save():ファイルの保存処理を行う(予定)
+    GOfile_save
 
     file_read():ファイルの読込処理を行う(予定)
+    GOfile_read
+
+move_current_dir():作業ディレクトリをwindowsv3が存在する場所へ移動する(cssを読み込むため)
+GOmove_current_dir
 
 '''
 
@@ -46,6 +71,7 @@ class WinMake(QMainWindow):
     '''メインウィンドウの生成を行う'''
 
 
+    #GOinit
     def __init__(self, app, parent=None) -> None:
         '''メインウィンドウの初期設定を行う'''
         # super().__init__()
@@ -171,6 +197,7 @@ class WinMake(QMainWindow):
         app.exec_()
 
 
+    #GOfd_read
     def fd_read(self):
         '''読み込みファイルを選択するダイアログの表示を行う'''
         # fn = QFileDialog.getOpenFileName(self,str("用いたいファイルを選んでください"), "/home/deskTop", str("Image Files (*.png *.jpg *.bmp)"))
@@ -193,8 +220,9 @@ class WinMake(QMainWindow):
         return fn
 
 
+    #GOfd_save
     def fd_save(self):
-        '''読み込みファイルを選択するダイアログの表示を行う'''
+        '''書き出しファイルを選択するダイアログの表示を行う'''
         fn = QFileDialog.getSaveFileName(self, str("ファイルを保存します"))
         #フィルタ
         if fn[0] == '':
@@ -209,6 +237,7 @@ class WinMake(QMainWindow):
         return fn
 
 
+    #GOwin_attendUI
     def win_attendUI(self):
         '''UIを出席判別画面へ変更する'''
         self.status = 1
@@ -226,6 +255,7 @@ class WinMake(QMainWindow):
         self.setStyleSheet(css)
 
 
+    #GOwin_menuUI
     def win_menuUI(self):
         '''UIをメイン画面へ変更する'''
         self.status = 0
@@ -243,6 +273,7 @@ class WinMake(QMainWindow):
         self.setStyleSheet(css)
 
 
+    #GOwin_hida
     def win_hide(self):
         '''要素を全て非表示にする'''
         self.attendbt.hide()
@@ -256,6 +287,7 @@ class WinMake(QMainWindow):
         self.timelb.hide()
 
 
+    #GOmakewindow
     def makeWindow(self):
         '''サブウィンドウ(ポップアップウィンドウ)の呼び出しを行う'''
         # サブウィンドウの作成
@@ -264,6 +296,7 @@ class WinMake(QMainWindow):
         subWindow.show()
 
 
+    #GOwin_update
     def win_update(self):
         '''指定ms毎に行われる処理'''
         try:
@@ -297,6 +330,7 @@ class SubWindow(QWidget):
     '''ポップアップウィンドウの作成を行う'''
 
 
+    #GOsubinit
     def __init__(self, parent=None):
         '''ポップアップウィンドウの初期設定を行う'''
         self.w = QDialog(parent)
@@ -316,6 +350,7 @@ class SubWindow(QWidget):
 
         self.w.setLayout(layout)
 
+    #GOshow
     def show(self):
         '''ポップアップウィンドウの表示を行う'''
         self.w.exec_()
@@ -324,14 +359,17 @@ class SubWindow(QWidget):
 
 class FileOpe():
     '''ファイル操作を行う？'''
+    #GOfile_save
     def file_save(self):
         print("Saved!!")
         return "Saved!!"
+    #GOfile_read
     def file_read(self):
         print("Read!!")
         return "Read!!"
 
 
+#GOmove_current_dir
 def move_current_dir():
     '''カレントディレクトリをこのプログラム(windowsv3)が存在するディレクトリに変更する'''
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
