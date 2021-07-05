@@ -31,3 +31,9 @@
 ~~- ラズパイにLANなしでSSH接続する方法~~
 
  ~~https://qiita.com/m4saka/items/09e60a929dbd5debcd3b~~
+
+### quick start
+
+- Download this repository
+- Run main.py
+
