@@ -1,3 +1,7 @@
+/*
+  csvファイルからjsonファイルを作成するスクリプト
+*/
+
 //コピー元：http://lifelog.main.jp/wordpress/?p=2970
 
 //mdn：https://developer.mozilla.org/ja/docs/Web/API/Blob

@@ -16,7 +16,7 @@ from PyQt5.QtWidgets import *
 from gui import windowsv3 #./gui/windowsv3 をimportしている
 from functions import define # windowsv3と値をやり取りするための苦渋の策
 # from functions import cardreader
-from functions import dummy_cardreader as cardreader # 上記cardreader の手動入力版(35行目も記載)
+from functions import dummy_cardreader as cardreader # 上記cardreader の手動入力版 # debug
 from functions import time_attend # 出席を判定するもの
 from functions import comparsion # IDｍと生徒情報を紐づける
 
