@@ -81,11 +81,18 @@ class WinMake(QMainWindow):
         # 実行ファイルの移動
         move_current_dir()
         # 窓の設定
-        self.height_c = int(app.desktop().height() / 2.0)
-        self.width_c = int(app.desktop().width() / 2.0)
-        self.winw = self.width_c
-        self.winh = self.height_c
-        self.showFullScreen()
+        # self.height_c = int(app.desktop().height() / 2.0)
+        # self.width_c = int(app.desktop().width() / 2.0)
+        # self.showFullScreen()
+        self.setGeometry(100, 100, 1000, 500)
+        self.show()
+        # print(self.height(), self.width())
+
+        self.now_width = 0
+        self.now_height = 0
+
+
+
 
         # ステータスバーの設定
         self.statusBar().showMessage("現在時刻が表示されるはずです テナント募集")
@@ -113,6 +120,7 @@ class WinMake(QMainWindow):
         self.file.addAction(self.inport)
         #File 退出
         self.exit = QAction(QIcon("icon/exit3.png"), "Exit", self)
+        self.exit.setShortcut("Ctrl+c")
         self.exit.setStatusTip("画面を閉じます")
         self.exit.triggered.connect(self.close)
         self.file.addAction(self.exit)
@@ -142,53 +150,62 @@ class WinMake(QMainWindow):
         self.tool = self.bar.addMenu("is(&BBBB)")
         self.tool2 = self.bar.addMenu("God(&G)")
 
-    # Menu にのせるもの
+    # MainGUI にのせるもの
         # ボタンの設定 ｘボタン
         self.exitbt = QPushButton("X", self)
         self.exitbt.setStyleSheet("background-color: red")
         self.exitbt.setToolTip("このウィンドウを閉じます")
         self.exitbt.setShortcut("c")
-        self.exitbt.setGeometry(int(self.width_c * 2) - 50, 27, 50, 50)
+        #self.exitbt.setGeometry(int(self.width_c * 2) - 50, 27, 50, 50)
+        self.exitbt.setGeometry(int(self.width() - self.width() * 1/20) , int(1/20), int(self.width() * 1/20), int(self.width() * 1/20))
         self.exitbt.clicked.connect(self.close)
-        # ラベルの設定 取得時間割表示ラベル
-        self.timetablelb = QLabel("時間割ファイルを設定してください", self)
-        self.timetablelb.setStyleSheet("color: rgb(0,0,0)")
-        self.timetablelb.setGeometry(int(self.width_c * 0.5), int(self.height_c * 0.5), 50000, 100)
         # ボタンの設定 ファイル読込ボタン
         self.readbt = QPushButton("ファイルの読込", self)
         self.readbt.setToolTip("Ctrl+o")
-        self.readbt.setGeometry(int(self.timetablelb.x() - 110), int(self.timetablelb.y() + 30), 100, 50)
+        #self.readbt.setGeometry(int(self.timetablelb.x() - 110), int(self.timetablelb.y() + 30), 100, 50)
+        self.readbt.setGeometry(int(self.width() * 1/10), int(self.height() * 1/4), int(self.width() *  1/10), int(self.height() * 1/10))
         self.readbt.clicked.connect(self.fd_read)
+        # ラベルの設定 取得時間割表示ラベル
+        self.timetablelb = QLabel("時間割ファイルを設定してください", self)
+        self.timetablelb.setStyleSheet("color: rgb(0,0,0)")
+        #self.timetablelb.setGeometry(int(self.width_c * 0.5), int(self.height_c * 0.5), 50000, 100)
+        self.timetablelb.setGeometry(int(self.width() * 1/10 + self.readbt.x()), int(self.height() * 1/4), int(self.width()), int(self.height() * 1/10))
         # ボタンの設定 出席ボタン
         self.attendbt = QPushButton("出席をとる", self)
         self.attendbt.setToolTip("出席をとる画面を表示します")
         self.attendbt.setShortcut("s")
-        self.attendbt.setGeometry(self.width_c - 175, self.height_c - 150, 400, 300)
+        #self.attendbt.setGeometry(self.width() - 175, self.height() - 150, 400, 300)
+        self.attendbt.setGeometry(int(self.width() * 3/10), int(self.height() * 1/2), int(self.width() * 4/10), int(self.height() * 3/10))
         self.attendbt.setStyleSheet("font-size: 50pt")
         self.attendbt.clicked.connect(self.win_attendUI)
 
-    #Attendにのせるもの
+    #AttendGUIにのせるもの
         # ボタンの設定 Menuに戻るボタン
         self.returnmenubt = QPushButton("戻る", self)
         self.returnmenubt.setToolTip("Menuに戻ります")
         self.returnmenubt.setShortcut("c")
         self.returnmenubt.setStyleSheet("background-color: red")
-        self.returnmenubt.setGeometry(int(self.width_c * 2) - 50, 27, 50, 50)
+        #self.returnmenubt.setGeometry(int(self.width_c * 2) - 50, 27, 50, 50)
+        self.returnmenubt.setGeometry(int(self.width() - self.width() * 1/20) , int(1/20), int(self.width() * 1/20), int(self.width() * 1/20))
         self.returnmenubt.clicked.connect(self.win_menuUI)
         # ラベルの設定 時刻出力ラベル
         self.timelb = QLabel("時刻を出力するよ", self)
-        self.timelb.setGeometry(self.width_c - int(self.width_c * 0.6), self.height_c - 300, self.width_c * 2, 200)
+        #self.timelb.setGeometry(self.width_c - int(self.width_c * 0.6), self.height_c - 300, self.width_c * 2, 200)
+        self.timelb.setGeometry(int(self.width() * 1/10), int(self.height() * 1/10), int(self.width() ), int(self.height() * 2/10))
         # ラベルの設定 ID出力ラベル
         self.idlb = QLabel("ID(または名前)を出力するよ", self)
-        self.idlb.setGeometry(self.width_c - int(self.width_c * 0.6), int(self.timelb.y() + 300), self.width_c * 2, 200)
+        #self.idlb.setGeometry(self.width_c - int(self.width_c * 0.6), int(self.timelb.y() + 300), self.width_c * 2, 200)
+        self.idlb.setGeometry(int(self.width() * 1/10), int(self.timelb.height() + self.timelb.y() + self.height() * 1/10), self.width(), int(self.height() * 2/10))
         # ラベルの設定 出席判別ラベル
         self.attendlb = QLabel("出席を判別するよ", self)
-        self.attendlb.setGeometry(self.width_c - int(self.width_c * 0.6), int(self.idlb.y() +300), self.width_c * 2, 200)
+        #self.attendlb.setGeometry(self.width_c - int(self.width_c * 0.6), int(self.idlb.y() +300), self.width_c * 2, 200)
+        self.attendlb.setGeometry(int(self.width() * 1/10), int(self.idlb.height() + self.idlb.y() + self.height() * 1/10), self.width(), int(self.height() * 1/10))
 
         # QTimerの設定
         timer = QTimer()
         timer.timeout.connect(self.win_update)
         timer.start(int(1000/120))
+
 
         # スタイルの呼び出し
         self.win_menuUI()
@@ -197,6 +214,8 @@ class WinMake(QMainWindow):
         self.show()
         app.exec_()
 
+
+    #def resizeEvent(self,event):
 
     #GOfd_read
     def fd_read(self):
@@ -289,7 +308,6 @@ class WinMake(QMainWindow):
 
 
     #GOsub_make
-    #GOsub_make
     def sub_make(self):
         '''サブウィンドウ(ポップアップウィンドウ)の呼び出しを行う'''
         # サブウィンドウの作成
@@ -301,6 +319,20 @@ class WinMake(QMainWindow):
     #GOwin_update
     def win_update(self):
         '''指定ms毎に行われる処理'''
+        if (self.height() != self.now_height or self.width() != self.now_width):
+            # print(self.now_width, self.now_height)
+            self.exitbt.setGeometry(int(self.width() - self.width() * 1/20) , int(1/20), int(self.width() * 1/20), int(self.width() * 1/20))
+            self.readbt.setGeometry(int(self.width() * 1/10), int(self.height() * 1/4), int(self.width() *  1/10), int(self.height() * 1/10))
+            self.timetablelb.setGeometry(int(self.width() * 1/10 + self.readbt.x()), int(self.height() * 1/4), int(self.width()), int(self.height() * 1/10))
+            self.attendbt.setGeometry(int(self.width() * 3/10), int(self.height() * 1/2), int(self.width() * 4/10), int(self.height() * 3/10))
+            self.returnmenubt.setGeometry(int(self.width() - self.width() * 1/20) , int(1/20), int(self.width() * 1/20), int(self.width() * 1/20))
+            self.timelb.setGeometry(int(self.width() * 1/10), int(self.height() * 1/10), int(self.width() ), int(self.height() * 2/10))
+            self.idlb.setGeometry(int(self.width() * 1/10), int(self.timelb.height() + self.timelb.y() + self.height() * 1/10), self.width(), int(self.height() * 2/10))
+            self.attendlb.setGeometry(int(self.width() * 1/10), int(self.idlb.height() + self.idlb.y() + self.height() * 1/10), self.width(), int(self.height() * 1/10))
+
+        self.now_width = self.width()
+        self.now_height = self.height()
+
         try:
             self.timelb.setText(str(datetime.datetime.now()))
             if self.status == 0:
