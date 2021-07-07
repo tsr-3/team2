@@ -1,13 +1,9 @@
 // Electronのモジュール
-const { webviewTag } = require("electron");
 const electron = require("electron");
 
 // アプリケーションをコントロールするモジュール
 const app = electron.app;
 const Menu = electron.Menu;
-
-//ipc
-const ipc = electron.ipcMain;
 
 // ウィンドウを作成するモジュール
 const BrowserWindow = electron.BrowserWindow;
@@ -79,9 +75,6 @@ function initWindowMenu(){
   Menu.setApplicationMenu(menu)
 }
 
-
-
-
 function printPDF(event) {
   let dir_home = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
   const pdfPath = require("path").join(dir_home, "Desktop");
@@ -97,9 +90,9 @@ function printPDF(event) {
   })
 }
 
-/**
- * WindowsとMacで文字を切り替える
- */
+/*
+  WindowsとMacで文字を切り替える
+*/
  function switchCharactersByOS(forMac, forWin) {
   if (process.platform == 'darwin') {
     return forMac;
