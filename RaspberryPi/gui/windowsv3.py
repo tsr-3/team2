@@ -436,7 +436,7 @@ class WarnWindow(QWidget):
         label.setFont(QFont("Arial", 14, QFont.Black))
 
         # ファイルを読み込み
-        image = QImage('ex.png')
+        image = QImage('ex.gif')
         imagelabel = QLabel()
         # ラベルに読み込んだ画像を反映
         imagelabel.setPixmap(QPixmap.fromImage(image))
