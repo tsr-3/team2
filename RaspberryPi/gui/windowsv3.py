@@ -83,13 +83,13 @@ class WinMake(QMainWindow):
         # 窓の設定
         # self.height_c = int(app.desktop().height() / 2.0)
         # self.width_c = int(app.desktop().width() / 2.0)
+
         # self.showFullScreen()
         self.setGeometry(100, 100, 1000, 500)
         self.show()
-        # print(self.height(), self.width())
 
-        self.now_width = 0
-        self.now_height = 0
+        self.now_width = 0 #現在起動されているGUIウィンドウの幅
+        self.now_height = 0 #現在起動されているGUIウィンドウの高
 
 
 
@@ -319,8 +319,7 @@ class WinMake(QMainWindow):
     #GOwin_update
     def win_update(self):
         '''指定ms毎に行われる処理'''
-        if (self.height() != self.now_height or self.width() != self.now_width):
-            # print(self.now_width, self.now_height)
+        if (self.height() != self.now_height or self.width() != self.now_width): # GUIウィンドウの大きさが変化したときにボタンやラベルの大きさを変更する
             self.exitbt.setGeometry(int(self.width() - self.width() * 1/20) , int(1/20), int(self.width() * 1/20), int(self.width() * 1/20))
             self.readbt.setGeometry(int(self.width() * 1/10), int(self.height() * 1/4), int(self.width() *  1/10), int(self.height() * 1/10))
             self.timetablelb.setGeometry(int(self.width() * 1/10 + self.readbt.x()), int(self.height() * 1/4), int(self.width()), int(self.height() * 1/10))
