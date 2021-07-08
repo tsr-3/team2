@@ -1,14 +1,59 @@
 # ----- SaveDataFile ----- #
 # version 3.9.0 64-bit
 
-from AES256CBC import AES256CBC
+from RaspberryPi.functions.AES256CBC import AES256CBC
+import json
+
+# from AES256CBC import AES256CBC
+
+# savedata
+# filetype + Base64(key) + Base64(iv) + Base64(AES256CBC(data-container-s))
+# | str"t2pecf=="(8-byte) | data-containers(variable-byte)
+# data-containers
+# | type(8-byte) | key(43-byte) | iv(22-byte) | body(variable-byte) |
+# 各コンテナは.でつなぐ
+# key
+# AES256CBC => 44byte data => remove one padding(=) => 43byte data
+# iv
+# AES256CBC => 24byte data => remove two padding(=) => 22byte data
+# type
+# - .prof=== : professors data
+# - .student : students data
+# - .lecture : lecture data
+# - .attend= : attendance data
 
 class SaveDataFile:
-    def read():
-        PATH = ''
-        with open(PATH, 'r', 1, 'utf-8') as fp:
-            encoded = fp.read()
-        pass
+    # SaveDataFile.read(filepath)
+    # return : {'proffesors': list, 'students' : list. 'lecture': dict, 'attendance': list}
+    @staticmethod
+    def read(path: str):
+        # read file
+        fp = open(path, 'r', 1, 'utf-8')
+        encoded:str = fp.read()
+        # close
+        fp.close()
+        # check file type
+        if encoded[0:7] is not 't2pecf==':
+            return None
+        DATA = {}
+        for container in encoded[8:].split('.'):
+            if container[0:6] is 'prof===':
+                # professors
+                plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
+                DATA['professors'] = json.loads(plain)
+            if container[0:6] is 'student':
+                # students
+                plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
+                DATA['students'] = json.loads(plain)
+            if container[0:6] is 'lecture':
+                # lecture data
+                plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
+                DATA['lecture'] = json.loads(plain)
+            if container[0:6] is 'attend=':
+                # attendances
+                plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
+    
+    @staticmethod
     def write(dat:object, path:str):
         pass
 
