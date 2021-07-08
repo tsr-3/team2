@@ -3,7 +3,7 @@ QMainWindow{
     /* color: rgb(183, 198, 209); */
 }
 QLabel{
-    font-size: 50pt;
+    font-size: 30pt;
     font-weight: 700;
     color: rgb(248, 85, 85);
 }
@@ -14,7 +14,7 @@ QPushButton{
   /* background: #f56500; */
 }
 .QPushButton {
-  border-radius: 40px;
+  border-radius: 10px;
   border: 2px solid #82a237;
 }
 .QPushButton:hover {

@@ -17,7 +17,7 @@
   - settings
   - 履修者
 - 出欠データ
-  - 
+  -
 
 ### gui windows
 
@@ -35,5 +35,8 @@
 ### quick start
 
 - Download this repository
-- Run main.py
 
+- Type these commands in a terminal
+###
+    team2> pip install -r requirements.txt
+    team2> python3 RaspberryPi/main.py
