@@ -22,14 +22,19 @@ WinMake()
     GOwin_menuUI
 
     win_hide():UIに表示されている要素全てを非表示にする
-    GOwin_hida
+    GOwin_hide
 
-    sub_make:サブウィンドウの呼び出しを行う
-    GOsub_make
-    GOsub_make
+    message_info:サブウィンドウの呼び出す
+    GOmessage_info
 
     win_update():UIを再描写する
     GOwin_update
+
+    resize():ボタンやラベルのリサイズする
+    GOresize
+
+    messege_warn():ファイルが選択されていない場合の警告を呼び出す
+    GOmessage_warn
 
 
 SubWindow()
@@ -39,12 +44,17 @@ SubWindow()
     show():サブウィンドウの表示する
     GOshow
 
+WarnWindow()
+    __init__():初期設定
+    GOwarninit
+
 FileOpe():
     file_save():ファイルの保存処理を行う(予定)
     GOfile_save
 
     file_read():ファイルの読込処理を行う(予定)
     GOfile_read
+
 
 move_current_dir():作業ディレクトリをwindowsv3が存在する場所へ移動する(cssを読み込むため)
 GOmove_current_dir
@@ -72,6 +82,7 @@ class WinMake(QMainWindow):
     '''メインウィンドウの生成を行う'''
 
 
+
     #GOinit
     def __init__(self, app, parent=None) -> None:
         '''メインウィンドウの初期設定を行う'''
@@ -81,16 +92,15 @@ class WinMake(QMainWindow):
         # 実行ファイルの移動
         move_current_dir()
         # 窓の設定
-        # self.height_c = int(app.desktop().height() / 2.0)
-        # self.width_c = int(app.desktop().width() / 2.0)
+        #self.height_c = int(app.desktop().height() / 2.0)
+        #self.width_c = int(app.desktop().width() / 2.0)
 
-        # self.showFullScreen()
+        #self.showFullScreen()
         self.setGeometry(100, 100, 1000, 500)
         self.show()
 
         self.now_width = 0 #現在起動されているGUIウィンドウの幅
         self.now_height = 0 #現在起動されているGUIウィンドウの高
-
 
 
 
@@ -141,7 +151,7 @@ class WinMake(QMainWindow):
         # self.help = self.bar.addMenu("ヘルプ(&H)")
         self.help = self.bar.addMenu("インフォメーション(&I)")
         self.help1 = QAction(QIcon("icon/help2.png"), "情報", self)
-        self.help1.triggered.connect(self.sub_make)
+        self.help1.triggered.connect(self.message_info)
         self.help.addAction(self.help1)
          ###
 
@@ -215,8 +225,6 @@ class WinMake(QMainWindow):
         app.exec_()
 
 
-    #def resizeEvent(self,event):
-
     #GOfd_read
     def fd_read(self):
         '''読み込みファイルを選択するダイアログの表示を行う'''
@@ -260,6 +268,10 @@ class WinMake(QMainWindow):
     #GOwin_attendUI
     def win_attendUI(self):
         '''UIを出席判別画面へ変更する'''
+        print("hello")
+        if self.messege_warn():
+            return
+
         self.status = 1
         self.win_hide()
         # AttendUIに用いる要素の表示
@@ -293,7 +305,7 @@ class WinMake(QMainWindow):
         self.setStyleSheet(css)
 
 
-    #GOwin_hida
+    #GOwin_hide
     def win_hide(self):
         '''要素を全て非表示にする'''
         self.attendbt.hide()
@@ -307,31 +319,9 @@ class WinMake(QMainWindow):
         self.timelb.hide()
 
 
-    #GOsub_make
-    def sub_make(self):
-        '''サブウィンドウ(ポップアップウィンドウ)の呼び出しを行う'''
-        # サブウィンドウの作成
-        subWindow = SubWindow()
-        # サブウィンドウの表示
-        subWindow.show()
-
-
     #GOwin_update
     def win_update(self):
         '''指定ms毎に行われる処理'''
-        if (self.height() != self.now_height or self.width() != self.now_width): # GUIウィンドウの大きさが変化したときにボタンやラベルの大きさを変更する
-            self.exitbt.setGeometry(int(self.width() - self.width() * 1/20) , int(1/20), int(self.width() * 1/20), int(self.width() * 1/20))
-            self.readbt.setGeometry(int(self.width() * 1/10), int(self.height() * 1/4), int(self.width() *  1/10), int(self.height() * 1/10))
-            self.timetablelb.setGeometry(int(self.width() * 1/10 + self.readbt.x()), int(self.height() * 1/4), int(self.width()), int(self.height() * 1/10))
-            self.attendbt.setGeometry(int(self.width() * 3/10), int(self.height() * 1/2), int(self.width() * 4/10), int(self.height() * 3/10))
-            self.returnmenubt.setGeometry(int(self.width() - self.width() * 1/20) , int(1/20), int(self.width() * 1/20), int(self.width() * 1/20))
-            self.timelb.setGeometry(int(self.width() * 1/10), int(self.height() * 1/10), int(self.width() ), int(self.height() * 2/10))
-            self.idlb.setGeometry(int(self.width() * 1/10), int(self.timelb.height() + self.timelb.y() + self.height() * 1/10), self.width(), int(self.height() * 2/10))
-            self.attendlb.setGeometry(int(self.width() * 1/10), int(self.idlb.height() + self.idlb.y() + self.height() * 1/10), self.width(), int(self.height() * 1/10))
-
-        self.now_width = self.width()
-        self.now_height = self.height()
-
         try:
             self.timelb.setText(str(datetime.datetime.now()))
             if self.status == 0:
@@ -353,9 +343,51 @@ class WinMake(QMainWindow):
                 elif define.attendcheck[1] == 3: # 非履修
                     self.statusBar().setStyleSheet("background-color: rgb(93, 87, 185)")
 
+            self.resize()
         except:
             self.close()
             print('Something Happened')
+
+
+    #GOresize
+    def resize(self):
+        '''ボタンやラベルのリサイズを行う'''
+        if not self.isFullScreen(): #フルスクリーンウィンドウでなければ
+            if (self.height() != self.now_height or self.width() != self.now_width): # GUIウィンドウの大きさが変化したときにボタンやラベルの大きさを変更する
+                self.exitbt.setGeometry(int(self.width() - self.width() * 1/20) , int(1/20), int(self.width() * 1/20), int(self.width() * 1/20))
+                self.readbt.setGeometry(int(self.width() * 1/10), int(self.height() * 1/4), int(self.width() *  1/10), int(self.height() * 1/10))
+                self.timetablelb.setGeometry(int(self.width() * 1/10 + self.readbt.x()), int(self.height() * 1/4), int(self.width()), int(self.height() * 1/10))
+                self.attendbt.setGeometry(int(self.width() * 3/10), int(self.height() * 1/2), int(self.width() * 4/10), int(self.height() * 3/10))
+                self.returnmenubt.setGeometry(int(self.width() - self.width() * 1/20) , int(1/20), int(self.width() * 1/20), int(self.width() * 1/20))
+                self.timelb.setGeometry(int(self.width() * 1/10), int(self.height() * 1/10), int(self.width() ), int(self.height() * 2/10))
+                self.idlb.setGeometry(int(self.width() * 1/10), int(self.timelb.height() + self.timelb.y() + self.height() * 1/10), self.width(), int(self.height() * 2/10))
+                self.attendlb.setGeometry(int(self.width() * 1/10), int(self.idlb.height() + self.idlb.y() + self.height() * 1/10), self.width(), int(self.height() * 1/10))
+
+        self.now_width = self.width()
+        self.now_height = self.height()
+
+
+    #GOmessage_warn
+    def messege_warn(self):
+        '''ファイルが選択されていない場合に警告画面を表示する'''
+        if (self.timetablelb.text() == "時間割ファイルを設定してください") or (self.timetablelb.text() == "選択に失敗したようです"):
+            # サブウィンドウの作成
+            warn = WarnWindow()
+            # サブウィンドウの表示
+            warn.show()
+
+            self.fd_read()
+
+            return True
+
+
+    #GOmessage_info
+    def message_info(self):
+        '''サブウィンドウ(ポップアップウィンドウ)の呼び出しを行う'''
+        # サブウィンドウの作成
+        subWindow = SubWindow()
+        # サブウィンドウの表示
+        subWindow.show()
 
 
 
@@ -386,6 +418,39 @@ class SubWindow(QWidget):
     #GOshow
     def show(self):
         '''ポップアップウィンドウの表示を行う'''
+        self.w.exec_()
+
+class WarnWindow(QWidget):
+    '''ファイルが選択できていない場合の警告画面の作成を行う'''
+
+
+    #GOwarninit
+    def __init__(self, parent=None):
+        '''ウィンドウ初期設定を行う'''
+        self.w = QDialog(parent)
+        self.w.setWindowTitle("ファイルの読み込みが出来ていません")
+        self.w.setGeometry(500, 500, 200, 300)
+
+        label = QLabel(self.w)
+        label.setText('授業関係ファイルを選択してください :)')
+        label.setFont(QFont("Arial", 14, QFont.Black))
+
+        # ファイルを読み込み
+        image = QImage('ex.png')
+        imagelabel = QLabel()
+        # ラベルに読み込んだ画像を反映
+        imagelabel.setPixmap(QPixmap.fromImage(image))
+        # スケールは1.0
+        imagelabel.scaleFactor = 0.3
+
+        layout = QVBoxLayout()
+        layout.addWidget(label)
+        layout.addWidget(imagelabel)
+
+        self.w.setLayout(layout)
+
+    def show(self):
+        '''表示を行う'''
         self.w.exec_()
 
 
