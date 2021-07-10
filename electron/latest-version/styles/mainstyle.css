@@ -80,6 +80,12 @@ table {
   text-align: center;
 }
 
+/* for canvas */
+div#canvas {
+	width:640px; /* もうちょい良い方法ないっすか？ */
+	margin:0 auto;
+}
+
 /* for form */
 form {
   margin: 0 auto;
