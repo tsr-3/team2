@@ -9,25 +9,28 @@
 
 function drawgraph(attenddata, filename) {
 
-  let raito = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  let raito = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; /* テストデータ */
 
   let body = document.querySelector('body');
   let div = document.createElement('div');
   div.id = "canvas";
   let canvas = document.createElement('canvas');
-  let W = 1600;
-  let H = 400;
+  let W = 600;
+  let H = 20*attenddata.length+40;
   canvas.width = W;
   canvas.height = H;
   let ctx = canvas.getContext('2d');
 
   // 棒グラフ for loop
-  let color = ['red','grean','yello','blue'];
   for (let i = 0; i < attenddata.length; i++){
-    ctx.fillStyle = color[Math.floor(Math.random() * color.length)];
-    bar = 100 * raito[Math.floor(Math.random() * raito.length)];
-    ctx.fillRect(20, 100 + 15 * i, bar, 10);
-    ctx.fillText(bar,25,105 + 15 * i,100);
+    ctx.fillStyle = 'black';
+    let count = raito[Math.floor(Math.random() * raito.length)];
+    let bar = count * W / raito.length;
+    let barheight = 20 + 20 * i;
+    ctx.fillRect(20, barheight, bar, 10);
+    ctx.fillStyle = 'black';
+    let datatext = '名前：' + attenddata[i]['名前'] + ' 出席回数：' + count;
+    ctx.fillText(datatext,25,barheight-1.5);
   }
 
   // x軸の描画
