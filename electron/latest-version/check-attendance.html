@@ -12,8 +12,15 @@
     <div id="scripts">
       <script src="./functions/jsonToObject.mjs"></script>
       <script src="./functions/makeTable.mjs"></script>
+      <script src="./functions/drawGraph.mjs"></script>
+      <script>
+        function doReload(){
+          window.location.reload();
+        }
+      </script>
     </div>
     <div class="buttonarea">
+      <button class="button" onclick="doReload();">クリア</button>
       <button class="button" onclick="location.href='./mainmenu.html'">戻る</button>
     </div>
   </body>
