@@ -7,6 +7,19 @@
 入れ方はStartDocumentを参照
 
 ---
+## ファイル構造
+
+> latest-version
+- functions
+  - jsファイル群．
+- pages
+  - htmlファイルとか
+- styles
+  - cssファイル
+- その他
+  - その他上記のカテゴリーに属しないもの
+
+---
 
 ## ファイル名と内容の対応について
 ---
@@ -22,13 +35,11 @@
 > mainmenu.html
 - ユーザが利用できる機能メニューを表示する
 - 改善案があったらください
-> makelist.html
-- 出席を判定するためのjsonファイルを作成するフォーム
+> create-lectinfo.html
+- 出席を判定するためのjsonファイルとか講義に関するデータを作成するフォーム
 - 最終的にはフォームにはjsonとかなんとか書かなくしてDDエリアと時間設定だけにするつもり
-- 現時点ではここにありません tmp-app を参照してください
-> table.html
+> check-attendance.html
 - 出席状況取得後のjsonファイルを読み取るための部分
-- これもmakelist同様
 > graph.html
 - 読み取った出席状況をグラフ化して表示する
 - 方法模索中

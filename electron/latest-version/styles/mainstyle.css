@@ -31,6 +31,12 @@ body {
   margin-right: auto;
 }
 
+/* for help button */
+button.help {
+  margin-right: 0;
+}
+
+
 /* for menu page's button */
 .menu {
   position: relative;
@@ -100,4 +106,9 @@ form > label {
 /* for form > input */
 form > input {
   position: relative;
+}
+
+/* for form .timesetting */
+form.timesetting {
+  height: auto;
 }
