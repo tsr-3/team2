@@ -40,13 +40,13 @@ function initWindowMenu(){
       submenu: [
         {
           label: 'スタート画面',
-          click () { mainWindow.loadURL(`file://${__dirname}/index.html`); }
+          click () { mainWindow.loadURL(`file://${__dirname}/pages/index.html`); }
         },{
           label: '出席状況確認ツール',
-          click () { mainWindow.loadURL(`file://${__dirname}/readjson.html`); }
+          click () { mainWindow.loadURL(`file://${__dirname}/pages/check-attendance.html`); }
         },{
           label: '履修者リスト作成ツール',
-          click () { mainWindow.loadURL(`file://${__dirname}/makelist.html`); }
+          click () { mainWindow.loadURL(`file://${__dirname}/pages/create-lectinfo.html`); }
         }
       ]
     },{
