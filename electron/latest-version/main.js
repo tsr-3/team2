@@ -28,7 +28,7 @@ app.on('ready', function() {
 
 // ウィンドウが閉じられたらアプリも終了
     mainWindow.on('closed', function() {
-        mainWindow = null;
+      mainWindow = null;
     });
 });
 
@@ -58,6 +58,7 @@ function initWindowMenu(){
           click() {
             subWindow = new BrowserWindow({ width: 800, height: 600 });
             subWindow.loadURL(`file://${__dirname}/pages/help.html`);
+            subWindow.setMenu(null);
           }
         }
       ]
