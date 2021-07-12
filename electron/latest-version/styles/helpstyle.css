@@ -1,4 +1,25 @@
 table{
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+}
+
+label {
+  width: max-content;
+  height: 10000px;
+}
+
+td.buttonarea {
+  margin-left: 0;
+  margin-right: auto;
+  margin-top: 0;
+}
+
+td.pictarea {
+  width: 400px;
+  height: 300px;
+}
+
+td.textarea {
+  width: 300px;
+  height: 500px;
 }
