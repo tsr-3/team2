@@ -443,6 +443,13 @@ class WarnWindow(QWidget):
         # スケールは1.0
         imagelabel.scaleFactor = 0.3
 
+
+        exit = QPushButton(self.w)
+        exit.setGeometry(0, 0, 1, 1)
+        exit.setShortcut("Ctrl+c")
+        exit.setShortcut("c")
+        exit.clicked.connect(self.w.close)
+
         layout = QVBoxLayout()
         layout.addWidget(label)
         layout.addWidget(imagelabel)

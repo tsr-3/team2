@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="./styles/mainstyle.css">
+    <link rel="stylesheet" href="../styles/mainstyle.css">
     <title>出席管理システム</title>
   </head>
   <body>
@@ -10,10 +10,17 @@
     <hr class="line">
     <input id="json-reader" type="file" accept=".json">
     <div id="scripts">
-      <script src="./functions/jsonToObject.mjs"></script>
-      <script src="./functions/makeTable.mjs"></script>
+      <script src="../functions/jsonToObject.mjs"></script>
+      <script src="../functions/makeTable.mjs"></script>
+      <script src="../functions/drawGraph.mjs"></script>
+      <script>
+        function doReload(){
+          window.location.reload();
+        }
+      </script>
     </div>
     <div class="buttonarea">
+      <button class="button" onclick="doReload();">クリア</button>
       <button class="button" onclick="location.href='./mainmenu.html'">戻る</button>
     </div>
   </body>
