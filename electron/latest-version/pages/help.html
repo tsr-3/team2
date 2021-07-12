@@ -4,12 +4,98 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../styles/mainstyle.css">
+  <link rel="stylesheet" href="../styles/helpstyle.css">
   <title>出席管理システム</title>
 </head>
 <body>
+
+  <!-- <img id="helpic" src="pics1.jpg" width="400" height="300"> -->
+  <!-- <input type="button" value="戻る" onclick="go_back()"> -->
+  <!-- <input type="button" value="進む" onclick="go_forward()"> -->
+  <!-- <script src=""></script> -->
+  <script>
+    var pics_src = new Array("pics0.jpg", "pics1.jpg", "pics2.jpg", "pics3.jpg");
+
+    function help(number){
+
+      switch(number){
+        case 1:
+          document.getElementById("helpic").src=pics_src[1];
+          document.getElementById("helptext").textContent = "ヘルプ1";
+          break;
+        case 2:
+          document.getElementById("helpic").src=pics_src[2];
+          document.getElementById("helptext").textContent = "ヘルプ2";
+          break;
+        case 3:
+          document.getElementById("helpic").src=pics_src[3];
+          document.getElementById("helptext").innerText = 'ヘルプ3';
+          break;
+        case 4:
+          document.getElementById("helpic").src=pics_src[4];
+          document.getElementById("helptext").innerText = 'ヘルプ4';
+          break;
+        case 5:
+          document.getElementById("helpic").src=pics_src[5];
+          document.getElementById("helptext").innerText = 'ヘルプ5';
+          break;
+        case 6:
+          document.getElementById("helpic").src=pics_src[6];
+          document.getElementById("helptext").innerText = 'ヘルプ6';
+          break;
+        case 7:
+          document.getElementById("helpic").src=pics_src[7];
+          document.getElementById("helptext").innerText = 'ヘルプ7';
+          break;
+        default:
+          document.getElementById("helpic").scr=pics_src[0];
+          document.getElementById("helptext").textContent = "ヘルプ0";
+      }
+    }
+  </script>
+
+
   <h2 class="MainTitle">ソフトウェア操作マニュアル(仮称)</h2>
   <hr class="line">
   マニュアル書いていくよ
+
+  <table border="2" width>
+    <tr>
+      <td width= "91">
+        <button class="button" onclick="help(1)">ヘルプ項目1</button>
+      </td>
+      <td rowspan="8">
+        はろーワールド
+        <img id="helpic" src="pics1.jpg" width="400" height="300">
+        <label id="helptext">label</label>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button class="button" onclick="help(2)">ヘルプ項目2</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button class="button" onclick="help(3)">ヘルプ項目3</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button class="button" onclick="help(4)">ヘルプ項目4</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button class="button" onclick="help(5)">ヘルプ項目5</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button class="button" onclick="help(6)">ヘルプ項目6</button>
+      </td>
+    </tr>
+  </table>
+
 </body>
 </html>
