@@ -50,12 +50,15 @@ function initWindowMenu(){
         }
       ]
     },{
-      label: '印刷(未実装)',
+      label: 'ヘルプ',
       submenu: [
         {
-          label: 'PDF印刷',
-          acceletor: switchCharactersByOS('Command+P', 'Ctrl+P'),
-          click: function () { printPDF(); }
+          label: '操作方法ヘルプ',
+          accelerator: switchCharactersByOS('Command+H', 'Ctrl+H'),
+          click() {
+            subWindow = new BrowserWindow({ width: 800, height: 600 });
+            subWindow.loadURL(`file://${__dirname}/pages/help.html`);
+          }
         }
       ]
     },{
@@ -72,21 +75,6 @@ function initWindowMenu(){
 
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
-}
-
-function printPDF(event) {
-  let dir_home = process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
-  const pdfPath = require("path").join(dir_home, "Desktop");
-  mainWindow.webContents.printToPDF({}, function(error, data) {
-    if (error) throw error
-    fs.writeFile(pdfPath, data, function(error) {
-      if (error) {
-        throw error
-      }
-      shell.openExternal('file://' + pdfPath)
-      event.sender.send('wrote-pdf', pdfPath)
-    })
-  })
 }
 
 /*
