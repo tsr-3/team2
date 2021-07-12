@@ -24,7 +24,7 @@ class Professors:
     #   strの教員IDが存在しないとき、Noneを返す
     # keyがそれ以外の時
     #   Exceptionを投げる
-    """
+    
     def __getitem__(self, key):
         pass
         for key in self._prfessors():
@@ -43,6 +43,7 @@ class Professors:
     @property
     def count(self):
         pass
+        counter=0
         for key in self._professors():
             counter+=1
         return counter
@@ -50,8 +51,7 @@ class Professors:
     @count.getter
     def count(self):
         pass
-        count():
-        return counter
+        
 
     @property
     def data(self):
@@ -74,10 +74,19 @@ class Professors:
     @empty.getter
     def empty(self):
         pass
-"""
+
 
 if __name__=='__main__':
     value=[]
     if value==('id')or('name')or('yomi')or('sex')or('lect[]'):
         print('Exception')
+    
+    key=(12.5)
+    if type(key)==int:
+        print('123')
+    elif type(key)==str:
+        print('あいうえお')
+    else:
+        print('Exception')
+    
     
