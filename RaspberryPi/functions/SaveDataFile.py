@@ -1,7 +1,8 @@
+# coding: utf-8
 # ----- SaveDataFile ----- #
 # version 3.9.0 64-bit
 
-from RaspberryPi.functions.AES256CBC import AES256CBC
+from AES256CBC import AES256CBC
 import json
 
 # from AES256CBC import AES256CBC
@@ -33,23 +34,23 @@ class SaveDataFile:
         # close
         fp.close()
         # check file type
-        if encoded[0:7] is not 't2pecf==':
+        if encoded[0:7] != 't2pecf==':
             return None
         DATA = {}
         for container in encoded[8:].split('.'):
-            if container[0:6] is 'prof===':
+            if container[0:6] == 'prof===':
                 # professors
                 plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
                 DATA['professors'] = json.loads(plain)
-            if container[0:6] is 'student':
+            if container[0:6] == 'student':
                 # students
                 plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
                 DATA['students'] = json.loads(plain)
-            if container[0:6] is 'lecture':
+            if container[0:6] == 'lecture':
                 # lecture data
                 plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
                 DATA['lecture'] = json.loads(plain)
-            if container[0:6] is 'attend=':
+            if container[0:6] == 'attend=':
                 # attendances
                 plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
     
