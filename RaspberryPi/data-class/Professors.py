@@ -1,3 +1,6 @@
+from typing import Counter
+
+
 class Professors:
     
     _professors:list = None
@@ -51,6 +54,9 @@ class Professors:
     @count.getter
     def count(self):
         pass
+        count=Professors()
+        return count.count
+        
         
 
     @property
@@ -77,8 +83,8 @@ class Professors:
 
 
 if __name__=='__main__':
-    value=[]
-    if value==('id')or('name')or('yomi')or('sex')or('lect[]'):
+    value=['123','岡田','okada','女',[1]]
+    if value!=('id')or('name')or('yomi')or('sex')or('lect[]'):
         print('Exception')
     
     key=(12.5)
@@ -89,4 +95,12 @@ if __name__=='__main__':
     else:
         print('Exception')
     
+    count=Professors()
+    print(count.count)
+
+
+    
+    
+
+
     
