@@ -2,7 +2,7 @@ from typing import Counter
 
 
 class Professors:
-    
+
     _professors:list = None
 
     # Professors() と呼び出したとき
@@ -12,12 +12,14 @@ class Professors:
     #   valueリストの各データにid, name, yomi, sex, lectのキーが存在することをチェックし、一つでもキーが存在しなかったらExceptionを投げる
 
     def __init__(self, value:list = None):#コンストラクタ
+        print("do init")
         pass
         self._professors==None
         if type(value) is list:
             if value in value ('id')or('name')or('yomi')or('sex')or('lect[]'):
                 self._professors==self._professors(value)
-            return self._professors    
+            print("end init")
+            return self._professors
 
     # keyがintのとき
     #   self._professorsのリストのkey番目の教員データを返す
@@ -27,24 +29,26 @@ class Professors:
     #   strの教員IDが存在しないとき、Noneを返す
     # keyがそれ以外の時
     #   Exceptionを投げる
-    
+
     def __getitem__(self, key):
+        print("do getitem")
         pass
-        for key in self._prfessors():
+        for key in self._professors():
             if type(key)==int:
                 return self._professors(key)
-                if self._professors[key]>=self._professors():
-                    return None
+            if self._professors[key]>=self._professors():
+                return None
             if type(key)==str:
                 self._professors(id)==self._professors('')
                 return self._professors(id)
-                if self._professors('id')=='':
-                    return None
+            if self._professors('id')=='':
+                return None
             else:
                 return Exception
 
     @property
     def count(self):
+        print("do count")
         pass
         counter=0
         for key in self._professors():
@@ -53,32 +57,39 @@ class Professors:
     # 教員データの数を返す
     @count.getter
     def count(self):
+        print("do count.getter")
         pass
-        count=Professors()
+        # count=Professors()
         return count.count
-        
-        
+
+
 
     @property
     def data(self):
+        print("do data")
+        pass
         pass
         return self._professors()
     # 教員データのリストを返す
     @data.getter
     def data(self):
+        print("do data.getter")
         pass
     # self._professorsにvalueを設定する、同時にコンストラクタでも行ったキーのチェックも行う
     @data.setter
-    def data(self, value):
+    def dat(self, value):
+        print("do data.setter")
         pass
 
     @property
     def empty(self):
+        print("do empty")
         pass
     # データが設定されていないかどうかを返す
     # => データが設定されていないときにtrue
     @empty.getter
     def empty(self):
+        print("do empty.getter")
         pass
 
 
@@ -86,7 +97,7 @@ if __name__=='__main__':
     value=['123','岡田','okada','女',[1]]
     if value!=('id')or('name')or('yomi')or('sex')or('lect[]'):
         print('Exception')
-    
+
     key=(12.5)
     if type(key)==int:
         print('123')
@@ -94,13 +105,9 @@ if __name__=='__main__':
         print('あいうえお')
     else:
         print('Exception')
-    
+
     count=Professors()
     print(count.count)
 
 
-    
-    
 
-
-    
