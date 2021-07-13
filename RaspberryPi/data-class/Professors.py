@@ -76,7 +76,7 @@ class Professors:
                 for key in self.KEYS:
                     if key == 'lect':
                             if val.get(key) == item:
-                                print(f'{self.KEYS[0]}が{item}のデータは{val}')
+                                print(f'{key}が{item}のデータは{val}')
                     elif val.get(key) == item:
                         print(f'{key}が{item}のデータは{val}')
                         pass
@@ -197,13 +197,13 @@ if __name__ == '__main__':
     # ここまでコンストラクタの検証(済)
 
     # ここからメソッドの検証
-    print(empty_instance.__getitem__(1)) # => Exception(例外)が返ってくる
+    print(empty_instance[1]) # => Exception(例外)が返ってくる
 
-    print(test_instance1.__getitem__(10)) # => test_instance1の10番目が返ってくる(豊崎史郎)
-    print(test_instance1.__getitem__(20)) # => 存在しないためNoneが返ってくる
+    print(test_instance1[10]) # => test_instance1の10番目が返ってくる(豊崎史郎)
+    print(test_instance1[20]) # => 存在しないためNoneが返ってくる
 
-    print(test_instance1.__getitem__('P001')) # => データの中身 lectの比較だけ上手く動かない
-    print(test_instance1.__getitem__('B')) # => None
+    print(test_instance1['P001']) # => データの中身 lectの比較だけ上手く動かない
+    print(test_instance1['B']) # => None
 
     # 検証結果 => まあまあ良いのでは？
 
