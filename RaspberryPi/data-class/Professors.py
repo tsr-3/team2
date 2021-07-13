@@ -1,10 +1,8 @@
 # coding :utf-8
 
-from typing import List
-
-
 class Professors:
 
+    # クラス変数(不変)
     KEYS = ['id','name','yomi','sex','lect']
     # クラス変数とインスタンス変数について理解しましょう
     # professors (variable name : type)
@@ -23,7 +21,6 @@ class Professors:
     #   問題が無ければself._professorsにvalueを設定する
     def __init__(self, professors:list = None): # constructor
         self._professors = []
-        #KEYS = ['id','name','yomi','sex','lect']
         if professors is None:
             self._professors = None
         else:
@@ -87,21 +84,44 @@ class Professors:
                     return None
         else:
             return Exception
+        # 検証済み
 
     @property
     def count(self):
         pass
+    # 教員データの数を返す
     @count.getter
     def count(self):
         return len(self._professors)
+        # 検証済み
 
     @property
     def data(self):
-        pass
-    @data.getter
-    def data(self):
-        self._professors
+        # 教員データのリストを返す
         return self._professors
+    # self._professorsにvalueを設定する、同時にコンストラクタで行ったようなキーのチェックも行う
+    @data.setter
+    def data(self,value):
+        self._professors.append(value)
+        return True
+        '''
+        self._professors = []
+        if value is None:
+            self._professors = None
+            return Exception
+        else:
+            key_is_not_found = False
+            for j in range(len(self.KEYS)):
+                if self.KEYS[j] not in value:
+                    key_is_not_found = True
+                    print(f'{self.KEYS[j]}がない')
+                    return Exception
+            if key_is_not_found == False:
+                self._professors.append(value)
+        if self._professors == []:
+            self._professors = None
+            return Exception
+            '''
 
     @property
     def empty(self):
@@ -111,6 +131,7 @@ class Professors:
         if self._professors == None:
             return True
         return False
+        # 検証済み
 
 if __name__ == '__main__':
 
@@ -139,7 +160,7 @@ if __name__ == '__main__':
     ])
     print(test_instance1.data) # 理想値 => 上のリストが \ﾜｰｰｰｰ/ って出てくる
 
-    # どこかしらに欠損があるテストデータ
+    # どこかしら(すべて)に欠損があるテストデータ
     test_instance2 = Professors(professors=
     [{"name":"秋場紀明","yomi":"あきばのりあき","sex":"男","lect":["応用数学","数学演習"]},
     {"id":"P002","yomi":"ありもとたいし","sex":"男","lect":["保健体育"]},
@@ -170,20 +191,27 @@ if __name__ == '__main__':
     print(test_instance1.__getitem__('P001')) # => データの中身 lectの比較だけ上手く動かない
     print(test_instance1.__getitem__('B')) # => None
 
+    # 検証結果 => まあまあ良いのでは？
 
+    # ここから getter setter の検証
+    print(f'教員データの数：{test_instance1.count}個') # getter => 16
 
-'''
-    instance = Professors([{"id":"S001","name":"相道森","yomi":"あいどうしん","sex":"男","idm":"012E44A7A5187429"},{"id":"S002","name":"揚村巴絵","yomi":"あげむらともえ","sex":"女","idm":"012E44A7A518527D"},{"id":"S003","name":"浅井礼子","yomi":"あさいれいこ","sex":"女","idm":"012E44A7A5152B9F"},{"id":"S004","name":"荒松晴一","yomi":"あらまつせいいち","sex":"男","idm":"012E44A7A518807A"}])
-    print(instance.empty)
-    print(instance[3])
-    instance[3] = {"id":"S100","name":"渡利雄祐","yomi":"わたりゆうすけ","sex":"男","idm":"012E44A7A5112853"}
-    print(instance[3])
-    print(instance['S002'])
-    print(instance.find({'id':'S002'}))
-    print(instance.find({'name':'渡利雄祐'}))
-    print(instance.find({'sex':'男'}))
-'''
-    # instance.data = [{'id':'', 'name':'', 'yomi':'', 'idm':''}] # error test
+    print(f'教員データのリスト\n{test_instance1.data}') # getter => データ全部
+    print(f'教員データのリスト\n{test_instance2.data}') # getter => None
+
+    print(empty_instance.empty) # getter => True
+    print(test_instance1.empty) # getter => False
+    print(test_instance2.empty) # getter => True
+
+    # ここまで大きな問題なし
+
+    print(type(empty_instance.data))
+    # data.setterを検証のために，空のやつを使うやで
+    print(f'教員データのリスト\n{empty_instance.data}') # getter => None
+    I_want_to_add_data:dict = {'id':'P000','name':'被験者','yomi':'おにんぎょう','sex':'不明','lect':['相対性理論応用']}
+    empty_instance.data(I_want_to_add_data)
+    print(empty_instance.data)
+
 
 
 #from typing import Counter
