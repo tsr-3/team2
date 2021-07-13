@@ -48,10 +48,12 @@ class Professors:
                     if self.KEYS[j] not in professors[i]:
                         key_is_not_found = True
                         print(f'{self.KEYS[j]}がない')
+                        #raise Exception or return None
                 if key_is_not_found == False:
                     self._professors.append(professors[i])
             if self._professors == []:
                 self._professors = None
+
         # 検証済み
 
     # keyがintのとき
@@ -86,29 +88,10 @@ class Professors:
             return Exception
         # 検証済み
 
-    @property
-    def count(self):
-        pass
-    # 教員データの数を返す
-    @count.getter
-    def count(self):
-        return len(self._professors)
-        # 検証済み
-
-    @property
-    def data(self):
-        # 教員データのリストを返す
-        return self._professors
-    # self._professorsにvalueを設定する、同時にコンストラクタで行ったようなキーのチェックも行う
-    @data.setter
-    def data(self,value):
-        self._professors.append(value)
-        return True
-        '''
+    def __insert__(self,value):
         self._professors = []
         if value is None:
             self._professors = None
-            return Exception
         else:
             key_is_not_found = False
             for j in range(len(self.KEYS)):
@@ -120,9 +103,40 @@ class Professors:
                 self._professors.append(value)
         if self._professors == []:
             self._professors = None
-            return Exception
-            '''
 
+    @property
+    def count(self):
+        pass
+    # 教員データの数を返す
+    @count.getter
+    def count(self):
+        return len(self._professors)
+        # 検証済み
+
+    @property
+    def data(self):
+        pass
+    @data.getter
+    def data(self):
+        return self._professors
+        '''
+    # self._professorsにvalueを設定する、同時にコンストラクタで行ったようなキーのチェックも行う
+    @data.setter
+    def data(self,value):
+        self._professors = []
+        if value is None:
+            self._professors = None
+        else:
+            key_is_not_found = False
+            for j in range(len(self.KEYS)):
+                if self.KEYS[j] not in value:
+                    key_is_not_found = True
+                    print(f'{self.KEYS[j]}がない')
+            if key_is_not_found == False:
+                self._professors.append(value)
+        if self._professors == []:
+            self._professors = None
+            '''
     @property
     def empty(self):
         pass
@@ -205,11 +219,10 @@ if __name__ == '__main__':
 
     # ここまで大きな問題なし
 
-    print(type(empty_instance.data))
     # data.setterを検証のために，空のやつを使うやで
     print(f'教員データのリスト\n{empty_instance.data}') # getter => None
-    I_want_to_add_data:dict = {'id':'P000','name':'被験者','yomi':'おにんぎょう','sex':'不明','lect':['相対性理論応用']}
-    empty_instance.data(I_want_to_add_data)
+    I_want_to_add_data = {'id':'P000','name':'被験者','yomi':'おにんぎょう','sex':'不明','lect':['相対性理論応用']}
+    empty_instance.__insert__(I_want_to_add_data)
     print(empty_instance.data)
 
 
