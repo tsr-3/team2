@@ -5,6 +5,7 @@ from typing import List
 
 class Professors:
 
+    KEYS = ['id','name','yomi','sex','lect']
     # クラス変数とインスタンス変数について理解しましょう
     # professors (variable name : type)
     # - id : str
@@ -12,13 +13,17 @@ class Professors:
     # - yomi : str
     # - sex : str
     # - lect : object (list or dict or ...)
-
     # [{"id":"P001","name":"秋場紀明","yomi":"秋葉典明","sex":"男","lect":[応用数学,数学演習]},{},....{}] 的な？
 
-
+    # コンストラクタの仕様(編集者注：どうやら言語仕様上コンストラクタではreturn Noneしか出来ないらしい)
+    # Professors() と呼び出したとき
+    #   self._professorsにNoneを設定する
+    # Professors(value) と呼び出したとき
+    #   valueリストの各データにid, name, yomi, sex, lectのキーが存在することをチェック
+    #   問題が無ければself._professorsにvalueを設定する
     def __init__(self, professors:list = None): # constructor
         self._professors = []
-        KEYS = ['id','name','yomi','sex','lect']
+        #KEYS = ['id','name','yomi','sex','lect']
         if professors is None:
             self._professors = None
         else:
@@ -39,47 +44,49 @@ class Professors:
                     self._professors.append(professors[i])
             if self._professors == []:
                 self._professors = None
-            '''
+                '''
             # 大量のif文の代替案
                 key_is_not_found = False
-                for j in range(len(KEYS)):
-                    if KEYS[j] not in professors[i]:
+                for j in range(len(self.KEYS)):
+                    if self.KEYS[j] not in professors[i]:
                         key_is_not_found = True
-                        print(f'{KEYS[j]}がない')
+                        print(f'{self.KEYS[j]}がない')
                 if key_is_not_found == False:
                     self._professors.append(professors[i])
             if self._professors == []:
                 self._professors = None
         # 検証済み
 
+    # keyがintのとき
+    #   self._professorsのリストのkey番目の教員データを返す
+    #   self._professors[key]がリストの範囲外のとき、Noneを返す
+    # keyがstrのとき
+    #   キー（lect以外）がstrの教員データを返す
+    #   strのキーが存在しないとき、Noneを返す
+    # keyがそれ以外の時
+    #   Exceptionを投げる
     def __getitem__(self, item):
         if self._professors == None: # そもそもデータが無いときは例外
             return Exception
         elif type(item) == int:
             if int(len(self._professors)) <= item:
                 return None
-            return self._professors[item]
+            return self._professors[item-1] # item番目のデータが欲しいはずなので item-1
         elif type(item) == str:
-            data:bool = False
             for val in self._professors:
-                if val['id'] == item:
-                    data = val
-                    break
-            if data is False:
-                return None
-            return data
+                for key in self.KEYS:
+                    if key == 'lect':
+                            if val.get(key) == item:
+                                print(f'{self.KEYS[0]}が{item}のデータは{val}')
+                    elif val.get(key) == item:
+                        print(f'{key}が{item}のデータは{val}')
+                        pass
+                    else:
+                        continue
+                if val is None:
+                    return None
         else:
-            return None
-
-    def __setitem__(self, item, value):
-        if type(item) == int:
-            if len(self._professors) <= item:
-                return False
-            self._professors[item] = value
-        elif type(item) == str:
-            pass
-        else:
-            return False
+            return Exception
 
     @property
     def count(self):
@@ -156,6 +163,14 @@ if __name__ == '__main__':
 
     # ここからメソッドの検証
     print(empty_instance.__getitem__(1)) # => Exception(例外)が返ってくる
+
+    print(test_instance1.__getitem__(10)) # => test_instance1の10番目が返ってくる(豊崎史郎)
+    print(test_instance1.__getitem__(20)) # => 存在しないためNoneが返ってくる
+
+    print(test_instance1.__getitem__('P001')) # => データの中身 lectの比較だけ上手く動かない
+    print(test_instance1.__getitem__('B')) # => None
+
+
 
 '''
     instance = Professors([{"id":"S001","name":"相道森","yomi":"あいどうしん","sex":"男","idm":"012E44A7A5187429"},{"id":"S002","name":"揚村巴絵","yomi":"あげむらともえ","sex":"女","idm":"012E44A7A518527D"},{"id":"S003","name":"浅井礼子","yomi":"あさいれいこ","sex":"女","idm":"012E44A7A5152B9F"},{"id":"S004","name":"荒松晴一","yomi":"あらまつせいいち","sex":"男","idm":"012E44A7A518807A"}])
