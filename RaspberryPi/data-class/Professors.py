@@ -16,7 +16,7 @@ class Professors:
     # コンストラクタの仕様(編集者注：どうやら言語仕様上コンストラクタではreturn Noneしか出来ないらしい)
     # Professors() と呼び出したとき
     #   self._professorsにNoneを設定する
-    # Professors(value) と呼び出したとき
+    # Professors(item) と呼び出したとき
     #   valueリストの各データにid, name, yomi, sex, lectのキーが存在することをチェック
     #   問題が無ければself._professorsにvalueを設定する
     def __init__(self, professors:list = None): # constructor
@@ -88,21 +88,20 @@ class Professors:
             return Exception
         # 検証済み
 
-    def __insert__(self,value):
-        self._professors = []
-        if value is None:
+    def __setitem__(self,key,item):
+        if self._professors == None:
+            self._professors == []
+        elif item is None:
             self._professors = None
         else:
             key_is_not_found = False
             for j in range(len(self.KEYS)):
-                if self.KEYS[j] not in value:
+                if self.KEYS[j] not in item:
                     key_is_not_found = True
                     print(f'{self.KEYS[j]}がない')
                     return Exception
             if key_is_not_found == False:
-                self._professors.append(value)
-        if self._professors == []:
-            self._professors = None
+                self._professors.insert(key,item)
 
     @property
     def count(self):
@@ -110,6 +109,8 @@ class Professors:
     # 教員データの数を返す
     @count.getter
     def count(self):
+        if self._professors == None:
+            self._professors = []
         return len(self._professors)
         # 検証済み
 
@@ -122,18 +123,18 @@ class Professors:
         '''
     # self._professorsにvalueを設定する、同時にコンストラクタで行ったようなキーのチェックも行う
     @data.setter
-    def data(self,value):
+    def data(self,item):
         self._professors = []
-        if value is None:
+        if item is None:
             self._professors = None
         else:
             key_is_not_found = False
             for j in range(len(self.KEYS)):
-                if self.KEYS[j] not in value:
+                if self.KEYS[j] not in item:
                     key_is_not_found = True
                     print(f'{self.KEYS[j]}がない')
             if key_is_not_found == False:
-                self._professors.append(value)
+                self._professors.append(item)
         if self._professors == []:
             self._professors = None
             '''
@@ -221,8 +222,8 @@ if __name__ == '__main__':
 
     # data.setterを検証のために，空のやつを使うやで
     print(f'教員データのリスト\n{empty_instance.data}') # getter => None
-    I_want_to_add_data = {'id':'P000','name':'被験者','yomi':'おにんぎょう','sex':'不明','lect':['相対性理論応用']}
-    empty_instance.__insert__(I_want_to_add_data)
+    I_want_to_add = {'id':'P000','name':'被験者','yomi':'おにんぎょう','sex':'不明','lect':['相対性理論応用']}
+    empty_instance[empty_instance.count] = I_want_to_add
     print(empty_instance.data)
 
 
@@ -236,19 +237,19 @@ if __name__ == '__main__':
 #
 #    # Professors() と呼び出したとき
 #    #   self._professorsにNoneを設定する
-#    # Professors(value) と呼び出したとき
+#    # Professors(item) と呼び出したとき
 #    #   self._professorsにvalueを設定する
 #    #   valueリストの各データにid, name, yomi, sex, lectのキーが存在することをチェックし、一つでもキーが存在しなかったらExceptionを投げる
 #
-#    def __init__(self, value:list = None):#コンストラクタ
+#    def __init__(self, item:list = None):#コンストラクタ
 #        print("do init")
 #        pass
 #
 #        self._professors==None
 #
-#        if type(value) is list:
-#            if value in value ('id')or('name')or('yomi')or('sex')or('lect[]'):
-#                self._professors==self._professors(value)
+#        if type(item) is list:
+#            if item in item ('id')or('name')or('yomi')or('sex')or('lect[]'):
+#                self._professors==self._professors(item)
 #            print("end init")
 #            return self._professors
 #
@@ -309,7 +310,7 @@ if __name__ == '__main__':
 #        pass
 #    # self._professorsにvalueを設定する、同時にコンストラクタでも行ったキーのチェックも行う
 #    @data.setter
-#    def dat(self, value):
+#    def dat(self, item):
 #        print("do data.setter")
 #        pass
 #
@@ -326,8 +327,8 @@ if __name__ == '__main__':
 #
 #
 #if __name__=='__main__':
-#    value=['123','岡田','okada','女',[1]]
-#    if value!=('id')or('name')or('yomi')or('sex')or('lect[]'):
+#    item=['123','岡田','okada','女',[1]]
+#    if item!=('id')or('name')or('yomi')or('sex')or('lect[]'):
 #        print('Exception')
 #
 #    key=(12.5)
