@@ -75,6 +75,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 p = os.path.abspath('..')
 sys.path.insert(1, p)
 from functions import define
+from functions import SaveDataFile
 
 
 
@@ -243,7 +244,11 @@ class WinMake(QMainWindow):
         else:
             self.timetablelb.setStyleSheet("font-size: 25pt")
             self.timetablelb.setText(str(os.path.basename(fn[0])))
+            print(fn[0])
             self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
+
+            SaveDataFile.read(fn[0])
+
 
         return fn
 
