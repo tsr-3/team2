@@ -34,7 +34,11 @@
 
 ### quick start
 
-- Download this repository
+- Download or Clone this repository
+###
+    $>git clone git clone --depth 1 https://github.com/tsr-on-github/team2
+
+###
 
 - Type these commands in a terminal
 ###
