@@ -122,7 +122,7 @@ class Professors:
     @data.getter
     def data(self):
         return self._professors
-        '''
+
     # self._professorsにvalueを設定する、同時にコンストラクタで行ったようなキーのチェックも行う
     @data.setter
     def data(self,item):
@@ -139,7 +139,7 @@ class Professors:
                 self._professors.append(item)
         if self._professors == []:
             self._professors = None
-            '''
+
     @property
     def empty(self):
         pass
@@ -226,8 +226,9 @@ if __name__ == '__main__':
     # setter諦めて__setitem__メソッド使うことにした
     print(f'教員データのリスト -> {empty_instance.data}') # getter => None
     I_want_to_add = {'id':'P000','name':'被験者','yomi':'おにんぎょう','sex':'不明','lect':['相対性理論応用']}
-    empty_instance[empty_instance.count] = I_want_to_add # 対象の末尾に付け加える []内を変えると任意の場所に挿入できる
+    empty_instance.data = I_want_to_add
     print(empty_instance.data) # getter => I_want_to_add が empty_instance に挿入されて出てくる
+
 
     # デバッグ完了 (2021/7/14 13:13)
 
