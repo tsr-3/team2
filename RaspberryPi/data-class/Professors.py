@@ -1,80 +1,142 @@
 # coding :utf-8
 
 class Professors:
-    _professors: list = None
-    # student
-    # - id
-    # - name
-    # - yomi
-    # - sex
-    # - idm
 
+    # クラス変数(不変)
+    KEYS = ['id','name','yomi','sex','lect']
+    # クラス変数とインスタンス変数について理解しましょう
+    # professors (variable name : type)
+    # - id : str
+    # - name : str
+    # - yomi : str
+    # - sex : str
+    # - lect : object (list or dict or ...)
+    # [{"id":"P001","name":"秋場紀明","yomi":"秋葉典明","sex":"男","lect":[応用数学,数学演習]},{},....{}] 的な？
+
+    # コンストラクタの仕様(編集者注：どうやら言語仕様上コンストラクタではreturn Noneしか出来ないらしい)
+    # Professors() と呼び出したとき
+    #   self._professorsにNoneを設定する
+    # Professors(value) と呼び出したとき
+    #   valueリストの各データにid, name, yomi, sex, lectのキーが存在することをチェック
+    #   問題が無ければself._professorsにvalueを設定する
     def __init__(self, professors:list = None): # constructor
+        self._professors = []
         if professors is None:
-            return None
-        self.data = professors
+            self._professors = None
+        else:
+            for i in range(len(professors)):
+                print(f'{professors[i]}について')
+                '''
+                if 'id' not in professors[i]:
+                    print('idがない')
+                elif 'name' not in professors[i]:
+                    print('nameがない')
+                elif 'yomi' not in professors[i]:
+                    print('yomiがない')
+                elif 'sex' not in professors[i]:
+                    print('sexがない')
+                elif 'lect' not in professors[i]:
+                    print('lectがない')
+                else:
+                    self._professors.append(professors[i])
+            if self._professors == []:
+                self._professors = None
+                '''
+            # 大量のif文の代替案
+                key_is_not_found = False
+                for j in range(len(self.KEYS)):
+                    if self.KEYS[j] not in professors[i]:
+                        key_is_not_found = True
+                        print(f'{self.KEYS[j]}がない')
+                        #raise Exception or return None
+                if key_is_not_found == False:
+                    self._professors.append(professors[i])
+            if self._professors == []:
+                self._professors = None
 
+        # 検証済み
+
+    # keyがintのとき
+    #   self._professorsのリストのkey番目の教員データを返す
+    #   self._professors[key]がリストの範囲外のとき、Noneを返す
+    # keyがstrのとき
+    #   キー（lect以外）がstrの教員データを返す
+    #   strのキーが存在しないとき、Noneを返す
+    # keyがそれ以外の時
+    #   Exceptionを投げる
     def __getitem__(self, item):
-        if type(item) == int:
-            if len(self._professors) <= item:
+        if self._professors == None: # そもそもデータが無いときは例外
+            return Exception
+        elif type(item) == int:
+            if int(len(self._professors)) <= item:
                 return None
-            return self._professors[item]
+            return self._professors[item-1] # item番目のデータが欲しいはずなので item-1
         elif type(item) == str:
-            data:bool = False
             for val in self._professors:
-                if val['id'] == item:
-                    data = val
-                    break
-            if data is False:
-                return None
-            return data
+                for key in self.KEYS:
+                    if key == 'lect':
+                            if val.get(key) == item:
+                                print(f'{key}が{item}のデータは{val}')
+                    elif val.get(key) == item:
+                        print(f'{key}が{item}のデータは{val}')
+                        pass
+                    else:
+                        continue
+                if val is None:
+                    return None
         else:
-            return None
+            return Exception
+        # 検証済み
 
-    def __setitem__(self, item, value):
-        if type(item) == int:
-            if len(self._professors) <= item:
-                return False
-            self._professors[item] = value
-        elif type(item) == str:
-            pass
+    def __insert__(self,value):
+        self._professors = []
+        if value is None:
+            self._professors = None
         else:
-            return False
+            key_is_not_found = False
+            for j in range(len(self.KEYS)):
+                if self.KEYS[j] not in value:
+                    key_is_not_found = True
+                    print(f'{self.KEYS[j]}がない')
+                    return Exception
+            if key_is_not_found == False:
+                self._professors.append(value)
+        if self._professors == []:
+            self._professors = None
 
     @property
     def count(self):
         pass
+    # 教員データの数を返す
     @count.getter
     def count(self):
         return len(self._professors)
+        # 検証済み
 
     @property
     def data(self):
         pass
-    @data.setter
-    def data(self, value: list):
-        for val in value:
-            if 'id' not in val or 'name' not in val or 'yomi' not in val or 'sex' not in val or 'idm' not in val:
-                raise BaseException('invalid value type of "student"', val)
-        self._professors = value
     @data.getter
     def data(self):
         return self._professors
-
-    def find(self, cond:dict):
-        KEYS = ['id', 'name', 'yomi', 'sex', 'idm']
-        subset:list = self._professors
-        for key in KEYS:
-            if not len(subset):
-                return subset
-            if key in cond:
-                temp:list = []
-                for dat in subset:
-                    if dat[key] == cond[key]:
-                        temp.append(dat)
-                subset = temp
-        return subset
-
+        '''
+    # self._professorsにvalueを設定する、同時にコンストラクタで行ったようなキーのチェックも行う
+    @data.setter
+    def data(self,value):
+        self._professors = []
+        if value is None:
+            self._professors = None
+        else:
+            key_is_not_found = False
+            for j in range(len(self.KEYS)):
+                if self.KEYS[j] not in value:
+                    key_is_not_found = True
+                    print(f'{self.KEYS[j]}がない')
+            if key_is_not_found == False:
+                self._professors.append(value)
+        if self._professors == []:
+            self._professors = None
+            '''
     @property
     def empty(self):
         pass
@@ -83,19 +145,86 @@ class Professors:
         if self._professors == None:
             return True
         return False
+        # 検証済み
 
 if __name__ == '__main__':
-    instance = Professors([{"id":"S001","name":"相道森","yomi":"あいどうしん","sex":"男","idm":"012E44A7A5187429"},{"id":"S002","name":"揚村巴絵","yomi":"あげむらともえ","sex":"女","idm":"012E44A7A518527D"},{"id":"S003","name":"浅井礼子","yomi":"あさいれいこ","sex":"女","idm":"012E44A7A5152B9F"},{"id":"S004","name":"荒松晴一","yomi":"あらまつせいいち","sex":"男","idm":"012E44A7A518807A"}])
-    print(instance.empty)
-    print(instance[3])
-    instance[3] = {"id":"S100","name":"渡利雄祐","yomi":"わたりゆうすけ","sex":"男","idm":"012E44A7A5112853"}
-    print(instance[3])
-    print(instance['S002'])
-    print(instance.find({'id':'S002'}))
-    print(instance.find({'name':'渡利雄祐'}))
-    print(instance.find({'sex':'男'}))
 
-    # instance.data = [{'id':'', 'name':'', 'yomi':'', 'idm':''}] # error test
+    # インスタンスに何も設定されていないときのテスト
+    empty_instance = Professors()
+    print(empty_instance.data) # 理想値 => None
+
+    # インスタンスのデータを配布されていた教員・担当科目リスト.csvから引用
+    test_instance1 = Professors(professors=
+    [{"id":"P001","name":"秋場紀明","yomi":"あきばのりあき","sex":"男","lect":["応用数学","数学演習"]},
+    {"id":"P002","name":"有本太志","yomi":"ありもとたいし","sex":"男","lect":["保健体育"]},
+    {"id":"P003","name":"大島恵理子","yomi":"おおしまえりこ","sex":"女","lect":["心理学"]},
+    {"id":"P004","name":"鬼野極","yomi":"おにのきわむ","sex":"男","lect":["プログラミング"]},
+    {"id":"P005","name":"高坂信之","yomi":"こうさかのぶゆき","sex":"男","lect":["電磁気学"]},
+    {"id":"P006","name":"澤井信彦","yomi":"さわいのぶひこ","sex":"男","lect":["情報ネットワーク"]},
+    {"id":"P007","name":"進藤健児","yomi":"しんどうけんじ","sex":"男","lect":["システム開発演習","情報工学実習"]},
+    {"id":"P008","name":"武山寛子","yomi":"たけやまひろこ","sex":"女","lect":["情報理論","アルゴリズムとデータ構造"]},
+    {"id":"P009","name":"土橋健二","yomi":"つちはしけんじ","sex":"男","lect":["経済学"]},
+    {"id":"P010","name":"豊崎史朗","yomi":"とよさきしろう","sex":"男","lect":["英会話"]},
+    {"id":"P011","name":"西田順","yomi":"にしだじゅん","sex":"男","lect":["教養英語","科学英語"]},
+    {"id":"P012","name":"古澤範人","yomi":"ふるさわのりひと","sex":"男","lect":["物理学"]},
+    {"id":"P013","name":"細川靖司","yomi":"ほそかわやすし","sex":"男","lect":["コミュニケーション入門"]},
+    {"id":"P014","name":"水沼勝敏","yomi":"みずぬまかつとし","sex":"男","lect":["電子回路学"]},
+    {"id":"P015","name":"三谷和巳","yomi":"みつやかずみ","sex":"男","lect":["信号処理"]},
+    {"id":"P016","name":"鷲見和紀","yomi":"わしみかずのり","sex":"男","lect":["文学・文化学"]}
+    ])
+    print(test_instance1.data) # 理想値 => 上のリストが \ﾜｰｰｰｰ/ って出てくる
+
+    # どこかしら(すべて)に欠損があるテストデータ
+    test_instance2 = Professors(professors=
+    [{"name":"秋場紀明","yomi":"あきばのりあき","sex":"男","lect":["応用数学","数学演習"]},
+    {"id":"P002","yomi":"ありもとたいし","sex":"男","lect":["保健体育"]},
+    {"id":"P003","name":"大島恵理子","sex":"女","lect":["心理学"]},
+    {"id":"P004","name":"鬼野極","yomi":"おにのきわむ","lect":["プログラミング"]},
+    {"id":"P005","name":"高坂信之","yomi":"こうさかのぶゆき","sex":"男"},
+    {"id":"P006","yomi":"さわいのぶひこ","sex":"男","lect":["情報ネットワーク"]},
+    {"id":"P007","name":"進藤健児","sex":"男","lect":["システム開発演習","情報工学実習"]},
+    {"id":"P008","name":"武山寛子","yomi":"たけやまひろこ","lect":["情報理論","アルゴリズムとデータ構造"]},
+    {"id":"P009","name":"土橋健二","yomi":"つちはしけんじ","sex":"男"},
+    {"id":"P010","name":"豊崎史朗","sex":"男","lect":["英会話"]},
+    {"id":"P011","name":"西田順","yomi":"にしだじゅん","lect":["教養英語","科学英語"]},
+    {"id":"P012","name":"古澤範人","yomi":"ふるさわのりひと","sex":"男"},
+    {"id":"P013","name":"細川靖司","yomi":"ほそかわやすし","lect":["コミュニケーション入門"]},
+    {"id":"P014","name":"水沼勝敏","yomi":"みずぬまかつとし","sex":"男"},
+    {"id":"P015","sex":"男","lect":["信号処理"]},
+    {"id":"P016","name":"鷲見和紀"}
+    ])
+    print(test_instance2.data) # 理想値 全てのキーに欠損がある => None 一部のキーに欠損がある => 必要充分なデータが出力
+    # ここまでコンストラクタの検証(済)
+
+    # ここからメソッドの検証
+    print(empty_instance[1]) # => Exception(例外)が返ってくる
+
+    print(test_instance1[10]) # => test_instance1の10番目が返ってくる(豊崎史郎)
+    print(test_instance1[20]) # => 存在しないためNoneが返ってくる
+
+    print(test_instance1['P001']) # => データの中身 lectの比較だけ上手く動かない
+    print(test_instance1['B']) # => None
+
+    # 検証結果 => まあまあ良いのでは？
+
+    # ここから getter setter の検証
+    print(f'教員データの数：{test_instance1.count}個') # getter => 16
+
+    print(f'教員データのリスト\n{test_instance1.data}') # getter => データ全部
+    print(f'教員データのリスト\n{test_instance2.data}') # getter => None
+
+    print(empty_instance.empty) # getter => True
+    print(test_instance1.empty) # getter => False
+    print(test_instance2.empty) # getter => True
+
+    # ここまで大きな問題なし
+
+    # data.setterを検証のために，空のやつを使うやで
+    print(f'教員データのリスト\n{empty_instance.data}') # getter => None
+    I_want_to_add_data = {'id':'P000','name':'被験者','yomi':'おにんぎょう','sex':'不明','lect':['相対性理論応用']}
+    empty_instance.__insert__(I_want_to_add_data)
+    print(empty_instance.data)
+
 
 
 #from typing import Counter
