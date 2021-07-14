@@ -1,5 +1,7 @@
 # coding :utf-8
 
+# 気になる場所は自分で直してください
+
 class Professors:
 
     # クラス変数(不変)
@@ -50,6 +52,7 @@ class Professors:
                         print(f'{self.KEYS[j]}がない')
                         #raise Exception or return None
                 if key_is_not_found == False:
+                    print("問題ない")
                     self._professors.append(professors[i])
             if self._professors == []:
                 self._professors = None
@@ -72,18 +75,15 @@ class Professors:
                 return None
             return self._professors[item-1] # item番目のデータが欲しいはずなので item-1
         elif type(item) == str:
-            for val in self._professors:
-                for key in self.KEYS:
-                    if key == 'lect':
-                            if val.get(key) == item:
-                                print(f'{key}が{item}のデータは{val}')
-                    elif val.get(key) == item:
-                        print(f'{key}が{item}のデータは{val}')
-                        pass
-                    else:
-                        continue
-                if val is None:
+            for i in range(len(self._professors)):
+                if self._professors[i] is None:
                     return None
+                for j in self._professors[i].get('lect'):
+                    if item == j:
+                        return (f'lectが{item}のデータは{self._professors[i]}')
+                for key in self.KEYS:
+                    if self._professors[i].get(key) == item:
+                        return (f'{key}が{item}のデータは{self._professors[i]}')
         else:
             return Exception
         # 検証済み
@@ -203,7 +203,8 @@ if __name__ == '__main__':
     print(test_instance1[10]) # => test_instance1の10番目が返ってくる(豊崎史郎)
     print(test_instance1[20]) # => 存在しないためNoneが返ってくる
 
-    print(test_instance1['P001']) # => データの中身 lectの比較だけ上手く動かない
+    print(test_instance1['P001']) # => データの中身
+    print(test_instance1['コミュニケーション入門']) # lect でも動くようにしたけど比較が多すぎる
     print(test_instance1['B']) # => None
 
     # 検証結果 => まあまあ良いのでは？
@@ -211,8 +212,8 @@ if __name__ == '__main__':
     # ここから getter setter の検証
     print(f'教員データの数：{test_instance1.count}個') # getter => 16
 
-    print(f'教員データのリスト\n{test_instance1.data}') # getter => データ全部
-    print(f'教員データのリスト\n{test_instance2.data}') # getter => None
+    print(f'教員データのリスト -> {test_instance1.data}') # getter => データ全部
+    print(f'教員データのリスト -> {test_instance2.data}') # getter => None
 
     print(empty_instance.empty) # getter => True
     print(test_instance1.empty) # getter => False
@@ -220,13 +221,13 @@ if __name__ == '__main__':
 
     # ここまで大きな問題なし
 
-    # data.setterを検証のために，空のやつを使うやで
-    print(f'教員データのリスト\n{empty_instance.data}') # getter => None
+    # setter諦めて__setitem__メソッド使うことにした
+    print(f'教員データのリスト -> {empty_instance.data}') # getter => None
     I_want_to_add = {'id':'P000','name':'被験者','yomi':'おにんぎょう','sex':'不明','lect':['相対性理論応用']}
-    empty_instance[empty_instance.count] = I_want_to_add
-    print(empty_instance.data)
+    empty_instance[empty_instance.count] = I_want_to_add # 対象の末尾に付け加える []内を変えると任意の場所に挿入できる
+    print(empty_instance.data) # getter => I_want_to_add が empty_instance に挿入されて出てくる
 
-
+    # デバッグ完了 (2021/7/14 13:13)
 
 #from typing import Counter
 #
