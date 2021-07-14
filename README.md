@@ -36,7 +36,7 @@
 
 - Download or Clone this repository
 ###
-    $>git clone git clone --depth 1 https://github.com/tsr-on-github/team2
+    ~>git clone git clone --depth 1 https://github.com/tsr-on-github/team2
 
 ###
 
