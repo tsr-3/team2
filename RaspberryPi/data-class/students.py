@@ -36,8 +36,6 @@ class Students:
             if len(self._students) <= item:
                 return False
             self._students[item] = value
-        elif type(item) == str:
-            pass
         else:
             return False
 
