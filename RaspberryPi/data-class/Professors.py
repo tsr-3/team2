@@ -63,8 +63,8 @@ class Professors:
     #   self._professorsのリストのkey番目の教員データを返す
     #   self._professors[key]がリストの範囲外のとき、Noneを返す
     # keyがstrのとき
-    #   キー（lect以外）がstrの教員データを返す
-    #   strのキーが存在しないとき、Noneを返す
+    #   内容がstrの教員データを全て返す
+    #   strの内容が存在しないとき、Noneを返す
     # keyがそれ以外の時
     #   Exceptionを投げる
     def __getitem__(self, item):
@@ -80,10 +80,12 @@ class Professors:
                     return None
                 for j in self._professors[i].get('lect'):
                     if item == j:
-                        return (f'lectが{item}のデータは{self._professors[i]}')
+                        print(f'lectが{item}のデータは{self._professors[i]}')
+                        continue
                 for key in self.KEYS:
                     if self._professors[i].get(key) == item:
-                        return (f'{key}が{item}のデータは{self._professors[i]}')
+                        print(f'{key}が{item}のデータは{self._professors[i]}')
+                        continue
         else:
             return Exception
         # 検証済み
@@ -203,8 +205,8 @@ if __name__ == '__main__':
     print(test_instance1[10]) # => test_instance1の10番目が返ってくる(豊崎史郎)
     print(test_instance1[20]) # => 存在しないためNoneが返ってくる
 
-    print(test_instance1['P001']) # => データの中身
-    print(test_instance1['コミュニケーション入門']) # lect でも動くようにしたけど比較が多すぎる
+    test_instance1['P001'] # => データの中身
+    test_instance1['コミュニケーション入門'] # lect でも動くようにしたけど比較が多すぎる
     print(test_instance1['B']) # => None
 
     # 検証結果 => まあまあ良いのでは？
