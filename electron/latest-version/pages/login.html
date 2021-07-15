@@ -11,7 +11,8 @@
   <h2 class="MainTitle">ログイン(仮称)</h2>
   <hr class="line">
   <!-- ここでログイン処理関数を呼び出す -->
-  <form class="IDpasswd">
+  <script src="../functions/login.mjs"></script>
+  <form class="IDpasswd" id="BBB">
     <label for="ID">ID</label>
     <input type="text" id="ID" placeholder="ID"><br>
     <label for="passwd">パスワード</label>
@@ -19,7 +20,7 @@
   </form>
   <div class="buttonarea">
     <button type="button" class="button" onclick="location.href='./create-account.html'">アカウント作成</button>
-    <button type="button" class="button" onclick="location.href='./mainmenu.html'">ログイン</button>
+    <button type="button" class="button" onclick="login()">ログイン</button>
   </div>
 </body>
 </html>
