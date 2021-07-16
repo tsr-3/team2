@@ -2,8 +2,15 @@
 # ----- SaveDataFile ----- #
 # version 3.9.0 64-bit
 
-from AES256CBC import AES256CBC
 import json
+
+##Main.pyからSaveDataFile.py をimport するためのおまじない
+import os
+import sys
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+p = os.path.abspath('..')
+sys.path.insert(1, p)
+from functions.AES256CBC import AES256CBC
 
 # from AES256CBC import AES256CBC
 
@@ -53,7 +60,7 @@ class SaveDataFile:
             if container[0:6] == 'attend=':
                 # attendances
                 plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
-    
+
     @staticmethod
     def write(dat:object, path:str):
         pass
@@ -67,3 +74,7 @@ class DummySaveDataFile:
         return dat
     def write(dat: dict, path:str):
         return True
+
+
+if __name__ == "__main__":
+    print("hello")
