@@ -12,8 +12,6 @@ p = os.path.abspath('..')
 sys.path.insert(1, p)
 from functions.AES256CBC import AES256CBC
 
-# from AES256CBC import AES256CBC
-
 # savedata
 # filetype + Base64(key) + Base64(iv) + Base64(AES256CBC(data-container-s))
 # | str"t2pecf=="(8-byte) | data-containers(variable-byte)
