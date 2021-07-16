@@ -75,7 +75,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 p = os.path.abspath('..')
 sys.path.insert(1, p)
 from functions import define
-from functions import SaveDataFile
+#from functions import SaveDataFile
 
 
 
@@ -121,7 +121,7 @@ class WinMake(QMainWindow):
         self.export.setStatusTip("保存します")
         self.export.triggered.connect(FileOpe.file_save)
         self.export.triggered.connect(self.fd_save)
-        self.file.addAction(self.export)
+        #self.file.addAction(self.export)
         #File 読込
         self.inport = QAction(QIcon("icon/write.png"), "時刻の読み込み", self)
         self.inport.setShortcut("Ctrl+o")
@@ -158,8 +158,8 @@ class WinMake(QMainWindow):
 
          ###
 
-        self.tool = self.bar.addMenu("is(&BBBB)")
-        self.tool2 = self.bar.addMenu("God(&G)")
+        #self.tool = self.bar.addMenu("is(&BBBB)")
+        #self.tool2 = self.bar.addMenu("God(&G)")
 
     # MainGUI にのせるもの
         # ボタンの設定 ｘボタン
@@ -247,7 +247,7 @@ class WinMake(QMainWindow):
             print(fn[0])
             self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
 
-            SaveDataFile.read(fn[0])
+            #SaveDataFile.read(fn[0])
 
 
         return fn
@@ -273,7 +273,7 @@ class WinMake(QMainWindow):
     #GOwin_attendUI
     def win_attendUI(self):
         '''UIを出席判別画面へ変更する'''
-        print("hello")
+        #print("hello")
         if self.messege_warn():
             return
 
