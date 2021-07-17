@@ -22,3 +22,6 @@ studentname = "生徒の名前"
 '''
 global attendcheck
 attendcheck = ["出席かどうかを判別", 0]
+
+global filepath
+filepath:str = None
