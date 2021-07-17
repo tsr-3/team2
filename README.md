@@ -48,5 +48,5 @@
 
 ### quick start Electron
 
-\[ [Read this markdown](./electron/latest-version/StartDocument.md) \]
+[Read this markdown](./electron/latest-version/StartDocument.md)
 
