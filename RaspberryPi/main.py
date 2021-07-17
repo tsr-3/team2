@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # --- RaspberryPi main script --- #
 
-from RaspberryPi.functions.comparsion import comp
-from RaspberryPi.functions.SaveDataFile import DummySaveDataFile as SaveDataFile # debug
+from functions.comparsion import comp
+from functions.SaveDataFile import DummySaveDataFile as SaveDataFile # debug
+from functions.second_warn import second_warn
 # from RaspberryPi.functions.SaveDataFile import SaveDataFile
 import datetime
 import dateutil.parser
@@ -64,12 +65,17 @@ STATE_BEFORE_START:int = 1
 STATE_ACCEPTING:int = 2
 STATE_END_ACCEPT:int = 3
 
+flag_doMainLoop:bool = True
+
 def mainProcess():
     state:int = STATE_BEFORE_START
     students:list
     professors:list
     lecture:dict
+    attendance_dat:list = []
     while(True):
+        if not flag_doMainLoop:
+            break
         if state == STATE_BEFORE_START:
             if students == None or professors == None or lecture == None:
                 dat = SaveDataFile.read()
@@ -81,17 +87,19 @@ def mainProcess():
                 lecture = dat['lecture']
         elif state == STATE_ACCEPTING:
             idm, now = cardreader.printidm()
+            if second_warn(idm, attendance_dat):
+                continue # already accepting
             # check if this student is enrolled in lecture
-            if comparsion.comp(idm, lecture.students):
-                pass
-            else:
-                pass
+            if not comparsion.comp(idm, lecture.students)[2]:
+                continue # isnot in student who enrolled in lecture
+            # set to global for idm and time to accept
+            # add accept(attendance) data
+            attendance_dat.append({'time': now, 'id': students.find({'idm': idm})})
         elif state == STATE_END_ACCEPT:
             pass
 
 # -- onexec -- #
 if __name__ == '__main__':
-
 
     #スレッド作成
     executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
