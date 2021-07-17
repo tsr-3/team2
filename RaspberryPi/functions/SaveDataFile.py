@@ -2,10 +2,15 @@
 # ----- SaveDataFile ----- #
 # version 3.9.0 64-bit
 
-from AES256CBC import AES256CBC
 import json
 
-# from AES256CBC import AES256CBC
+##Main.pyからSaveDataFile.py をimport するためのおまじない
+import os
+import sys
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+p = os.path.abspath('..')
+sys.path.insert(1, p)
+from functions.AES256CBC import AES256CBC
 
 # savedata
 # filetype + Base64(AES256CBC(data-container-s))

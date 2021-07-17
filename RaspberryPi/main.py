@@ -2,7 +2,7 @@
 # --- RaspberryPi main script --- #
 
 from functions.comparsion import comp
-from functions.SaveDataFile import DummySaveDataFile as SaveDataFile # debug
+from functions.SaveDataFile import SaveDataFile
 from functions.second_warn import second_warn
 # from RaspberryPi.functions.SaveDataFile import SaveDataFile
 import datetime
@@ -14,8 +14,11 @@ import time
 #GUI表示に必要なもの
 import sys
 from PyQt5.QtWidgets import *
-from gui import windowsv3 #./gui/windowsv3 をimportしている
-from functions import define # windowsv3と値をやり取りするための苦渋の策
+
+from functions import *
+
+from functions import windowsv3 #./functions/windowsv3 をimportしている
+from functions import ValueStorage # windowsv3と値をやり取りするための苦渋の策
 # from functions import cardreader
 from functions import dummy_cardreader as cardreader # 上記cardreader の手動入力版 # debug
 from functions import time_attend # 出席を判定するもの
@@ -39,24 +42,24 @@ def NFCread():
 
         # idm, now = cardreader.printidm() #カードリーダによる読み取り
         idm, now = cardreader.printidm() #手動ID入力
-        define.nfcdata = str(idm) # nfcのIDをwindowsv3.pyへ渡す
+        ValueStorage.nfcdata = str(idm) # nfcのIDをwindowsv3.pyへ渡す
         tmp = comparsion.comp(idm, data) # IDmから生徒名を検索
-        define.studentname = tmp[0] # IDに対応する生徒の名前をwindowsv3.pyへ渡す
+        ValueStorage.studentname = tmp[0] # IDに対応する生徒の名前をwindowsv3.pyへ渡す
         # タッチした時刻と登録された時刻の比較を行いwindowsv3.pyへ渡す(出席/遅刻/欠席/非履修者)
 
         check = time_attend.time(t1, t2, t3)
 
         if tmp[2]:
             if check == "出席":
-                define.attendcheck[1] = 0
+                ValueStorage.attendcheck[1] = 0
             elif check == "遅刻":
-                define.attendcheck[1] = 1
+                ValueStorage.attendcheck[1] = 1
             elif check == "欠席":
-                define.attendcheck[1] = 2
-            define.attendcheck[0] = check
+                ValueStorage.attendcheck[1] = 2
+            ValueStorage.attendcheck[0] = check
         else:
-            define.attendcheck[0] = "非履修者"
-            define.attendcheck[1] = 3
+            ValueStorage.attendcheck[0] = "非履修者"
+            ValueStorage.attendcheck[1] = 3
 
 
 # -- main loop -- #
@@ -110,4 +113,4 @@ if __name__ == '__main__':
     app=QApplication(sys.argv)
     win = windowsv3.WinMake(app)
 
-    print(define.nfcdata)
+    print(ValueStorage.nfcdata)

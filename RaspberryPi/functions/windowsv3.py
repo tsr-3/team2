@@ -63,7 +63,6 @@ GOmove_current_dir
 
 import os
 import sys
-import os.path
 from PyQt5.QtCore import  Qt, QTimer
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -74,7 +73,7 @@ import datetime
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 p = os.path.abspath('..')
 sys.path.insert(1, p)
-from functions import define
+from functions import ValueStorage
 from functions import SaveDataFile
 
 
@@ -121,7 +120,7 @@ class WinMake(QMainWindow):
         self.export.setStatusTip("保存します")
         self.export.triggered.connect(FileOpe.file_save)
         self.export.triggered.connect(self.fd_save)
-        self.file.addAction(self.export)
+        #self.file.addAction(self.export)
         #File 読込
         self.inport = QAction(QIcon("icon/write.png"), "時刻の読み込み", self)
         self.inport.setShortcut("Ctrl+o")
@@ -158,8 +157,8 @@ class WinMake(QMainWindow):
 
          ###
 
-        self.tool = self.bar.addMenu("is(&BBBB)")
-        self.tool2 = self.bar.addMenu("God(&G)")
+        #self.tool = self.bar.addMenu("is(&BBBB)")
+        #self.tool2 = self.bar.addMenu("God(&G)")
 
     # MainGUI にのせるもの
         # ボタンの設定 ｘボタン
@@ -239,7 +238,7 @@ class WinMake(QMainWindow):
         if fn[0] == '':
             fn = "選択に失敗したようです"
             self.timetablelb.setText(str(fn))
-            # define.attendcheck[1] == 2: # 欠席
+            # ValueStorage.attendcheck[1] == 2: # 欠席
             self.statusBar().setStyleSheet("background-color: rgb(196, 114, 141)")
         else:
             self.timetablelb.setStyleSheet("font-size: 25pt")
@@ -247,7 +246,7 @@ class WinMake(QMainWindow):
             print(fn[0])
             self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
 
-            SaveDataFile.read(fn[0])
+            #SaveDataFile.read(fn[0])
 
 
         return fn
@@ -273,7 +272,7 @@ class WinMake(QMainWindow):
     #GOwin_attendUI
     def win_attendUI(self):
         '''UIを出席判別画面へ変更する'''
-        print("hello")
+        #print("hello")
         if self.messege_warn():
             return
 
@@ -287,7 +286,7 @@ class WinMake(QMainWindow):
         self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
 
         # Attendのデザイン読み込み
-        with open('attendsyl.css') as f:
+        with open('style/attendsyl.css') as f:
             css = f.read()
         self.setStyleSheet(css)
 
@@ -305,7 +304,7 @@ class WinMake(QMainWindow):
         self.timetablelb.show()
 
         # Menuのデザイン読み込み
-        with open('menusyl.css') as f:
+        with open('style/menusyl.css') as f:
             css = f.read()
         self.setStyleSheet(css)
 
@@ -332,20 +331,20 @@ class WinMake(QMainWindow):
             if self.status == 0:
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None    メインウィンドウ※開発中Windowです")
             elif self.status == 1:
-                with open('menusyl.css') as f:
+                with open('style/menusyl.css') as f:
                     css = f.read()
                 self.setStyleSheet(css)
                 self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
-                self.idlb.setText("nfcのIDは" + define.nfcdata +"\n利用者名は" + define.studentname)
-                self.attendlb.setText("出席判定の結果は " + define.attendcheck[0])
+                self.idlb.setText("nfcのIDは" + ValueStorage.nfcdata +"\n利用者名は" + ValueStorage.studentname)
+                self.attendlb.setText("出席判定の結果は " + ValueStorage.attendcheck[0])
 
-                if define.attendcheck[1] == 0: # 通常/出席
+                if ValueStorage.attendcheck[1] == 0: # 通常/出席
                     self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
-                elif define.attendcheck[1] == 1: # 遅刻
+                elif ValueStorage.attendcheck[1] == 1: # 遅刻
                     self.statusBar().setStyleSheet("background-color: rgb(196, 195, 114)")
-                elif define.attendcheck[1] == 2: # 欠席
+                elif ValueStorage.attendcheck[1] == 2: # 欠席
                     self.statusBar().setStyleSheet("background-color: rgb(196, 114, 141)")
-                elif define.attendcheck[1] == 3: # 非履修
+                elif ValueStorage.attendcheck[1] == 3: # 非履修
                     self.statusBar().setStyleSheet("background-color: rgb(93, 87, 185)")
 
             self.resize()
@@ -441,7 +440,7 @@ class WarnWindow(QWidget):
         label.setFont(QFont("Arial", 14, QFont.Black))
 
         # ファイルを読み込み
-        image = QImage('ex.gif')
+        image = QImage('style/ex.gif')
         imagelabel = QLabel()
         # ラベルに読み込んだ画像を反映
         imagelabel.setPixmap(QPixmap.fromImage(image))
