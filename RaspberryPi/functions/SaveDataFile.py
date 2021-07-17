@@ -8,7 +8,7 @@ import json
 # from AES256CBC import AES256CBC
 
 # savedata
-# filetype + Base64(key) + Base64(iv) + Base64(AES256CBC(data-container-s))
+# filetype + Base64(AES256CBC(data-container-s))
 # | str"t2pecf=="(8-byte) | data-containers(variable-byte)
 # data-containers
 # | type(8-byte) | key(43-byte) | iv(22-byte) | body(variable-byte) |
@@ -29,34 +29,58 @@ class SaveDataFile:
     @staticmethod
     def read(path: str):
         # read file
-        fp = open(path, 'r', 1, 'utf-8')
+        try:
+            fp = open(path, mode = 'r', encoding = 'utf-8')
+        except:
+            return None
         encoded:str = fp.read()
         # close
         fp.close()
         # check file type
-        if encoded[0:7] != 't2pecf==':
+        if encoded[0:8] != 't2pecf==': # Team2 raspberryPi - Electron Communication File
             return None
         DATA = {}
         for container in encoded[8:].split('.'):
-            if container[0:6] == 'prof===':
+            if container[0:7] == 'prof===':
                 # professors
                 plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
                 DATA['professors'] = json.loads(plain)
-            if container[0:6] == 'student':
+            if container[0:7] == 'student':
                 # students
                 plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
                 DATA['students'] = json.loads(plain)
-            if container[0:6] == 'lecture':
+            if container[0:7] == 'lecture':
                 # lecture data
                 plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
                 DATA['lecture'] = json.loads(plain)
-            if container[0:6] == 'attend=':
+            if container[0:7] == 'attend=':
                 # attendances
                 plain = AES256CBC.decode(container[7:50] + '=', container[50:72] + '==', container[72:])
+                DATA['attendances'] = plain.split('\n')
+        return DATA
     
     @staticmethod
     def write(dat:object, path:str):
-        pass
+        container: list = []
+        if 'professors' in dat:
+            cipher = AES256CBC.encode(json.dumps(dat['professors']))
+            container.append('prof===' + cipher['key'].replace('=','') + cipher['iv'].replace('=','') + cipher['body'])
+        if 'students' in dat:
+            cipher = AES256CBC.encode(json.dumps(dat['students']))
+            container.append('student' + cipher['key'].replace('=','') + cipher['iv'].replace('=','') + cipher['body'])
+        if 'lecture' in dat:
+            cipher = AES256CBC.encode(json.dumps(dat['lecture']))
+            container.append('lecture' + cipher['key'].replace('=','') + cipher['iv'].replace('=','') + cipher['body'])
+        if 'attendances' in dat:
+            cipher = AES256CBC.encode('\n'.join(dat['attendances']))
+            container.append('attend=' + cipher['key'].replace('=','') + cipher['iv'].replace('=','') + cipher['body'])
+        try:
+            fp = open(path, mode = 'w', encoding = 'utf-8')
+        except:
+            return False
+        fp.write('t2pecf==' + '.'.join(container))
+        fp.close()
+        return True
 
 class DummySaveDataFile:
     def read():
@@ -67,3 +91,17 @@ class DummySaveDataFile:
         return dat
     def write(dat: dict, path:str):
         return True
+
+
+if __name__ == '__main__':
+    data = {}
+    data['professors'] = [{'name':'b', 'lect':['BrainFuck', 'JavaScript', 'PHP']}, {'name':'hrm', 'lect':['c#', 'vim', 'Python']}, {'name':'hatena', 'lect':[]}]
+    data['students'] = [{'name':'aym', 'id':'ayumu'}, {'name':'hst', 'id':'daigakusei'},{'name':'tnhs', 'id':'nihachi16'}]
+    data['lecture'] = {'name':'Brainfuck', 'id':'bf', 'start':'18:00', 'late':'30', 'students':['ayumu','daigakusei','nihachi16']}
+    data['attendances'] = ['ayumu 2021-07-17 16:28:18', 'daigakusei 2021-07-17 16:29:55', 'nihachi16 2021-07-17 16:30:07']
+    SaveDataFile.write(data, './test/t2pecf/sdf-test.dat')
+    dat = SaveDataFile.read('./test/t2pecf/sdf-test.dat')
+    print(dat['professors'])
+    print(dat['students'])
+    print(dat['lecture'])
+    print(dat['attendances'])

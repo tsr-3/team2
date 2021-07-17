@@ -1,6 +1,6 @@
 def parse(path:str):
     try:
-        fp = open(path)
+        fp = open(path, encoding = 'utf-8')
     except:
         return None
     source:str = fp.read()
