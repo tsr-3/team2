@@ -33,23 +33,49 @@ const decrypto = async (text) => {
     let key = splited[i].substr(7, 43);
     let iv = splited[i].substr(50, 22);
     let body = splited[i].slice(72);
-    let plaintext = (await AES256CBC.AES256CBC.decode(key, iv, body)).replace(/\x13|\x16|\r/g, '').trim();
+    let plaintext = ((await AES256CBC.AES256CBC.decode(key, iv, body)).replace(/\x13|\x16|\r/g, '').trim());
     console.log(plaintext)
-    let adddata = { [type]: plaintext };
+    let adddata = { [type]: await toObjorList(plaintext) };
     decryptotext.push(adddata);
   }
   return decryptotext;
+}
+
+// 文字列になってしまったやつを戻す
+const toObjorList = (text) => {
+  let obj = [];
+  let tmparray = Array.from(text);
+  if (tmparray[0] == '[') {
+    text = text.substr(1, text.length - 2);
+    let tmp = text.split(/,(?![^{]*})/);
+    for (let i = 0; i < tmp.length; i++){
+      obj.push(JSON.parse(tmp[i]))
+    }
+  }
+  else if (tmparray[0] == '{') {
+    obj = JSON.parse(text)
+  }
+  else {
+    obj = text.split(/\n/);
+  }
+  return obj;
 }
 
 if (process.argv[1].match(/readDataFromFile/)) {
   (async () => {
     let filePath = './sdf-test.dat';
     let result1 = await readFileEx(filePath);
-    console.log('暗号化済みtext')
+    console.log('暗号化済みtext');
     console.log(result1);
 
-    console.log('復号text');
+    console.log('中間text(toObjorList前)')
     let dectxt = await decrypto(result1);
-    console.log(dectxt);
+    // アクセステスト
+    console.log('復号text');
+    for (let i = 0; i < dectxt.length; i++){
+      console.log(dectxt[i])
+    }
+    console.log('profの[Array]にアクセスするテスト')
+    console.log(dectxt[0]['prof'])
   })();
 }
