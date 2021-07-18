@@ -34,7 +34,6 @@ const decrypto = async (text) => {
     let iv = splited[i].substr(50, 22);
     let body = splited[i].slice(72);
     let plaintext = ((await AES256CBC.AES256CBC.decode(key, iv, body)).replace(/\x13|\x16|\r/g, '').trim());
-    console.log(plaintext)
     let adddata = { [type]: await toObjorList(plaintext) };
     decryptotext.push(adddata);
   }
@@ -68,7 +67,6 @@ if (process.argv[1].match(/readDataFromFile/)) {
     console.log('暗号化済みtext');
     console.log(result1);
 
-    console.log('中間text(toObjorList前)')
     let dectxt = await decrypto(result1);
     // アクセステスト
     console.log('復号text');
@@ -77,5 +75,15 @@ if (process.argv[1].match(/readDataFromFile/)) {
     }
     console.log('profの[Array]にアクセスするテスト')
     console.log(dectxt[0]['prof'])
+
+    //エンコードテスト
+    console.log('暗号化テスト(これでいいのか知らん)')
+    let enctxr = 't2pecf==';
+    let keyword = ['prof===', '.student', '.lecture', '.attend='];
+    for (let j = 0; j < dectxt.length; j++) {
+      let enc = (await AES256CBC.AES256CBC.encode(JSON.stringify(dectxt[j])))
+      enctxr += keyword[j] + enc['key'] + enc['iv'] + enc['body']
+    }
+    console.log(enctxr)
   })();
 }
