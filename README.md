@@ -32,7 +32,8 @@
 
  ~~https://qiita.com/m4saka/items/09e60a929dbd5debcd3b~~
 
-### quick start
+## System Start
+### quick start Python
 
 - Download or Clone this repository
 ###
@@ -44,3 +45,8 @@
 ###
     team2> pip install -r requirements.txt
     team2> python3 RaspberryPi/main.py
+
+### quick start Electron
+
+[Read this markdown](./electron/latest-version/StartDocument.md)
+
