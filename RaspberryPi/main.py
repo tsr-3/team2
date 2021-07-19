@@ -109,6 +109,9 @@ def mainProcess():
                 dat = students.find({'idm': idm})
                 if(len(dat) == 0):
                     # is not defined
+                    ValueStorage.nfcdata = idm
+                    ValueStorage.studentname = '--undefined--'
+                    ValueStorage.attendcheck[0] = '本校の生徒ではありません'
                     continue
                 STUDENT = dat[0]
                 print(STUDENT)
@@ -117,6 +120,9 @@ def mainProcess():
                 raise e
             # check if this student is enrolled in lecture
             if not comparsion.comp(STUDENT['id'], lecture['students']):
+                ValueStorage.nfcdata = idm
+                ValueStorage.studentname = STUDENT['name']
+                ValueStorage.attendcheck[0] = '非履修者です'
                 continue # isnot in student who enrolled in lecture
             # show data
             ValueStorage.nfcdata = idm
@@ -125,7 +131,12 @@ def mainProcess():
             # add accept(attendance) data
             attendance_dat.append({'time': now, 'id': STUDENT['id']})
         elif ValueStorage.process_state == STATE_END_ACCEPT:
-            pass
+            print('call end')
+            attend = []
+            for i in attendance_dat:
+                attend.append(str(attendance_dat['time']) + ' ' + attendance_dat['id'])
+            SaveDataFile.write({'attendance': '\n'.join(attend)}, str(datetime.datetime.now()) + '.t2pecf')
+            return None
 
 # -- onexec -- #
 if __name__ == '__main__':
