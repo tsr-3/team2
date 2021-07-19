@@ -25,3 +25,10 @@ attendcheck = ["出席かどうかを判別", 0]
 
 global filepath
 filepath:str = None
+
+global isFiledataExist
+isFiledataExist:dict = {
+    "professors": None,
+    "students": None,
+    "lecture": None
+}

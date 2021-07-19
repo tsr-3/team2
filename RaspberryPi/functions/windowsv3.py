@@ -243,10 +243,10 @@ class WinMake(QMainWindow):
         else:
             self.timetablelb.setStyleSheet("font-size: 25pt")
             self.timetablelb.setText(str(os.path.basename(fn[0])))
-            print(fn[0])
+            # print(fn[0])
             self.statusBar().setStyleSheet("background-color: rgb(141, 196, 141)")
 
-            #SaveDataFile.read(fn[0])
+            ValueStorage.filepath = fn[0]
 
 
         return fn
