@@ -117,11 +117,7 @@ def mainProcess():
             # show data
             ValueStorage.nfcdata = idm
             ValueStorage.studentname = STUDENT['name']
-            try:
-                ValueStorage.attendcheck = time_attend.timecheck(now, {'start': lecture['start'], 'limit': lecture['limit'], 'late':lecture['late']})
-            except BaseException as e:
-                print(e)
-                raise e
+            ValueStorage.attendcheck[0] = time_attend.timecheck(now, {'start': lecture['start'], 'limit': lecture['limit'], 'late':lecture['late']})
             # add accept(attendance) data
             attendance_dat.append({'time': now, 'id': STUDENT['id']})
         elif ValueStorage.process_state == STATE_END_ACCEPT:
