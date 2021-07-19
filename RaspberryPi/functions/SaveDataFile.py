@@ -18,7 +18,7 @@ from dataclass.students import Students
 # filetype + Base64(AES256CBC(data-container-s))
 # | str"t2pecf=="(8-byte) | data-containers(variable-byte)
 # data-containers
-# | type(8-byte) | key(43-byte) | iv(22-byte) | body(variable-byte) |
+# | type(7-byte) | key(43-byte) | iv(22-byte) | body(variable-byte) |
 # 各コンテナは.でつなぐ
 # key
 # AES256CBC => 44byte data => remove one padding(=) => 43byte data
@@ -35,7 +35,6 @@ class SaveDataFile:
     # return : {'proffesors': list, 'students' : list. 'lecture': dict, 'attendance': list}
     @staticmethod
     def read(path: str):
-        print('called')
         # read file
         try:
             fp = open(path, mode = 'r', encoding = 'utf-8')
