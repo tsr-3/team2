@@ -10,16 +10,19 @@
 <body>
   <h2 class="MainTitle">出席管理に必要なデータファイルを作成するツール(仮称)</h2>
   <hr class="line">
+  <input id="csv-reader" type="file" accept=".csv">
   <form class="timesetting">
-    <label for="starttiem">使い始めてから</label>
-    <input type="number" id="starttime">分間を出席とする<br>
-    <label for="starttiem">出席扱いが終わってから</label>
-    <input type="number" id="delaytime">分間を遅刻とする<br>
-    <label for="starttiem">それ以外</label>
-    <input type="number" id="endtime">
+    <label for="starttime">講義開始時間：</label>
+    <input type="time" id="starttime"><br>
+    <label for="attendtime">出席受付時間：</label>
+    <input type="number" id="attendtime">分間<br>
+    <label for="latenesstime">遅刻受付時間：</label>
+    <input type="number" id="latenesstime">分間<br>
   </form>
+  <script src="../functions/createLectinfo.js"></script>
   <div class="buttonarea">
     <button id="back" class="button" onclick="location.href='./mainmenu.html'">戻る</button>
+    <button class="button" onclick="createLecttime()">つぎへ</button>
   </div>
 </body>
 </html>
