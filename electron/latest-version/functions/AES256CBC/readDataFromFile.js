@@ -32,7 +32,7 @@ const decrypto = async (text) => {
     let key = splited[i].substr(7, 43);
     let iv = splited[i].substr(50, 22);
     let body = splited[i].slice(72);
-    let plaintext = ((await AES256CBC.AES256CBC.decode(key, iv, body)).replace(/\x13|\x16|\r/g, '').trim());
+    let plaintext = ((await AES256CBC.AES256CBC.decode(key, iv, body)).replace(/\x13|\x16|\r|\n+$/g, ''));
     fs.appendFileSync('predec-by-node.dat', plaintext + '\n')
     let adddata = { [type]: await toObjorList(plaintext) };
     decryptotext.push(adddata);
