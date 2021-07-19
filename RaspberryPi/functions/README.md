@@ -36,9 +36,7 @@
 
   - def comp(IDm:str, students_list:list):
 
-- define ゴミ
-
-- Mozi_Suzi 練習用(?)
+- ValueStorage 他関数と値を取りたいとき使う
 
 - SaveDataFile 
 
@@ -61,6 +59,10 @@
 - time_setting datetime型の加算
 
   - def minutes_add(original:datetime, additon:int):
+
+- windowsv3 PiのGUI
+
+- subwindows windowsv3で用いるポップアップ
 
 
 ### 必要な関数類 (実装されてたら消していって下さい)

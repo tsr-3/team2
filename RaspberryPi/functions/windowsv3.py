@@ -37,7 +37,7 @@ WinMake()
     GOmessage_warn
 
 
-SubWindow()
+InfoWindow()
     __init__():初期設定
     GOsubinit
 
@@ -47,14 +47,6 @@ SubWindow()
 WarnWindow()
     __init__():初期設定
     GOwarninit
-
-FileOpe():
-    file_save():ファイルの保存処理を行う(予定)
-    GOfile_save
-
-    file_read():ファイルの読込処理を行う(予定)
-    GOfile_read
-
 
 move_current_dir():作業ディレクトリをwindowsv3が存在する場所へ移動する(cssを読み込むため)
 GOmove_current_dir
@@ -75,6 +67,7 @@ p = os.path.abspath('..')
 sys.path.insert(1, p)
 from functions import ValueStorage
 from functions import SaveDataFile
+from functions import subwindows
 
 
 
@@ -118,14 +111,13 @@ class WinMake(QMainWindow):
         self.export = QAction(QIcon("icon/save2.png"), "名前を付けて保存", self)
         self.export.setShortcut("Ctrl+s")
         self.export.setStatusTip("保存します")
-        self.export.triggered.connect(FileOpe.file_save)
         self.export.triggered.connect(self.fd_save)
         #self.file.addAction(self.export)
         #File 読込
         self.inport = QAction(QIcon("icon/write.png"), "時刻の読み込み", self)
         self.inport.setShortcut("Ctrl+o")
+        self.inport.setShortcut("a")
         self.inport.setStatusTip("出力します")
-        self.inport.triggered.connect(FileOpe.file_read)
         self.inport.triggered.connect(self.fd_read)
         self.file.addAction(self.inport)
         #File 退出
@@ -148,16 +140,21 @@ class WinMake(QMainWindow):
          ###
 
         #メニュバーの設定 Help
-        # self.help = self.bar.addMenu("ヘルプ(&H)")
-        self.help = self.bar.addMenu("インフォメーション(&I)")
-        self.help1 = QAction(QIcon("icon/help2.png"), "情報", self)
-        self.help1.triggered.connect(self.message_info)
-        self.help.addAction(self.help1)
+        self.help = self.bar.addMenu("ヘルプ(&H)")
+        self.helper = QAction(QIcon("icon/help.png"), "ヘルプ", self)
+        self.helper.setShortcut("ctrl+h")
+        self.helper.triggered.connect(self.message_help)
+        self.help.addAction(self.helper)
+
+        #メニュバーの設定 info
+        self.info = self.bar.addMenu("インフォメーション(&I)")
+        self.info1 = QAction(QIcon("icon/info.png"), "情報", self)
+        self.info1.triggered.connect(self.message_info)
+        self.info.addAction(self.info1)
          ###
 
          ###
 
-        #self.tool = self.bar.addMenu("is(&BBBB)")
         #self.tool2 = self.bar.addMenu("God(&G)")
 
     # MainGUI にのせるもの
@@ -351,6 +348,7 @@ class WinMake(QMainWindow):
         except:
             self.close()
             print('Something Happened')
+            self.timetablelb.setText('Something Happend(ERROR)')
 
 
     #GOresize
@@ -376,7 +374,7 @@ class WinMake(QMainWindow):
         '''ファイルが選択されていない場合に警告画面を表示する'''
         if (self.timetablelb.text() == "時間割ファイルを設定してください") or (self.timetablelb.text() == "選択に失敗したようです"):
             # サブウィンドウの作成
-            warn = WarnWindow()
+            warn = subwindows.WarnWindow()
             # サブウィンドウの表示
             warn.show()
 
@@ -389,94 +387,13 @@ class WinMake(QMainWindow):
     def message_info(self):
         '''サブウィンドウ(ポップアップウィンドウ)の呼び出しを行う'''
         # サブウィンドウの作成
-        subWindow = SubWindow()
+        infowindow = subwindows.InfoWindow()
         # サブウィンドウの表示
-        subWindow.show()
+        infowindow.show()
 
-
-
-class SubWindow(QWidget):
-    '''ポップアップウィンドウの作成を行う'''
-
-
-    #GOsubinit
-    def __init__(self, parent=None):
-        '''ポップアップウィンドウの初期設定を行う'''
-        self.w = QDialog(parent)
-        self.w.setWindowTitle("このプロジェクトの情報")
-        self.w.setGeometry(500, 500, 200, 300)
-
-        label = QLabel('出席管理プロジェクト Team2', self.w)
-        label2 = QLabel("他ファイルから授業の開始時刻,遅刻みなし時刻，欠席時刻等を入力し\nそれに対応する出力を行うことによっていい感じにします", self.w)
-        label3 = QLabel(self.w)
-        label3.setOpenExternalLinks(True)
-        label3.setText("<a href='http://github.com/tsr-on-github/team2'>GitHubレポジトリ</a>")
-
-        layout = QVBoxLayout()
-        layout.addWidget(label)
-        layout.addWidget(label2)
-        layout.addWidget(label3)
-
-        self.w.setLayout(layout)
-
-    #GOshow
-    def show(self):
-        '''ポップアップウィンドウの表示を行う'''
-        self.w.exec_()
-
-class WarnWindow(QWidget):
-    '''ファイルが選択できていない場合の警告画面の作成を行う'''
-
-
-    #GOwarninit
-    def __init__(self, parent=None):
-        '''ウィンドウ初期設定を行う'''
-        self.w = QDialog(parent)
-        self.w.setWindowTitle("ファイルの読み込みが出来ていません")
-        self.w.setGeometry(500, 500, 200, 300)
-
-        label = QLabel(self.w)
-        label.setText('授業関係ファイルを選択してください :)')
-        label.setFont(QFont("Arial", 14, QFont.Black))
-
-        # ファイルを読み込み
-        image = QImage('style/ex.gif')
-        imagelabel = QLabel()
-        # ラベルに読み込んだ画像を反映
-        imagelabel.setPixmap(QPixmap.fromImage(image))
-        # スケールは1.0
-        imagelabel.scaleFactor = 0.3
-
-
-        exit = QPushButton(self.w)
-        exit.setGeometry(0, 0, 1, 1)
-        exit.setShortcut("Ctrl+c")
-        exit.setShortcut("c")
-        exit.clicked.connect(self.w.close)
-
-        layout = QVBoxLayout()
-        layout.addWidget(label)
-        layout.addWidget(imagelabel)
-
-        self.w.setLayout(layout)
-
-    def show(self):
-        '''表示を行う'''
-        self.w.exec_()
-
-
-
-class FileOpe():
-    '''ファイル操作を行う？'''
-    #GOfile_save
-    def file_save(self):
-        print("Saved!!")
-        return "Saved!!"
-    #GOfile_read
-    def file_read(self):
-        print("Read!!")
-        return "Read!!"
-
+    def message_help(self):
+        helpwindow = subwindows.HelpWindow()
+        helpwindow.show()
 
 #GOmove_current_dir
 def move_current_dir():
