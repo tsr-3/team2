@@ -66,7 +66,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 p = os.path.abspath('..')
 sys.path.insert(1, p)
 from functions import ValueStorage
-from functions import SaveDataFile
+from functions.SaveDataFile import SaveDataFile_noCipher as SaveDataFile
 from functions import subwindows
 
 
@@ -228,8 +228,15 @@ class WinMake(QMainWindow):
         '''MainUIのXボタンを押したときの処理'''
 
         #ここにValueStorageに使う値を書いてね
+        ValueStorage.process_state = 3
+        attend = []
+        for dat in ValueStorage.attendance:
+            attend.append(str(dat['time']) + ' ' + dat['id'])
+        SaveDataFile.write({'attendance': '\n'.join(attend)}, datetime.datetime.now().strftime('%Y-%m-%d_%H%M') + '.t2pecf')
+        ValueStorage.thread.shutdown(cancel_futures = True, wait = False)
         print("END!")
         self.close()
+        os._exit(0)
 
 
 

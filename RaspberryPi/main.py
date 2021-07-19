@@ -75,7 +75,6 @@ def mainProcess():
     students:list = None
     professors:list = None
     lecture:dict = None
-    attendance_dat:list = []
     accept_start:datetime = None
     while(True):
         # sleep
@@ -103,31 +102,41 @@ def mainProcess():
             ValueStorage.filepath = None
         elif ValueStorage.process_state == STATE_ACCEPTING:
             idm, now = cardreader.printidm()
-            if second_warn(idm, attendance_dat):
+            if second_warn(idm, ValueStorage.attendance):
                 continue # already accepting
             try:
-                STUDENT = students.find({'idm': idm})[0]
+                dat = students.find({'idm': idm})
+                if(len(dat) == 0):
+                    # is not defined
+                    ValueStorage.nfcdata = idm
+                    ValueStorage.studentname = '--undefined--'
+                    ValueStorage.attendcheck[0] = '本校の生徒ではありません'
+                    continue
+                STUDENT = dat[0]
                 print(STUDENT)
             except BaseException as e:
                 print(e)
                 raise e
             # check if this student is enrolled in lecture
             if not comparsion.comp(STUDENT['id'], lecture['students']):
+                ValueStorage.nfcdata = idm
+                ValueStorage.studentname = STUDENT['name']
+                ValueStorage.attendcheck[0] = '非履修者です'
                 continue # isnot in student who enrolled in lecture
             # show data
             ValueStorage.nfcdata = idm
             ValueStorage.studentname = STUDENT['name']
             ValueStorage.attendcheck[0] = time_attend.timecheck(now, {'start': lecture['start'], 'limit': lecture['limit'], 'late':lecture['late']})
             # add accept(attendance) data
-            attendance_dat.append({'time': now, 'id': STUDENT['id']})
+            ValueStorage.attendance.append({'time': now, 'id': STUDENT['id']})
         elif ValueStorage.process_state == STATE_END_ACCEPT:
-            pass
+            return None
 
 # -- onexec -- #
 if __name__ == '__main__':
 
     #スレッド作成
-    executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+    ValueStorage.thread = executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
     # 繰り返し行う処理
     executor.submit(mainProcess)
 

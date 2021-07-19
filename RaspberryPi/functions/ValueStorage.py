@@ -35,3 +35,9 @@ isFiledataExist:dict = {
 
 global process_state
 process_state: int
+
+global attendance
+attendance:list = []
+
+global thread
+thread = None
