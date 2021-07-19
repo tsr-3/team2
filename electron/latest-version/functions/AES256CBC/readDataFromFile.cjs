@@ -94,15 +94,15 @@ if (process.argv[1].match(/readDataFromFile/)) {
 
 /**
  * read filedata
- * @param {strihng} filepath 
+ * @param {strihng} filepath
  */
 exports.read = (filepath)=>{
   return JSON.parse(fs.readFileSync(filepath, 'utf-8'));
 }
 /**
  * write filedata
- * @param {string} filepath 
- * @param {object} data 
+ * @param {string} filepath
+ * @param {object} data
  */
 exports.write = (filepath, data)=>{
   fs.writeFileSync(filepath, JSON.stringify(data));
