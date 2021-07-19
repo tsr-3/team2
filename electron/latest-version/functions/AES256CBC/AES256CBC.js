@@ -36,7 +36,7 @@ exports.AES256CBC = class{
 };
 
 
-if(process.argv[1].match(/AES256CBC.cjs/)){
+if(process.argv[1] && process.argv[1].match(/AES256CBC.cjs/)){
   // debug
   (async ()=>{
     const plaintext = '{"list":[0,2,4,6,8,10],"obj":{"value":11,"str":"bbbaddd"},"str":"b%20is%20bad","value":1011}';

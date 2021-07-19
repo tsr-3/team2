@@ -60,7 +60,7 @@ const toObjorList = (text) => {
   return obj;
 }
 
-if (process.argv[1].match(/readDataFromFile/)) {
+if (typeof(process.argv[1]) == 'string' && process.argv[1].match(/readDataFromFile/)) {
   (async () => {
     let filePath = './sdf-test.dat';
     let result1 = await readFileEx(filePath);
