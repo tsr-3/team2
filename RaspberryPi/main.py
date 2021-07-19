@@ -75,7 +75,6 @@ def mainProcess():
     students:list = None
     professors:list = None
     lecture:dict = None
-    attendance_dat:list = []
     accept_start:datetime = None
     while(True):
         # sleep
@@ -103,7 +102,7 @@ def mainProcess():
             ValueStorage.filepath = None
         elif ValueStorage.process_state == STATE_ACCEPTING:
             idm, now = cardreader.printidm()
-            if second_warn(idm, attendance_dat):
+            if second_warn(idm, ValueStorage.attendance):
                 continue # already accepting
             try:
                 dat = students.find({'idm': idm})
@@ -129,20 +128,15 @@ def mainProcess():
             ValueStorage.studentname = STUDENT['name']
             ValueStorage.attendcheck[0] = time_attend.timecheck(now, {'start': lecture['start'], 'limit': lecture['limit'], 'late':lecture['late']})
             # add accept(attendance) data
-            attendance_dat.append({'time': now, 'id': STUDENT['id']})
+            ValueStorage.attendance.append({'time': now, 'id': STUDENT['id']})
         elif ValueStorage.process_state == STATE_END_ACCEPT:
-            print('call end')
-            attend = []
-            for i in attendance_dat:
-                attend.append(str(attendance_dat['time']) + ' ' + attendance_dat['id'])
-            SaveDataFile.write({'attendance': '\n'.join(attend)}, str(datetime.datetime.now()) + '.t2pecf')
             return None
 
 # -- onexec -- #
 if __name__ == '__main__':
 
     #スレッド作成
-    executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+    ValueStorage.thread = executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
     # 繰り返し行う処理
     executor.submit(mainProcess)
 
