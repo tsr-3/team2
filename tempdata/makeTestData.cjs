@@ -49,7 +49,7 @@ lecture.students = data;
   }
 */
 data = {};
-data.lect = lecture;
+data.lecture = lecture;
 data.professors = professors;
 data.students = students;
 
