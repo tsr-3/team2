@@ -106,7 +106,11 @@ def mainProcess():
             if second_warn(idm, attendance_dat):
                 continue # already accepting
             try:
-                STUDENT = students.find({'idm': idm})[0]
+                dat = students.find({'idm': idm})
+                if(len(dat) == 0):
+                    # is not defined
+                    continue
+                STUDENT = dat[0]
                 print(STUDENT)
             except BaseException as e:
                 print(e)
