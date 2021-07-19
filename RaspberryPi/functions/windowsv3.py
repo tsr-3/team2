@@ -234,7 +234,6 @@ class WinMake(QMainWindow):
             attend.append(str(dat['time']) + ' ' + dat['id'])
         SaveDataFile.write({'attendance': '\n'.join(attend)}, datetime.datetime.now().strftime('%Y-%m-%d_%H%M') + '.t2pecf')
         ValueStorage.thread.shutdown(cancel_futures = True, wait = False)
-        print("END!")
         self.close()
         os._exit(0)
 
@@ -244,7 +243,7 @@ class WinMake(QMainWindow):
     def fd_read(self):
         '''読み込みファイルを選択するダイアログの表示を行う'''
         # fn = QFileDialog.getOpenFileName(self,str("用いたいファイルを選んでください"), "/home/deskTop", str("Image Files (*.png *.jpg *.bmp)"))
-        fn = QFileDialog.getOpenFileName(self,str("用いたいファイルを選んでください"))
+        fn = QFileDialog.getOpenFileName(self,str("用いたいファイルを選んでください"), filter="Team Files(*.json *.t2pecf)")
         # print(fn)
         # print(type(fn[0])) #ファイル名
         # print(type(fn[1])) #拡張子分類
@@ -306,6 +305,7 @@ class WinMake(QMainWindow):
         self.setStyleSheet(css)
         ValueStorage.process_state = 2 # STATE_ACCEPTING
         ValueStorage.now_time = datetime.datetime.now()
+        ValueStorage.attendance.append({'time': ValueStorage.now_time, 'id': 'start'})
 
 
     #GOwin_menuUI
