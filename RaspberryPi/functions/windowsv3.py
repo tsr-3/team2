@@ -305,6 +305,7 @@ class WinMake(QMainWindow):
             css = f.read()
         self.setStyleSheet(css)
         ValueStorage.process_state = 2 # STATE_ACCEPTING
+        ValueStorage.now_time = datetime.datetime.now()
 
 
     #GOwin_menuUI

@@ -1,3 +1,4 @@
+from abc import ABC
 from types import LambdaType
 import datetime
 import dateutil.parser
@@ -6,7 +7,7 @@ import dateutil.parser
 #入力（出席の時間、遅刻の時間、欠席の時間）
 
 #出力　文字列（出席、遅刻、欠席）
-def time(start_time,late_time,end_time):
+def timeC(start_time,late_time,end_time):
     time = datetime.datetime.now()
 
     if time < late_time:
@@ -17,16 +18,18 @@ def time(start_time,late_time,end_time):
         return "欠席"
 
 def timecheck(now:datetime, times:dict):
-    START = dateutil.parser.parse(times['start'])
+    now = datetime.datetime.now()
+
+    START = times["start"]
     LATE = START + datetime.timedelta(minutes = times['late'])
     ABCENT = LATE + datetime.timedelta(minutes = times['limit'])
 
     if now < LATE:
-        return "出席"
+        return "出席", 0
     elif now < ABCENT:
-        return "遅刻"
+        return "遅刻", 1
     else:
-        return "欠席"
+        return "欠席", 2
 
 if __name__ == "__main__":
 
