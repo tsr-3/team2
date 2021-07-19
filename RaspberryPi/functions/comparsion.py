@@ -11,7 +11,7 @@ from types import LambdaType
 
 def comp(IDm:str, students_list:list):
     for i in range(len(students_list)):#リストをfor文で回す
-        if IDm==students_list[i]['IDm']:#if文でIDmとリストのIDmを比較
+        if IDm==students_list[i]:#if文でIDmとリストのIDmを比較
             return True
     return False
 

@@ -4,6 +4,8 @@
 from functions.comparsion import comp
 from functions.SaveDataFile import SaveDataFile_noCipher as SaveDataFile
 from functions.second_warn import second_warn
+from dataclass.Professors import Professors
+from dataclass.students import Students
 # from RaspberryPi.functions.SaveDataFile import SaveDataFile
 import datetime
 import dateutil.parser
@@ -90,10 +92,10 @@ def mainProcess():
                 print(err)
                 raise err
             if students == None:
-                students = dat['students']
+                students = Students(dat['students'])
                 ValueStorage.isFiledataExist['students'] = True
             if professors == None:
-                professors = dat['professors']
+                professors = Professors(dat['professors'])
                 ValueStorage.isFiledataExist['professors'] = True
             if lecture == None:
                 lecture = dat['lecture']
@@ -103,12 +105,25 @@ def mainProcess():
             idm, now = cardreader.printidm()
             if second_warn(idm, attendance_dat):
                 continue # already accepting
+            try:
+                STUDENT = students.find({'idm': idm})[0]
+                print(STUDENT)
+            except BaseException as e:
+                print(e)
+                raise e
             # check if this student is enrolled in lecture
-            if not comparsion.comp(idm, lecture.students)[2]:
+            if not comparsion.comp(STUDENT['id'], lecture['students']):
                 continue # isnot in student who enrolled in lecture
-            # set to global for idm and time to accept
+            # show data
+            ValueStorage.nfcdata = idm
+            ValueStorage.studentname = STUDENT['name']
+            try:
+                ValueStorage.attendcheck = time_attend.timecheck(now, {'start': lecture['start'], 'limit': lecture['limit'], 'late':lecture['late']})
+            except BaseException as e:
+                print(e)
+                raise e
             # add accept(attendance) data
-            attendance_dat.append({'time': now, 'id': students.find({'idm': idm})})
+            attendance_dat.append({'time': now, 'id': STUDENT['id']})
         elif ValueStorage.process_state == STATE_END_ACCEPT:
             pass
 

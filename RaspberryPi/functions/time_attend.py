@@ -16,6 +16,18 @@ def time(start_time,late_time,end_time):
     else:
         return "欠席"
 
+def timecheck(now:datetime, times:dict):
+    START = dateutil.parser.parse(times['start'])
+    LATE = START + datetime.timedelta(minutes = times['late'])
+    ABCENT = LATE + datetime.timedelta(minutes = times['limit'])
+
+    if now < LATE:
+        return "出席"
+    elif now < ABCENT:
+        return "遅刻"
+    else:
+        return "欠席"
+
 if __name__ == "__main__":
 
     t1 = datetime.datetime(2021, 6, 2, 16, 00)
