@@ -27,7 +27,7 @@ class Professors:
             self._professors = None
         else:
             for i in range(len(professors)):
-                print(f'{professors[i]}について')
+                # print(f'{professors[i]}について')
                 '''
                 if 'id' not in professors[i]:
                     print('idがない')
@@ -49,10 +49,10 @@ class Professors:
                 for j in range(len(self.KEYS)):
                     if self.KEYS[j] not in professors[i]:
                         key_is_not_found = True
-                        print(f'{self.KEYS[j]}がない')
+                        # print(f'{self.KEYS[j]}がない')
                         #raise Exception or return None
                 if key_is_not_found == False:
-                    print("問題ない")
+                    # print("問題ない")
                     self._professors.append(professors[i])
             if self._professors == []:
                 self._professors = None
