@@ -21,7 +21,6 @@ document.querySelector('#csv-reader').addEventListener('change', async (event)=>
 function csv2json(csvArray){
   let jsonArray = [];
 
-  // 1行目から「項目名」の配列を生成する
   let items = ['id', 'name', 'yomi', 'sex', 'IDm'];
 
   // CSVデータの配列の各行をループ処理する
@@ -44,6 +43,7 @@ function csv2json(csvArray){
 
 function getLecttime() {
   let starttime = document.querySelector('form > input#starttime').value;
+  let endtime = document.querySelector('form > input#endtime').value;
   let attendtime = document.querySelector('form > input#attendtime').value;
   let latenesstime = document.querySelector('form > input#latenesstime').value;
 
@@ -52,6 +52,11 @@ function getLecttime() {
     console.log("講義開始時間は入力しよう...うん...");
   } else {
     console.log(starttime);
+  }
+  if (endtime == null || endtime == undefined || endtime == '') {
+    console.log('講義終了時間入れて');
+  } else {
+    console.log(endtime);
   }
   if (attendtime == null || attendtime == undefined || attendtime == '') {
     console.log("出席受付時間入力よろ");
@@ -63,8 +68,8 @@ function getLecttime() {
   } else if (latenesstime < 0){
     console.log('遅刻受付時間は0以上で入力してください');
   }
-
-  let lecttime = { 'start': starttime, 'attend': attendtime, 'lateness': latenesstime }; // 講義に関する時間
+  // 講義に関するデータを設定
+  let lecttime = { 'start': starttime, 'end': endtime, 'attend': attendtime, 'lateness': latenesstime };
   return lecttime
 };
 
@@ -72,7 +77,6 @@ function createLectInfo() {
   let lect_info = {}
   // 履修者とかのデータをまとめる処理
   let lecttime = getLecttime();
-
 
 
   let filename = '○○さんのデータ'

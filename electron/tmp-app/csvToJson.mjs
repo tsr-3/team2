@@ -11,10 +11,11 @@
 //hatena氏のイベントハンドラを流用
 document.querySelector('#json-reader').addEventListener('change', async (event)=>{
   console.log(event.path[0].value);
+  console.log(event.target)
   if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
   let filename = event.target.files[0].name;
   let reader = new FileReader();
-  reader.onload = (event)=>{
+  reader.onload = (event) => {
     csvArray = event.target.result;
     let csvData = csvArray.split('\n');// 1行ごとに分割する
     let jsonArray = csv2json(csvData);
