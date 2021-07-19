@@ -5,7 +5,7 @@
 class Professors:
 
     # クラス変数(不変)
-    KEYS = ['id','name','yomi','sex','lect']
+    KEYS = ['id','name']
     # クラス変数とインスタンス変数について理解しましょう
     # professors (variable name : type)
     # - id : str

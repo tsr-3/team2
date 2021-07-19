@@ -52,7 +52,7 @@ class Students:
     @data.setter
     def data(self, value: list):
         for val in value:
-            if 'id' not in val or 'name' not in val or 'yomi' not in val or 'sex' not in val or 'idm' not in val:
+            if 'id' not in val or 'name' not in val or 'idm' not in val:
                 raise BaseException('invalid value type of "student"', val)
         self._students = value
     @data.getter
@@ -60,7 +60,7 @@ class Students:
         return self._students
 
     def find(self, cond:dict):
-        KEYS = ['id', 'name', 'yomi', 'sex', 'idm']
+        KEYS = ['id', 'name', 'idm']
         subset:list = self._students
         for key in KEYS:
             if not len(subset):
