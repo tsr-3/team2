@@ -3,6 +3,7 @@
  *
  * @return {{ID:string, passwd:string}} after
  */
+const SaveDataFile = require('./AES256CBC/readDataFromFile')
 
 function createAccount() {
   let ID = document.querySelector('form > input#ID').value;
@@ -29,9 +30,7 @@ function createAccount() {
     console.log("パスワードが一致しないでござる");
   }
 
-  // 暗号化呼び出し(どれ呼び出すのじゃ？)
-  //let cryptoed_passwd = aes256cbc.cjs -> enc(passwd)/*ココ*/;
-  //let IDnPass = { 'id': ID, 'passwd': cryptoed_passwd };
-  // こいつを保存？
-  //return IDnPass
-}
+  SaveDataFile
+
+
+};

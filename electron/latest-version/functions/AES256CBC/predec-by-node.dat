@@ -3,4 +3,9 @@
 {"name": "Brainfuck", "id": "bf", "start": "18:00", "late": "30", "students": ["ayumu", "daigakusei", "nihachi16"]}
 ayumu 2021-07-17 16:28:18
 daigakusei 2021-07-17 16:29:55
+nihachi16 2021-07-17 16:30:07[{"name": "b", "lect": ["BrainFuck", "JavaScript", "PHP"]}, {"name": "hrm", "lect": ["c#", "vim", "Python"]}, {"name": "hatena", "lect": []}]
+[{"name": "aym", "id": "ayumu"}, {"name": "hst", "id": "daigakusei"}, {"name": "tnhs", "id": "nihachi16"}]
+{"name": "Brainfuck", "id": "bf", "start": "18:00", "late": "30", "students": ["ayumu", "daigakusei", "nihachi16"]}
+ayumu 2021-07-17 16:28:18
+daigakusei 2021-07-17 16:29:55
 nihachi16 2021-07-17 16:30:07
