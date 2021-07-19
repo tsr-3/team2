@@ -10,7 +10,10 @@
 <body>
   <h2 class="MainTitle">出席管理に必要なデータファイルを作成するツール(仮称)</h2>
   <hr class="line">
-  <input id="csv-reader" type="file" accept=".csv">
+  <form>
+    <label for="csv-reader">履修者のCSVリストを選択してください</label><br>
+    <input id="csv-reader" type="file" accept=".csv">
+  </form>
   <form class="timesetting">
     <label for="starttime">講義開始時間：</label>
     <input type="time" id="starttime"><br>
@@ -22,7 +25,7 @@
   <script src="../functions/createLectinfo.js"></script>
   <div class="buttonarea">
     <button id="back" class="button" onclick="location.href='./mainmenu.html'">戻る</button>
-    <button class="button" onclick="createLecttime()">つぎへ</button>
+    <button class="button" onclick="createLectInfo()">つぎへ</button>
   </div>
 </body>
 </html>
