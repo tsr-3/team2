@@ -2,7 +2,7 @@
 # --- RaspberryPi main script --- #
 
 from functions.comparsion import comp
-from functions.SaveDataFile import SaveDataFile
+from functions.SaveDataFile import SaveDataFile_noCipher as SaveDataFile
 from functions.second_warn import second_warn
 # from RaspberryPi.functions.SaveDataFile import SaveDataFile
 import datetime
@@ -14,8 +14,6 @@ import time
 #GUI表示に必要なもの
 import sys
 from PyQt5.QtWidgets import *
-
-from functions import *
 
 from functions import windowsv3 #./functions/windowsv3 をimportしている
 from functions import ValueStorage # windowsv3と値をやり取りするための苦渋の策
@@ -72,22 +70,38 @@ flag_doMainLoop:bool = True
 
 def mainProcess():
     state:int = STATE_BEFORE_START
-    students:list
-    professors:list
-    lecture:dict
+    students:list = None
+    professors:list = None
+    lecture:dict = None
     attendance_dat:list = []
+    accept_start:datetime = None
     while(True):
+        # sleep
+        time.sleep(0.1)
+
         if not flag_doMainLoop:
             break
         if state == STATE_BEFORE_START:
-            if students == None or professors == None or lecture == None:
-                dat = SaveDataFile.read()
+            if ValueStorage.filepath is None:
+                continue
+            try:
+                dat = SaveDataFile.read(ValueStorage.filepath)
+            except BaseException as err:
+                print(err)
+                raise err
             if students == None:
                 students = dat['students']
+                ValueStorage.isFiledataExist['students'] = True
             if professors == None:
                 professors = dat['professors']
+                ValueStorage.isFiledataExist['professors'] = True
             if lecture == None:
                 lecture = dat['lecture']
+                ValueStorage.isFiledataExist['lecture'] = True
+            ValueStorage.filepath = None
+            print(lecture)
+            print(students)
+            print(professors)
         elif state == STATE_ACCEPTING:
             idm, now = cardreader.printidm()
             if second_warn(idm, attendance_dat):
@@ -107,7 +121,7 @@ if __name__ == '__main__':
     #スレッド作成
     executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
     # 繰り返し行う処理
-    executor.submit(NFCread)
+    executor.submit(mainProcess)
 
     # GUI処理(mainに無いと警告が出る)
     app=QApplication(sys.argv)
