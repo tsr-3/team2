@@ -286,6 +286,7 @@ class WinMake(QMainWindow):
         with open('style/attendsyl.css') as f:
             css = f.read()
         self.setStyleSheet(css)
+        ValueStorage.process_state = 2 # STATE_ACCEPTING
 
 
     #GOwin_menuUI

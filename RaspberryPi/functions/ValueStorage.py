@@ -32,3 +32,6 @@ isFiledataExist:dict = {
     "students": None,
     "lecture": None
 }
+
+global process_state
+process_state: int

@@ -69,7 +69,7 @@ STATE_END_ACCEPT:int = 3
 flag_doMainLoop:bool = True
 
 def mainProcess():
-    state:int = STATE_BEFORE_START
+    ValueStorage.process_state = STATE_BEFORE_START
     students:list = None
     professors:list = None
     lecture:dict = None
@@ -81,7 +81,7 @@ def mainProcess():
 
         if not flag_doMainLoop:
             break
-        if state == STATE_BEFORE_START:
+        if ValueStorage.process_state == STATE_BEFORE_START:
             if ValueStorage.filepath is None:
                 continue
             try:
@@ -99,10 +99,7 @@ def mainProcess():
                 lecture = dat['lecture']
                 ValueStorage.isFiledataExist['lecture'] = True
             ValueStorage.filepath = None
-            print(lecture)
-            print(students)
-            print(professors)
-        elif state == STATE_ACCEPTING:
+        elif ValueStorage.process_state == STATE_ACCEPTING:
             idm, now = cardreader.printidm()
             if second_warn(idm, attendance_dat):
                 continue # already accepting
@@ -112,7 +109,7 @@ def mainProcess():
             # set to global for idm and time to accept
             # add accept(attendance) data
             attendance_dat.append({'time': now, 'id': students.find({'idm': idm})})
-        elif state == STATE_END_ACCEPT:
+        elif ValueStorage.process_state == STATE_END_ACCEPT:
             pass
 
 # -- onexec -- #
