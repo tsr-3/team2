@@ -1,12 +1,12 @@
 /* for app's background-color */
 body {
-  background-color:lightgray;
+  background-color: rgba(240, 255, 255, 0.5);
 }
 
 /* for button */
 /* common buttons */
 .button {
-  background: rgba(160, 160, 160, 0.5);
+  background: rgb(156, 218, 166);
   border: 0;
   border-radius: 4px;
   width: max-content;
@@ -47,10 +47,10 @@ button.help {
   color: rgba(14, 30, 34, 0.8);
   text-align: center;
   text-shadow:
-  -1px -1px 0 rgba(241, 225, 221, 0.8),
-  -1px -1px 0 rgba(241, 225, 221, 0.8),
-  -1px -1px 0 rgba(241, 225, 221, 0.8),
-  -1px -1px 0 rgba(241, 225, 221, 0.8);
+  -1px -1px 0 rgba(240, 225, 220, 0.8),
+  -1px -1px 0 rgba(240, 225, 220, 0.8),
+  -1px -1px 0 rgba(240, 225, 220, 0.8),
+  -1px -1px 0 rgba(240, 225, 220, 0.8);
 }
 
 /* for h1 maintitle (index.html) */
@@ -66,8 +66,8 @@ h2.MainTitle {
 /* for hr line */
 .line {
   border: 0;
-  background-color: #09f;
-  background-image: -webkit-linear-gradient(left,#fff,#09f,#FFF);
+  background-color: rgb(156, 218, 166);
+  background-image: -webkit-linear-gradient(left,#fff,rgb(156, 218, 166),#FFF);
   height: 2px;
 }
 
