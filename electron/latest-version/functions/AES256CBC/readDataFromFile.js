@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { addListener } = require('process');
 const AES256CBC = require('./AES256CBC');
 
 // (暗号化済み)ファイルから文字列を少しずつ取得して最後にまとめて返すやつ
@@ -34,6 +33,7 @@ const decrypto = async (text) => {
     let iv = splited[i].substr(50, 22);
     let body = splited[i].slice(72);
     let plaintext = ((await AES256CBC.AES256CBC.decode(key, iv, body)).replace(/\x13|\x16|\r/g, '').trim());
+    fs.appendFileSync('predec-by-node.dat', plaintext + '\n')
     let adddata = { [type]: await toObjorList(plaintext) };
     decryptotext.push(adddata);
   }
@@ -75,15 +75,19 @@ if (process.argv[1].match(/readDataFromFile/)) {
     }
     console.log('profの[Array]にアクセスするテスト')
     console.log(dectxt[0]['prof'])
+    fs.writeFileSync('dec-by-node.dat', JSON.stringify(dectxt))
 
     //エンコードテスト
-    console.log('暗号化テスト(これでいいのか知らん)')
+    console.log('暗号化テスト(これでいいのか知らん)\nt2pecf==')
     let enctxr = 't2pecf==';
+    let keytxt = ['prof','student','lecture','attend']
     let keyword = ['prof===', '.student', '.lecture', '.attend='];
     for (let j = 0; j < dectxt.length; j++) {
-      let enc = (await AES256CBC.AES256CBC.encode(JSON.stringify(dectxt[j])))
-      enctxr += keyword[j] + enc['key'] + enc['iv'] + enc['body']
+      console.log(JSON.stringify(dectxt[j][keytxt[j]]))
+      let enc = (await AES256CBC.AES256CBC.encode(JSON.stringify(dectxt[j][keytxt[j]])))
+      console.log(keyword[j] + '\n' + enc['key'] + '\n' + enc['iv'] + '\n' + enc['body'])
+      enctxr += keyword[j] + enc['key'].replace('=','') + enc['iv'].replace('==','') + enc['body']
     }
-    console.log(enctxr)
+    fs.writeFileSync('enc-by-node.dat', enctxr);
   })();
 }
