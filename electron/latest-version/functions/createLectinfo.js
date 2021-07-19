@@ -1,12 +1,31 @@
-
+let jsonArray = {};
+document.querySelector('#csv-reader').addEventListener('change', async (event)=>{
+  if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
+  let reader = new FileReader();
+  reader.onload = (event) => {
+    csvArray = event.target.result;
+    let csvData = csvArray.split('\n');// 1行ごとに分割する
+    jsonArray = csv2json(csvData);
+    console.log(jsonArray)
+    /*
+    const blob = new Blob([JSON.stringify(jsonArray, null, 2)], { type: 'application/json' });
+    let link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename+'.json';
+    link.click();
+    */
+  };
+  reader.readAsText(event.target.files[0]);
+});
 
 async function createLecttime() {
   let starttime = document.querySelector('form > input#starttime').value;
   let attendtime = document.querySelector('form > input#attendtime').value;
   let latenesstime = document.querySelector('form > input#latenesstime').value;
 
-  await csvFileReader();
+  csvFileReader();
   // テスト用
+  // console.log() 部分は後で createElement にする
   if (starttime == null || starttime == undefined || starttime == '') {
     console.log("講義開始時間は入力しよう...うん...");
   } else {
@@ -27,15 +46,6 @@ async function createLecttime() {
 
   return lecttime
 };
-
-function csvFileReader() {
-  let csvpath = document.querySelector('#csv-reader').value;
-  if (!csvpath.slice(4-csvpath.length).match(/.csv/)) {
-    return;
-  }
-
-
-}
 
 function csv2json(csvArray){
   let jsonArray = [];
