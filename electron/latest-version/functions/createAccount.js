@@ -3,12 +3,11 @@
  *
  * @return {{ID:string, passwd:string}} after
  */
-const SaveDataFile = require('./AES256CBC/readDataFromFile')
 
 function createAccount() {
-  let ID = document.querySelector('form > input#ID').value;
-  let passwd = document.querySelectorAll('form > input#passwd')[0].value;
-  let re_passwd = document.querySelectorAll('form > input#passwd')[1].value;
+  const ID = document.querySelector('form > input#ID').value;
+  const passwd = document.querySelectorAll('form > input#passwd')[0].value;
+  const re_passwd = document.querySelectorAll('form > input#passwd')[1].value;
 
   // テスト用
   if (ID == null || ID == undefined || ID == '') {
@@ -30,7 +29,7 @@ function createAccount() {
     console.log("パスワードが一致しないでござる");
   }
 
-  SaveDataFile
-
+  // 取得はできた
+  // あとはファイルとかに上書きする
 
 };
