@@ -14,10 +14,14 @@ class AES256CBC:
         iv = (base64.b64encode(iv)).decode('utf-8')
         return {'key': key, 'iv': iv, 'body': body}
     def decode(key:str, iv:str, text:str):
-        BLOCK_SIZE = 32
-        key = base64.b64decode(key.encode('utf-8'))
-        iv = base64.b64decode(iv.encode('utf-8'))
-        return unpad((AES.new(key, AES.MODE_CBC, iv)).decrypt(base64.b64decode(text.encode('utf-8'))), BLOCK_SIZE).decode('utf-8')
+        try:
+            BLOCK_SIZE = 32
+            key = base64.b64decode(key.encode('utf-8'))
+            iv = base64.b64decode(iv.encode('utf-8'))
+            return unpad((AES.new(key, AES.MODE_CBC, iv)).decrypt(base64.b64decode(text.encode('utf-8'))), BLOCK_SIZE).decode('utf-8')
+        except BaseException as err:
+            print('aes256cbc.decode', err)
+            raise err
 
 
 if __name__ == '__main__':
