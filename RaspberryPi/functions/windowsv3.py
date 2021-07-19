@@ -165,7 +165,8 @@ class WinMake(QMainWindow):
         self.exitbt.setShortcut("c")
         #self.exitbt.setGeometry(int(self.width_c * 2) - 50, 27, 50, 50)
         self.exitbt.setGeometry(int(self.width() - self.width() * 1/20) , int(1/20), int(self.width() * 1/20), int(self.width() * 1/20))
-        self.exitbt.clicked.connect(self.close)
+        #self.exitbt.clicked.connect(self.close)
+        self.exitbt.clicked.connect(self.quit_window)
         # ボタンの設定 ファイル読込ボタン
         self.readbt = QPushButton("ファイルの読込", self)
         self.readbt.setToolTip("Ctrl+o")
@@ -220,6 +221,16 @@ class WinMake(QMainWindow):
         # 画面の表示とwin_updateの開始
         self.show()
         app.exec_()
+
+
+
+    def quit_window(self):
+        '''MainUIのXボタンを押したときの処理'''
+
+        #ここにValueStorageに使う値を書いてね
+        print("END!")
+        self.close()
+
 
 
     #GOfd_read
