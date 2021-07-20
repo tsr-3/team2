@@ -4,6 +4,8 @@
 
 var global = {};
 
+import * as SaveDataFile from '../functions/SaveDataFile.mjs';
+
 // input file read
 document.querySelector('#json-reader').addEventListener('change', async (event)=>{
   //console.log(event.path[0].value); // path
@@ -16,9 +18,9 @@ document.querySelector('#json-reader').addEventListener('change', async (event)=
   var reader = new FileReader();
   reader.onload = (event)=>{
     global.json = event.target.result;
-    maketable(JSON.parse(event.target.result), filename);
-    drawgraph(JSON.parse(event.target.result), filename);
+    let data = SaveDataFile.parse(global.json);
+    maketable(data.attendance, filename);
+    drawgraph(data.attendance, filename);
   };
   reader.readAsText(event.target.files[0]);
 });
-
