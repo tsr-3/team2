@@ -8,7 +8,12 @@
   <body>
     <h2 class="MainTitle">出席状況確認(仮称)</h2>
     <hr class="line">
-    <input id="json-reader" type="file" accept=".json,.t2pecf">
+    <form>
+      <label for="student-reader">作成した履修者のリストをここに</label><br>
+      <input id="student-reader" type="file" accept=".json,.t2pecf"><br>
+      <label for="attend-reader">出席者のデータをここに</label><br>
+      <input id="attend-reader" type="file" accept=".json,.t2pecf"><br>
+    </form>
     <span id="filetype-check"></span>
     <div id="scripts">
       <script src="../functions/jsonToObject.mjs" type="module"></script>
