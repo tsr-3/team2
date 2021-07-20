@@ -48,6 +48,7 @@ class WarnWindow(QWidget):
 class InfoWindow(QWidget):
     '''ポップアップウィンドウの作成を行う'''
 
+    VERSION = '1.0.0'
 
     #GOsubinit
     def __init__(self, parent=None):
@@ -56,8 +57,8 @@ class InfoWindow(QWidget):
         self.w.setWindowTitle("このプロジェクトの情報")
         self.w.setGeometry(500, 500, 200, 300)
 
-        label = QLabel('出席管理プロジェクト Team2', self.w)
-        label2 = QLabel("他ファイルから授業の開始時刻,遅刻みなし時刻，欠席時刻等を入力し\nそれに対応する出力を行うことによっていい感じにします", self.w)
+        label = QLabel('出席管理プロジェクト Team2 version:' + InfoWindow.VERSION, self.w)
+        label2 = QLabel("出席確認システムで設定された情報を元に生徒の出席を判別,集計します", self.w)
         label3 = QLabel(self.w)
         label3.setOpenExternalLinks(True)
         label3.setText("<a href='http://github.com/tsr-on-github/team2'>GitHubレポジトリ</a>")
@@ -139,7 +140,7 @@ class WinHelp1(QWidget):
         '''ウィンドウ初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("手順1")
-        self.w.setGeometry(300, 300, 200, 300)
+        self.w.setGeometry(400, 400, 200, 300)
 
         label = QLabel(self.w)
         label.setText('「ファイルの読込」ボタンを押して,出席を取るファイル(t2pecf拡張子)を選択しましょう')
@@ -179,7 +180,7 @@ class WinHelp2(QWidget):
         '''ウィンドウ初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("手順2")
-        self.w.setGeometry(300, 300, 200, 300)
+        self.w.setGeometry(400, 400, 200, 300)
 
         label = QLabel(self.w)
         label.setText('「出席を取る」ボタンを押しましょう\n コレを押した瞬間に出席受付と出席計測区間が開始されます')
@@ -215,7 +216,7 @@ class WinHelp3(QWidget):
         '''ウィンドウ初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("手順3")
-        self.w.setGeometry(300, 300, 200, 300)
+        self.w.setGeometry(400, 400, 200, 300)
 
         label = QLabel(self.w)
         label.setText('この画面になった状態でカードリーダーにカードをタッチすると生徒の情報が画面に表示され出席データに保存されます\nこの画面から「戻る」ことで出席受付が終了します')
@@ -251,14 +252,14 @@ class WinHelp4(QWidget):
         '''ウィンドウ初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("手順4")
-        self.w.setGeometry(300, 300, 200, 300)
+        self.w.setGeometry(400, 400, 200, 300)
 
         label = QLabel(self.w)
         label.setText('「戻る」ボタンを押し,「X」ボタンを押すことで起動終了することができます')
         label.setFont(QFont("Arial", 14, QFont.Black))
 
         label2 = QLabel(self.w)
-        label2.setText('「X」ボタンを押して正常終了すると, "YY-mm-dd_起動終了時刻(1200等).t2pecf"ファイルが作成されます\nこれを保管して出席データ作成を行うプログラムに読ませましょう')
+        label2.setText('「X」ボタンを押して正常終了すると, "YY-mm-dd_起動終了時刻(1200等).t2pecf"ファイルが作成されます\nこれを保管して出席確認システムに読み込ませましょう')
         label2.setFont(QFont("Arial", 14, QFont.Black))
         # ファイルを読み込み
         image = QImage('style/protocol4.gif')
