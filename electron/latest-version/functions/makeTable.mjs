@@ -1,7 +1,7 @@
 /**
  *
- * @param append_list :object
- * @param filename :str
+ * @param {object} append_list :object
+ * @param {string} filename :str
  */
 
 function maketable(append_list, filename) {

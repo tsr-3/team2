@@ -112,3 +112,9 @@ form > input {
 form.timesetting {
   height: auto;
 }
+
+/* check-attendance.html */
+#filetype-check.error{
+  color: red;
+  font-size: 10pt;
+}
