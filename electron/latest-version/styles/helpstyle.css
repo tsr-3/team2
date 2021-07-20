@@ -1,6 +1,7 @@
 table{
   width: auto;
   height: auto;
+  border: 2px solid #045f04;
 }
 
 label {
@@ -8,10 +9,20 @@ label {
   height: 10000px;
 }
 
+
+
 td.buttonarea {
   margin-left: 0;
   margin-right: auto;
   margin-top: 0;
+}
+
+.button{
+  width: 4.5cm;
+}
+
+#helpic > img{
+  border: 2px solid #32f632a2;
 }
 
 td.pictarea {
@@ -20,7 +31,7 @@ td.pictarea {
 }
 
 td.textarea {
-  width: 300px;
+  width: 900px;
   height: 500px;
   text-align: left;
 }
