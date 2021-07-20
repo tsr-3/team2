@@ -32,7 +32,6 @@ document.querySelectorAll('#csv-reader')[2].addEventListener('change', async (ev
   reader.onload = (event) => {
     csvArray = event.target.result.replace(/\r/g,'');
     let csvData = csvArray.split('\n');// 1行ごとに分割する
-    console.log(csvData)
     professors = csv2jsonForProf(csvData);
   };
   reader.readAsText(event.target.files[0]);
@@ -144,11 +143,11 @@ function createLectInfo() {
   // 履修者とかのデータをまとめる処理
   getLectID();
   // 講義科目ルールの個人用（講義科目ルールCSV）＋履修者の学籍番号CSV＋教員科目リスト全部CSV＋学生リスト全部CSV
-  console.log(LectID);
-  console.log(students);
-  console.log(allstudent);
-  console.log(professors);
-  console.log(lecture);
+  //console.log(LectID);
+  //console.log(students);
+  //console.log(allstudent);
+  //console.log(professors);
+  //console.log(lecture);
 
   let stuid = [];
   for (let i = 0; i < students.length; i++) {
@@ -164,7 +163,7 @@ function createLectInfo() {
   let exam = true;
   if (lecture[i]['exam'] == 'なし') { exam = false; }
 
-  let inlecture = {'id':LectID,'name':lecture[i]['name'],'prof':lecture[i]['prof'],'start':lecture[i]['start'],'end':lecture[i]['end'],'limit':parseInt(lecture[i]['limit']),'late':parseInt(lecture[i]['late']),'exam':exam,'students':stuid};
+  let inlecture = {'id':LectID,'name':lecture[i]['name'],'prof':lecture[i]['prof'],'start':lecture[i]['start'],'end':lecture[i]['end'],'limit':parseInt(lecture[i]['limit'])+1,'late':parseInt(lecture[i]['late']),'exam':exam,'students':stuid};
   lect_info = {'lecture':inlecture,'professors':professors,'students':allstudent}
   console.log(lect_info)
 
