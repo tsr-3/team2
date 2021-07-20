@@ -9,7 +9,8 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
     document.querySelector('#filetype-check').classList.add('error')
   }
   let reader = new FileReader();
-  const filename = event.target.files[0];
+  console.log(event.path[0].value)
+  const filename = event.path[0].value.match(/[^\/\\]+\.[^\/\\]+$/g)[0];
   reader.onload = (event) => {
     const attend = SaveDataFile.parse(event.target.result);
     console.log(attend);
@@ -17,5 +18,5 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
     maketable(attend.attendance, filename);
     drawgraph(attend.attendance, filename);
   };
-  reader.readAsText(filename);
+  reader.readAsText(event.target.files[0]);
 })
