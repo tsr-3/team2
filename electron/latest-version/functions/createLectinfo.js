@@ -69,7 +69,7 @@ function getLecttime() {
     console.log('遅刻受付時間は0以上で入力してください');
   }
   // 講義に関するデータを設定
-  let lecttime = { 'start': starttime, 'end': endtime, 'attend': attendtime, 'lateness': latenesstime };
+  let lecttime = { start: starttime, end: endtime, limit: attendtime, late: latenesstime };
   return lecttime
 };
 
@@ -77,10 +77,8 @@ function createLectInfo() {
   let lect_info = {}
   // 履修者とかのデータをまとめる処理
   let lecttime = getLecttime();
-
-
   let filename = '○○さんのデータ'
-  const blob = new Blob([JSON.stringify(lect_info, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify({lecture:lecttime})], { type: 'application/json' });
   let link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
   link.download = filename+'.json';
