@@ -76,6 +76,7 @@ function csv2jsonForProf(csvArray){
   let jsonArray = [];
 
   let items = ['id', 'name', 'yomi', 'sex', 'lect'];
+  console.log(csvArray)
 
   // CSVデータの配列の各行をループ処理する
   // 配列の先頭要素(行)は項目名のため処理対象外
@@ -85,11 +86,15 @@ function csv2jsonForProf(csvArray){
     // カンマで区切られた各データに分割する
     let csvArrayD = csvArray[i].split(',');
     // 各データをループ処理する
-    for (let j = 0; j < items.length; j++) {
+    for (let j = 0; j < items.length ; j++) {
       // 要素名：items[j]
-      // データ：csvArrayD[j]
-      a_line[items[j]] = csvArrayD[j];
+      if (j == items.length - 1) {
+        a_line[items[j]] = [csvArrayD[j], csvArrayD[j + 1]];
+      } else {
+        a_line[items[j]] = csvArrayD[j];
+      }
     }
+    console.log(a_line)
     jsonArray.push(a_line);
   }
   return jsonArray;
@@ -155,7 +160,7 @@ function createLectInfo() {
   if (lecture[i]['exam'] == 'なし') { exam = false; }
 
   let inlecture = {'id':LectID,'name':lecture[i]['name'],'prof':lecture[i]['prof'],'start':lecture[i]['start'],'end':lecture[i]['end'],'limit':lecture[i]['limit'],'late':lecture[i]['late'],'exam':exam,'students':stuid};
-  lect_info = {'lecture':inlecture,'professors':professors,'students':[allstudent]}
+  lect_info = {'lecture':inlecture,'professors':professors,'students':allstudent}
   console.log(lect_info)
 
   let filename = lecture[i]['profname']+'さん専用のデータ'
