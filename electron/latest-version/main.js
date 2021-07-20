@@ -70,6 +70,7 @@ function initWindowMenu(){
             subWindow = new BrowserWindow({ width: 1080, height:  720 });
             subWindow.loadURL(`file://${__dirname}/pages/help.html`);
             subWindow.setMenu(null);
+            subWindow.webContents.openDevTools();
           }
         }
       ]
