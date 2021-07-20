@@ -1,22 +1,53 @@
-let jsonArray = {};
-document.querySelector('#csv-reader').addEventListener('change', async (event)=>{
+let LectID = '';
+let students = {};
+let allstudent = {};
+let professors = {};
+let lecture = {};
+
+document.querySelectorAll('#csv-reader')[0].addEventListener('change', async (event)=>{
   if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
   let reader = new FileReader();
   reader.onload = (event) => {
     csvArray = event.target.result;
     let csvData = csvArray.split('\n');// 1行ごとに分割する
-    jsonArray = csv2json(csvData);
-    console.log(jsonArray)
-    /*
-    const blob = new Blob([JSON.stringify(jsonArray, null, 2)], { type: 'application/json' });
-    let link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = filename+'.json';
-    link.click();
-    */
+    students = csv2json(csvData);
   };
   reader.readAsText(event.target.files[0]);
 });
+
+document.querySelectorAll('#csv-reader')[1].addEventListener('change', async (event)=>{
+  if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
+  let reader = new FileReader();
+  reader.onload = (event) => {
+    csvArray = event.target.result;
+    let csvData = csvArray.split('\n');// 1行ごとに分割する
+    allstudent = csv2json(csvData);
+  };
+  reader.readAsText(event.target.files[0]);
+});
+
+document.querySelectorAll('#csv-reader')[2].addEventListener('change', async (event)=>{
+  if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
+  let reader = new FileReader();
+  reader.onload = (event) => {
+    csvArray = event.target.result;
+    let csvData = csvArray.split('\n');// 1行ごとに分割する
+    professors = csv2jsonForProf(csvData);
+  };
+  reader.readAsText(event.target.files[0]);
+});
+
+document.querySelectorAll('#csv-reader')[3].addEventListener('change', async (event)=>{
+  if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
+  let reader = new FileReader();
+  reader.onload = (event) => {
+    csvArray = event.target.result;
+    let csvData = csvArray.split('\n');// 1行ごとに分割する
+    lecture = csv2jsonForLect(csvData);
+  };
+  reader.readAsText(event.target.files[0]);
+});
+
 
 function csv2json(csvArray){
   let jsonArray = [];
@@ -41,47 +72,97 @@ function csv2json(csvArray){
   return jsonArray;
 }
 
-function getLecttime() {
-  let starttime = document.querySelector('form > input#starttime').value;
-  let endtime = document.querySelector('form > input#endtime').value;
-  let attendtime = document.querySelector('form > input#attendtime').value;
-  let latenesstime = document.querySelector('form > input#latenesstime').value;
+function csv2jsonForProf(csvArray){
+  let jsonArray = [];
 
+  let items = ['id', 'name', 'yomi', 'sex', 'lect'];
+
+  // CSVデータの配列の各行をループ処理する
+  // 配列の先頭要素(行)は項目名のため処理対象外
+  // 配列の最終要素(行)は空のため処理対象外
+  for (let i = 1; i < csvArray.length; i++) {
+    let a_line = new Object();
+    // カンマで区切られた各データに分割する
+    let csvArrayD = csvArray[i].split(',');
+    // 各データをループ処理する
+    for (let j = 0; j < items.length; j++) {
+      // 要素名：items[j]
+      // データ：csvArrayD[j]
+      a_line[items[j]] = csvArrayD[j];
+    }
+    jsonArray.push(a_line);
+  }
+  return jsonArray;
+}
+
+function csv2jsonForLect(csvArray){
+  let jsonArray = [];
+
+  let items = ['id','name','prof','profname','start','end','limit','lata','exam','stunum'];
+
+  // CSVデータの配列の各行をループ処理する
+  // 配列の先頭要素(行)は項目名のため処理対象外
+  // 配列の最終要素(行)は空のため処理対象外
+  for (let i = 1; i < csvArray.length; i++) {
+    let a_line = new Object();
+    // カンマで区切られた各データに分割する
+    let csvArrayD = csvArray[i].split(',');
+    // 各データをループ処理する
+    for (let j = 0; j < items.length; j++) {
+      // 要素名：items[j]
+      // データ：csvArrayD[j]
+      a_line[items[j]] = csvArrayD[j];
+    }
+    jsonArray.push(a_line);
+  }
+  return jsonArray;
+}
+
+function getLectID() {
+  LectID = document.querySelector('form > input#LectID').value;
   // console.log() 部分は後で createElement にする
-  if (starttime == null || starttime == undefined || starttime == '') {
-    console.log("講義開始時間は入力しよう...うん...");
+  if (LectID == null || LectID == undefined || LectID == '') {
+    console.log("講義IDを入力してくれ");
+    return;
   } else {
-    console.log(starttime);
+    return;
   }
-  if (endtime == null || endtime == undefined || endtime == '') {
-    console.log('講義終了時間入れて');
-  } else {
-    console.log(endtime);
-  }
-  if (attendtime == null || attendtime == undefined || attendtime == '') {
-    console.log("出席受付時間入力よろ");
-  } else if (attendtime < 0){
-    console.log('出席受付時間は0以上で入力してください');
-  }
-  if (latenesstime == null || latenesstime == undefined || latenesstime == '') {
-    console.log("遅刻受付時間入力はよ");
-  } else if (latenesstime < 0){
-    console.log('遅刻受付時間は0以上で入力してください');
-  }
-  // 講義に関するデータを設定
-  let lecttime = { start: starttime, end: endtime, limit: attendtime, late: latenesstime };
-  return lecttime
 };
 
 function createLectInfo() {
   let lect_info = {}
   // 履修者とかのデータをまとめる処理
-  let lecttime = getLecttime();
-  let filename = '○○さんのデータ'
-  const blob = new Blob([JSON.stringify({lecture:lecttime})], { type: 'application/json' });
+  getLectID();
+  // 講義科目ルールの個人用（講義科目ルールCSV）＋履修者の学籍番号CSV＋教員科目リスト全部CSV＋学生リスト全部CSV
+  console.log(LectID);
+  console.log(students);
+  console.log(allstudent);
+  console.log(professors);
+  console.log(lecture);
+
+  let stuid = [];
+  for (let i = 0; i < students.length; i++) {
+    stuid.push(students[i]['id'])
+  }
+
+  let i = 0;
+  for (i = 0; i < lecture.length; i++) {
+    if (LectID == lecture[i]['id']) {
+      break;
+    }
+  }
+  let exam = true;
+  if (lecture[i]['exam'] == 'なし') { exam = false; }
+
+  let inlecture = {'id':LectID,'name':lecture[i]['name'],'prof':lecture[i]['prof'],'start':lecture[i]['start'],'end':lecture[i]['end'],'limit':lecture[i]['limit'],'late':lecture[i]['late'],'exam':exam,'students':stuid};
+  lect_info = {'lecture':inlecture,'professors':[professors],'students':[allstudent]}
+  console.log(lect_info)
+
+  let filename = lecture[i]['profname']+'さん専用のデータ'
+  const blob = new Blob([JSON.stringify(lect_info)], { type: 'application/json' });
   let link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
-  link.download = filename+'.json';
+  link.download = filename+'.t2pecf';
   link.click();
   return;
 }
