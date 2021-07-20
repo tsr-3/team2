@@ -15,14 +15,15 @@
   <!-- <input type="button" value="進む" onclick="go_forward()"> -->
   <!-- <script src=""></script> -->
   <script>
-    var pics_src = new Array("pics0.jpg", "pages/pics/help1.jpg", "pics2.jpg", "pics3.jpg");
+    var pics_src = new Array("pics0.jpg", "./pics/help1.jpg", "pics2.jpg", "pics3.jpg");
 
     function help(number){
 
       switch(number){
         case 1:
-          document.getElementById("helic").src=pics_src[1];
-          document.getElementById("helptext").textContent = `このアプリケーションで操作可能な項目が並んでいます「出席状況を確認」:作成した履修者データや出席者データを閲覧 「講義データを作成」:出席を取る際に必要なファイルを作成`;
+          if(!document.querySelector("#helpic > img")) alert('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+          document.querySelector("#helpic > img").src=pics_src[1];
+          document.getElementById("helptext").innerText = `このアプリケーションで操作可能な項目が並んでいます\n出席状況を確認」:作成した履修者データや出席者データを閲覧\n講義データを作成」:出席を取る際に必要なファイルを作成`;
           break;
         case 2:
           document.getElementById("helpic").src=pics_src[2];
@@ -83,6 +84,7 @@
         <button class="button" onclick="help(6)">ヘルプ項目6</button>
       </td>
       <td class="pictarea" id="helpic">
+        <img src="#">
         ココにはデフォルトの写真？画像かな
       </td>
       <td class="textarea" id="helptext">
