@@ -98,7 +98,7 @@ function csv2jsonForProf(csvArray){
 function csv2jsonForLect(csvArray){
   let jsonArray = [];
 
-  let items = ['id','name','prof','profname','start','end','limit','lata','exam','stunum'];
+  let items = ['id','name','prof','profname','start','end','limit','late','exam','stunum'];
 
   // CSVデータの配列の各行をループ処理する
   // 配列の先頭要素(行)は項目名のため処理対象外
