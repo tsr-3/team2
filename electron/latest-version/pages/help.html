@@ -15,22 +15,22 @@
   <!-- <input type="button" value="進む" onclick="go_forward()"> -->
   <!-- <script src=""></script> -->
   <script>
-    var pics_src = new Array("pics0.jpg", "pics1.jpg", "pics2.jpg", "pics3.jpg");
+    var pics_src = new Array("pics0.jpg", "pages/pics/help1.jpg", "pics2.jpg", "pics3.jpg");
 
     function help(number){
 
       switch(number){
         case 1:
-          document.getElementById("helpic").src=pics_src[1];
-          document.getElementById("helptext").textContent = "ヘルプ1";
+          document.getElementById("helic").src=pics_src[1];
+          document.getElementById("helptext").textContent = `このアプリケーションで操作可能な項目が並んでいます「出席状況を確認」:作成した履修者データや出席者データを閲覧 「講義データを作成」:出席を取る際に必要なファイルを作成`;
           break;
         case 2:
           document.getElementById("helpic").src=pics_src[2];
-          document.getElementById("helptext").textContent = "ヘルプ2";
+          document.getElementById("helptext").textContent = "履修者データや出席者データを閲覧することが出来ます 「ファイルを選択」をクリックし，閲覧したい.t2pecfファイルを選択すると内容を閲覧することが出来ます";
           break;
         case 3:
           document.getElementById("helpic").src=pics_src[3];
-          document.getElementById("helptext").innerText = 'ヘルプ3';
+          document.getElementById("helptext").innerText = '出席を取るためのファイルを作成することが出来ます 必要な3つのCSVファイルを選択し講義の開始時刻(「出席を取る」ボタンを押す時間)終了時刻，「出席として判定される時間猶予」,「遅刻として判定される時間猶予」を設定することが出来ます これらを入力後「つぎへ」を押すと出席を取る際に必要なファイルを作成することが出来ます.';
           break;
         case 4:
           document.getElementById("helpic").src=pics_src[4];
@@ -65,13 +65,13 @@
     </tr>
     <tr>
       <td class="buttonarea">
-        <button class="button" onclick="help(1)">ヘルプ項目1</button>
+        <button class="button" onclick="help(1)">機能一覧</button>
       </td>
       <td class="buttonarea">
-        <button class="button" onclick="help(2)">ヘルプ項目2</button>
+        <button class="button" onclick="help(2)">出席状況確認</button>
       </td>
       <td class="buttonarea">
-        <button class="button" onclick="help(3)">ヘルプ項目3</button>
+        <button class="button" onclick="help(3)">講義データ作成</button>
       </td>
       <td class="buttonarea">
         <button class="button" onclick="help(4)">ヘルプ項目4</button>
