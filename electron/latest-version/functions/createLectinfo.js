@@ -128,8 +128,8 @@ function csv2jsonForLect(csvArray){
 function getLectID() {
   LectID = document.querySelector('form > input#LectID').value;
   // console.log() 部分は後で createElement にする
-  if (LectID == null || LectID == undefined || LectID == '') {
-    //console.log("講義IDを入力してくれ");
+  if (LectID == null || LectID == undefined || LectID == ''){
+    alert("講義IDを入力してください");
     return;
   } else {
     return;
