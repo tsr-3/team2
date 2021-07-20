@@ -155,7 +155,7 @@ function createLectInfo() {
   if (lecture[i]['exam'] == 'なし') { exam = false; }
 
   let inlecture = {'id':LectID,'name':lecture[i]['name'],'prof':lecture[i]['prof'],'start':lecture[i]['start'],'end':lecture[i]['end'],'limit':lecture[i]['limit'],'late':lecture[i]['late'],'exam':exam,'students':stuid};
-  lect_info = {'lecture':inlecture,'professors':[professors],'students':[allstudent]}
+  lect_info = {'lecture':inlecture,'professors':professors,'students':[allstudent]}
   console.log(lect_info)
 
   let filename = lecture[i]['profname']+'さん専用のデータ'
