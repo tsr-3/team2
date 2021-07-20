@@ -44,7 +44,7 @@
 - Type these commands in a terminal
 ###
     team2> pip install -r requirements.txt
-    team2> python3 RaspberryPi/main.py
+    team2> python RaspberryPi/main.py
 
 ### quick start Electron
 
