@@ -8,7 +8,7 @@ document.querySelectorAll('#csv-reader')[0].addEventListener('change', async (ev
   if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
   let reader = new FileReader();
   reader.onload = (event) => {
-    csvArray = event.target.result;
+    csvArray = event.target.result.replace(/\r/g,'');
     let csvData = csvArray.split('\n');// 1行ごとに分割する
     students = csv2json(csvData);
   };
@@ -19,7 +19,7 @@ document.querySelectorAll('#csv-reader')[1].addEventListener('change', async (ev
   if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
   let reader = new FileReader();
   reader.onload = (event) => {
-    csvArray = event.target.result;
+    csvArray = event.target.result.replace(/\r/g,'');
     let csvData = csvArray.split('\n');// 1行ごとに分割する
     allstudent = csv2json(csvData);
   };
@@ -30,8 +30,9 @@ document.querySelectorAll('#csv-reader')[2].addEventListener('change', async (ev
   if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
   let reader = new FileReader();
   reader.onload = (event) => {
-    csvArray = event.target.result;
+    csvArray = event.target.result.replace(/\r/g,'');
     let csvData = csvArray.split('\n');// 1行ごとに分割する
+    console.log(csvData)
     professors = csv2jsonForProf(csvData);
   };
   reader.readAsText(event.target.files[0]);
@@ -41,7 +42,7 @@ document.querySelectorAll('#csv-reader')[3].addEventListener('change', async (ev
   if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
   let reader = new FileReader();
   reader.onload = (event) => {
-    csvArray = event.target.result;
+    csvArray = event.target.result.replace(/\r/g,'');
     let csvData = csvArray.split('\n');// 1行ごとに分割する
     lecture = csv2jsonForLect(csvData);
   };
@@ -89,7 +90,11 @@ function csv2jsonForProf(csvArray){
     for (let j = 0; j < items.length ; j++) {
       // 要素名：items[j]
       if (j == items.length - 1) {
-        a_line[items[j]] = [csvArrayD[j], csvArrayD[j + 1]];
+        if (csvArrayD[j + 1] == '') {
+          a_line[items[j]] = [csvArrayD[j]]
+        } else {
+          a_line[items[j]] = [csvArrayD[j], csvArrayD[j + 1]];
+        }
       } else {
         a_line[items[j]] = csvArrayD[j];
       }
