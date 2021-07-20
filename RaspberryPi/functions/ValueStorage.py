@@ -5,6 +5,9 @@ nfcdataをglobalに置くことによって，nfcで取得したデータをGUI�
 '''
 
 # nfcのID
+from datetime import datetime
+
+
 global nfcdata
 nfcdata = "NFCのID"
 
@@ -41,3 +44,6 @@ attendance:list = []
 
 global thread
 thread = None
+
+
+global now_time

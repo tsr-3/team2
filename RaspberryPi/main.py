@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # --- RaspberryPi main script --- #
 
+from typing import ValuesView
 from functions.comparsion import comp
 from functions.SaveDataFile import SaveDataFile_noCipher as SaveDataFile
 from functions.second_warn import second_warn
@@ -47,7 +48,7 @@ def NFCread():
         ValueStorage.studentname = tmp[0] # IDに対応する生徒の名前をwindowsv3.pyへ渡す
         # タッチした時刻と登録された時刻の比較を行いwindowsv3.pyへ渡す(出席/遅刻/欠席/非履修者)
 
-        check = time_attend.time(t1, t2, t3)
+        check = time_attend.timeC(t1, t2, t3)
 
         if tmp[2]:
             if check == "出席":
@@ -126,7 +127,8 @@ def mainProcess():
             # show data
             ValueStorage.nfcdata = idm
             ValueStorage.studentname = STUDENT['name']
-            ValueStorage.attendcheck[0] = time_attend.timecheck(now, {'start': lecture['start'], 'limit': lecture['limit'], 'late':lecture['late']})
+            ValueStorage.attendcheck[0], ValueStorage.attendcheck[1] = time_attend.timecheck(now, {'start': ValueStorage.now_time, 'limit': lecture['limit'], 'late':lecture['late']})
+
             # add accept(attendance) data
             ValueStorage.attendance.append({'time': now, 'id': STUDENT['id']})
         elif ValueStorage.process_state == STATE_END_ACCEPT:
