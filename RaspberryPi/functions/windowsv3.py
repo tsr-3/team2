@@ -189,7 +189,7 @@ class WinMake(QMainWindow):
 
     #AttendGUIにのせるもの
         # ボタンの設定 Menuに戻るボタン
-        self.returnmenubt = QPushButton("戻る", self)
+        self.returnmenubt = QPushButton("終了", self)
         self.returnmenubt.setToolTip("Menuに戻ります")
         self.returnmenubt.setShortcut("c")
         self.returnmenubt.setStyleSheet("background-color: red")
