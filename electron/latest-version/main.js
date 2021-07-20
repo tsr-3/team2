@@ -13,23 +13,34 @@ let mainWindow;
 
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
-    if (process.platform != 'darwin') {
-        app.quit();
-    }
+  if (process.platform != 'darwin') {
+    app.quit();
+  }
 });
 
 // Electronの初期化完了後に実行
 app.on('ready', function() {
-    // メイン画面の表示。ウィンドウの幅、高さを指定できる
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  // メイン画面の表示。ウィンドウの幅、高さを指定できる
+  mainWindow = new BrowserWindow({
+    width: 1080,
+    height: 720,
+    // webPreferences: {
+    //   nodeIntegretion: false,
+    //   contextIsolation: false,
+    //   preload: __dirname + '/functions/preload.cjs'
+    // }
+  });
   mainWindow.loadURL('file://' + __dirname + '/pages/index.html');
-    // ウィンドウメニューをカスタマイズ
-    initWindowMenu();
+  // ウィンドウメニューをカスタマイズ
+  initWindowMenu();
 
-// ウィンドウが閉じられたらアプリも終了
-    mainWindow.on('closed', function() {
-      mainWindow = null;
-    });
+  // for debug
+  mainWindow.webContents.openDevTools(); // open DevTools
+
+  // ウィンドウが閉じられたらアプリも終了
+  mainWindow.on('closed', function() {
+    mainWindow = null;
+  });
 });
 
 // メニューバーを変更する
@@ -56,7 +67,7 @@ function initWindowMenu(){
           label: '操作方法ヘルプ',
           accelerator: switchCharactersByOS('Command+H', 'Ctrl+H'),
           click() {
-            subWindow = new BrowserWindow({ width: 800, height: 600 });
+            subWindow = new BrowserWindow({ width: 1080, height:  720 });
             subWindow.loadURL(`file://${__dirname}/pages/help.html`);
             subWindow.setMenu(null);
           }
