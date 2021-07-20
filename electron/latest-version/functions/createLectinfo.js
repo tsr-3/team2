@@ -52,7 +52,7 @@ document.querySelectorAll('#csv-reader')[3].addEventListener('change', async (ev
 function csv2json(csvArray){
   let jsonArray = [];
 
-  let items = ['id', 'name', 'yomi', 'sex', 'IDm'];
+  let items = ['id', 'name', 'yomi', 'sex', 'idm'];
 
   // CSVデータの配列の各行をループ処理する
   // 配列の先頭要素(行)は項目名のため処理対象外
@@ -159,7 +159,7 @@ function createLectInfo() {
   let exam = true;
   if (lecture[i]['exam'] == 'なし') { exam = false; }
 
-  let inlecture = {'id':LectID,'name':lecture[i]['name'],'prof':lecture[i]['prof'],'start':lecture[i]['start'],'end':lecture[i]['end'],'limit':lecture[i]['limit'],'late':lecture[i]['late'],'exam':exam,'students':stuid};
+  let inlecture = {'id':LectID,'name':lecture[i]['name'],'prof':lecture[i]['prof'],'start':lecture[i]['start'],'end':lecture[i]['end'],'limit':parseInt(lecture[i]['limit']),'late':parseInt(lecture[i]['late']),'exam':exam,'students':stuid};
   lect_info = {'lecture':inlecture,'professors':professors,'students':allstudent}
   console.log(lect_info)
 
