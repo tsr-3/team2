@@ -1,5 +1,5 @@
 
-export function parse(string){
+function parse(string){
   const dat = JSON.parse(string);
   if(dat.attendance){
     dat.attendance = dat.attendance.split(/\r\n|\n/g);
@@ -14,7 +14,7 @@ export function parse(string){
   return dat;
 }
 
-export function stringify(object){
+function stringify(object){
   const _attendance = object.attendance;
   if(object.attendance){
     object.attendance = new Array(_attendance.length);

@@ -8,26 +8,25 @@
   <body>
     <h2 class="MainTitle">出席状況確認(仮称)</h2>
     <hr class="line">
-    <form>
+    <form class="file-reader">
       <label for="student-reader">作成した履修者のリストをここに</label><br>
       <input id="student-reader" type="file" accept=".json,.t2pecf"><br>
-      <label for="attend-reader">出席者のデータをここに</label><br>
-      <input id="attend-reader" type="file" accept=".json,.t2pecf"><br>
     </form>
     <span id="filetype-check"></span>
+    <div class="buttonarea">
+      <button class="button" onclick="doReload();">クリア</button>
+      <button class="button" onclick="location.href='./mainmenu.html'">戻る</button>
+    </div>
     <div id="scripts">
-      <script src="../functions/jsonToObject.mjs" type="module"></script>
       <script src="../functions/makeTable.mjs"></script>
       <script src="../functions/drawGraph.mjs"></script>
+      <script src="../functions/checkAttendance.mjs"></script>
+      <script src="../functions/SaveDataFile.mjs"></script>
       <script>
         function doReload(){
           window.location.reload();
         }
       </script>
-    </div>
-    <div class="buttonarea">
-      <button class="button" onclick="doReload();">クリア</button>
-      <button class="button" onclick="location.href='./mainmenu.html'">戻る</button>
     </div>
   </body>
 </html>
