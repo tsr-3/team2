@@ -22,4 +22,5 @@ td.pictarea {
 td.textarea {
   width: 300px;
   height: 500px;
+  text-align: left;
 }

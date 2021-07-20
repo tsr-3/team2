@@ -83,19 +83,19 @@ class HelpWindow(QWidget):
         '''ウィンドウ初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("ヘルプ")
-        self.w.setGeometry(500, 500, 200, 150)
+        self.w.setGeometry(200, 200, 200, 150)
 
         label = QLabel(self.w)
         label.setText('使い方')
         label.setFont(QFont("Arial", 14, QFont.Black))
 
-        self.h1 = QPushButton("手順1", self.w)
+        self.h1 = QPushButton("手順1(出席判定ファイルの読込方法について)", self.w)
         self.h1.clicked.connect(HelpWindow.pro1)
-        self.h2 = QPushButton("手順2", self.w)
+        self.h2 = QPushButton("手順2(出席判定の開始方法について)", self.w)
         self.h2.clicked.connect(HelpWindow.pro2)
-        self.h3 = QPushButton("手順3", self.w)
+        self.h3 = QPushButton("手順3(出席判定中画面の要素について)", self.w)
         self.h3.clicked.connect(HelpWindow.pro3)
-        self.h4 = QPushButton("手順4", self.w)
+        self.h4 = QPushButton("手順4(出席判定後に出力されるファイルについて)", self.w)
         self.h4.clicked.connect(HelpWindow.pro4)
 
         exit = QPushButton(self.w)
@@ -139,11 +139,14 @@ class WinHelp1(QWidget):
         '''ウィンドウ初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("手順1")
-        self.w.setGeometry(500, 500, 200, 300)
+        self.w.setGeometry(300, 300, 200, 300)
 
         label = QLabel(self.w)
-        label.setText('「ファイルの読込」ボタンを押して,出席を取るファイルを選択しましょう')
+        label.setText('「ファイルの読込」ボタンを押して,出席を取るファイル(t2pecf拡張子)を選択しましょう')
         label.setFont(QFont("Arial", 14, QFont.Black))
+        label2 = QLabel(self.w)
+        label2.setText('t2pecfは，T２ｐｅｃｆ ｉｓ ｔｅａｍ2 RａｓｐｂｅｒｒｙＰｉ Eｌｅｃｔｏｎ Cｏｍｍｕｎｉｃａｔｉｏｎ Fｉｌｅ の略です')
+        label2.setFont(QFont("Arial", 14, QFont.Black))
 
         # ファイルを読み込み
         image = QImage('style/protocol1.gif')
@@ -162,6 +165,7 @@ class WinHelp1(QWidget):
 
         layout = QVBoxLayout()
         layout.addWidget(label)
+        layout.addWidget(label2)
         layout.addWidget(imagelabel)
 
         self.w.setLayout(layout)
@@ -175,7 +179,7 @@ class WinHelp2(QWidget):
         '''ウィンドウ初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("手順2")
-        self.w.setGeometry(500, 500, 200, 300)
+        self.w.setGeometry(300, 300, 200, 300)
 
         label = QLabel(self.w)
         label.setText('「出席を取る」ボタンを押しましょう\n コレを押した瞬間に出席受付と出席計測区間が開始されます')
@@ -211,10 +215,10 @@ class WinHelp3(QWidget):
         '''ウィンドウ初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("手順3")
-        self.w.setGeometry(500, 500, 200, 300)
+        self.w.setGeometry(300, 300, 200, 300)
 
         label = QLabel(self.w)
-        label.setText('この画面になった状態でカードリーダーにカードをタッチすると生徒の情報が画面に表示され出席データに保存されます\nこの画面から「戻る」ことで出席が終了します')
+        label.setText('この画面になった状態でカードリーダーにカードをタッチすると生徒の情報が画面に表示され出席データに保存されます\nこの画面から「戻る」ことで出席受付が終了します')
         label.setFont(QFont("Arial", 14, QFont.Black))
 
         # ファイルを読み込み
@@ -247,12 +251,15 @@ class WinHelp4(QWidget):
         '''ウィンドウ初期設定を行う'''
         self.w = QDialog(parent)
         self.w.setWindowTitle("手順4")
-        self.w.setGeometry(500, 500, 200, 300)
+        self.w.setGeometry(300, 300, 200, 300)
 
         label = QLabel(self.w)
         label.setText('「戻る」ボタンを押し,「X」ボタンを押すことで起動終了することができます')
         label.setFont(QFont("Arial", 14, QFont.Black))
 
+        label2 = QLabel(self.w)
+        label2.setText('「X」ボタンを押して正常終了すると, "YY-mm-dd_起動終了時刻(1200等).t2pecf"ファイルが作成されます\nこれを保管して出席データ作成を行うプログラムに読ませましょう')
+        label2.setFont(QFont("Arial", 14, QFont.Black))
         # ファイルを読み込み
         image = QImage('style/protocol4.gif')
         imagelabel = QLabel()
@@ -270,6 +277,7 @@ class WinHelp4(QWidget):
 
         layout = QVBoxLayout()
         layout.addWidget(label)
+        layout.addWidget(label2)
         layout.addWidget(imagelabel)
 
         self.w.setLayout(layout)

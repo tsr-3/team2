@@ -15,42 +15,41 @@
   <!-- <input type="button" value="進む" onclick="go_forward()"> -->
   <!-- <script src=""></script> -->
   <script>
-    var pics_src = new Array("pics0.jpg", "./pics/help1.jpg", "pics2.jpg", "pics3.jpg");
+    var pics_src = new Array("./pics/help0.jpg", "./pics/help1.jpg", "./pics/help2.jpg", "./pics/help3.jpg", "./pics/help4.jpg", "./pics/help5.jpg", "./pics/help6.jpg", "./pics/help7.jpg", );
 
     function help(number){
 
       switch(number){
         case 1:
-          if(!document.querySelector("#helpic > img")) alert('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
           document.querySelector("#helpic > img").src=pics_src[1];
-          document.getElementById("helptext").innerText = `このアプリケーションで操作可能な項目が並んでいます\n出席状況を確認」:作成した履修者データや出席者データを閲覧\n講義データを作成」:出席を取る際に必要なファイルを作成`;
+          document.getElementById("helptext").innerText = `このアプリケーションで操作可能な項目が並んでいます.\n「出席状況を確認」:作成した履修者データや出席者データを閲覧\n「講義データを作成」:出席を取る際に必要なファイルを作成`;
           break;
         case 2:
-          document.getElementById("helpic").src=pics_src[2];
-          document.getElementById("helptext").textContent = "履修者データや出席者データを閲覧することが出来ます 「ファイルを選択」をクリックし，閲覧したい.t2pecfファイルを選択すると内容を閲覧することが出来ます";
+          document.querySelector("#helpic > img").src=pics_src[2];
+          document.getElementById("helptext").innerText = "履修者データや出席者データを閲覧することが出来ます\n「ファイルを選択」をクリックし，閲覧したい[*.t2pecf]ファイルを選択すると内容を閲覧することが出来ます\n";
           break;
         case 3:
-          document.getElementById("helpic").src=pics_src[3];
-          document.getElementById("helptext").innerText = '出席を取るためのファイルを作成することが出来ます 必要な3つのCSVファイルを選択し講義の開始時刻(「出席を取る」ボタンを押す時間)終了時刻，「出席として判定される時間猶予」,「遅刻として判定される時間猶予」を設定することが出来ます これらを入力後「つぎへ」を押すと出席を取る際に必要なファイルを作成することが出来ます.';
+          document.querySelector("#helpic > img").src=pics_src[3];
+          document.getElementById("helptext").innerText = '出席を取るためのファイルを作成することが出来ます\n必要な3つのCSVファイルを選択し\n1:講義の開始時刻(「出席を取る」ボタンを押す時間)\n2:講義の終了時刻\n3:「出席として判定される時間猶予(分)」\n4:「遅刻として判定される時間猶予(分)」\nを設定することが出来ます \nこれらを入力後「つぎへ」を押すと出席を取る際に必要なファイルを作成することが出来ます.';
           break;
         case 4:
-          document.getElementById("helpic").src=pics_src[4];
+          document.querySelector("#helpic > img").src=pics_src[4];
           document.getElementById("helptext").innerText = 'ヘルプ4';
           break;
         case 5:
-          document.getElementById("helpic").src=pics_src[5];
+          document.querySelector("#helpic > img").src=pics_src[5];
           document.getElementById("helptext").innerText = 'ヘルプ5';
           break;
         case 6:
-          document.getElementById("helpic").src=pics_src[6];
+          document.querySelector("#helpic > img").src=pics_src[6];
           document.getElementById("helptext").innerText = 'ヘルプ6';
           break;
         case 7:
-          document.getElementById("helpic").src=pics_src[7];
+          document.querySelector("#helpic > img").src=pics_src[7];
           document.getElementById("helptext").innerText = 'ヘルプ7';
           break;
         default:
-          document.getElementById("helpic").scr=pics_src[0];
+          document.querySelector("#helpic > img").src=pics_src[0];
           document.getElementById("helptext").textContent = "ヘルプ0";
       }
     }

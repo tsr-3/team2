@@ -19,4 +19,4 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
     drawgraph(attend.attendance, filename);
   };
   reader.readAsText(event.target.files[0]);
-})
+});
