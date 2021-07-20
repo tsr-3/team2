@@ -101,6 +101,8 @@ def mainProcess():
                 lecture = dat['lecture']
                 ValueStorage.isFiledataExist['lecture'] = True
             ValueStorage.filepath = None
+            ValueStorage.late_time =  lecture['late']
+            ValueStorage.abcent_time =  lecture['limit']
         elif ValueStorage.process_state == STATE_ACCEPTING:
             idm, now = cardreader.printidm()
             if second_warn(idm, ValueStorage.attendance):

@@ -47,3 +47,7 @@ thread = None
 
 
 global now_time
+global late_time
+late_time = 0
+global abcent_time
+abcent_time = 0

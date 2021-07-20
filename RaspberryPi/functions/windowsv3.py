@@ -55,6 +55,7 @@ GOmove_current_dir
 
 import os
 import sys
+from typing import ValuesView
 from PyQt5.QtCore import  Qt, QTimer
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -199,7 +200,7 @@ class WinMake(QMainWindow):
         # ラベルの設定 時刻出力ラベル
         self.timelb = QLabel("時刻を出力するよ", self)
         #self.timelb.setGeometry(self.width_c - int(self.width_c * 0.6), self.height_c - 300, self.width_c * 2, 200)
-        self.timelb.setGeometry(int(self.width() * 1/10), int(self.height() * 1/10), int(self.width() ), int(self.height() * 2/10))
+        self.timelb.setGeometry(int(self.width() * 1/10), int(self.height() * 1/10), int(self.width() ), int(self.height() * 3/10))
         # ラベルの設定 ID出力ラベル
         self.idlb = QLabel("ID(または名前)を出力するよ", self)
         #self.idlb.setGeometry(self.width_c - int(self.width_c * 0.6), int(self.timelb.y() + 300), self.width_c * 2, 200)
@@ -208,6 +209,10 @@ class WinMake(QMainWindow):
         self.attendlb = QLabel("出席を判別するよ", self)
         #self.attendlb.setGeometry(self.width_c - int(self.width_c * 0.6), int(self.idlb.y() +300), self.width_c * 2, 200)
         self.attendlb.setGeometry(int(self.width() * 1/10), int(self.idlb.height() + self.idlb.y() + self.height() * 1/10), self.width(), int(self.height() * 1/10))
+
+
+        self.latetime = datetime.datetime.now()
+        self.abcenttime = self.latetime
 
         # QTimerの設定
         timer = QTimer()
@@ -305,6 +310,8 @@ class WinMake(QMainWindow):
         self.setStyleSheet(css)
         ValueStorage.process_state = 2 # STATE_ACCEPTING
         ValueStorage.now_time = datetime.datetime.now()
+        self.latetime = ValueStorage.now_time + datetime.timedelta(minutes=ValueStorage.late_time)
+        self.abcenttime = self.latetime + datetime.timedelta(minutes=ValueStorage.abcent_time)
         ValueStorage.attendance.append({'time': ValueStorage.now_time, 'id': 'start'})
 
 
@@ -344,14 +351,14 @@ class WinMake(QMainWindow):
     def win_update(self):
         '''指定ms毎に行われる処理'''
         try:
-            self.timelb.setText(str(datetime.datetime.now()))
+            self.timelb.setText("現在時刻は" + str(datetime.datetime.now()) + "\n" + str(self.latetime.time()) + "まで出席" + str(self.abcenttime.time()) + "まで遅刻")
             if self.status == 0:
-                self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None    メインウィンドウ※開発中Windowです")
+                self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "メインウィンドウ")
             elif self.status == 1:
                 with open('style/menusyl.css') as f:
                     css = f.read()
                 self.setStyleSheet(css)
-                self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "次回授業開始予定時刻は  None   出席判別ウィンドウ※開発中Windowです")
+                self.statusBar().showMessage("現在時刻は" + str(datetime.datetime.now()) + "出席判別ウィンドウ")
                 self.idlb.setText("nfcのIDは" + ValueStorage.nfcdata +"\n利用者名は" + ValueStorage.studentname)
                 self.attendlb.setText("出席判定の結果は " + ValueStorage.attendcheck[0])
 
