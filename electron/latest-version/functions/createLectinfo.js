@@ -76,7 +76,6 @@ function csv2jsonForProf(csvArray){
   let jsonArray = [];
 
   let items = ['id', 'name', 'yomi', 'sex', 'lect'];
-  console.log(csvArray)
 
   // CSVデータの配列の各行をループ処理する
   // 配列の先頭要素(行)は項目名のため処理対象外
@@ -98,7 +97,6 @@ function csv2jsonForProf(csvArray){
         a_line[items[j]] = csvArrayD[j];
       }
     }
-    console.log(a_line)
     jsonArray.push(a_line);
   }
   return jsonArray;
@@ -131,7 +129,7 @@ function getLectID() {
   LectID = document.querySelector('form > input#LectID').value;
   // console.log() 部分は後で createElement にする
   if (LectID == null || LectID == undefined || LectID == '') {
-    console.log("講義IDを入力してくれ");
+    //console.log("講義IDを入力してくれ");
     return;
   } else {
     return;
@@ -165,13 +163,16 @@ function createLectInfo() {
 
   let inlecture = {'id':LectID,'name':lecture[i]['name'],'prof':lecture[i]['prof'],'start':lecture[i]['start'],'end':lecture[i]['end'],'limit':parseInt(lecture[i]['limit'])+1,'late':parseInt(lecture[i]['late']),'exam':exam,'students':stuid};
   lect_info = {'lecture':inlecture,'professors':professors,'students':allstudent}
-  console.log(lect_info)
+  //console.log(lect_info)
 
   let filename = lecture[i]['profname']+'さん専用のデータ'
   const blob = new Blob([JSON.stringify(lect_info)], { type: 'application/json' });
   let link = document.createElement('a');
   link.href = URL.createObjectURL(blob);
-  link.download = filename+'.t2pecf';
-  link.click();
+  link.download = filename + '.t2pecf';
+  let masssagetf = confirm('出席確認データが出来ました。受け取りますか？');
+  if (masssagetf == true) {
+    link.click();
+  }
   return;
 }
