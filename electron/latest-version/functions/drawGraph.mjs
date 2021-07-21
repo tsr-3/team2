@@ -1,5 +1,6 @@
 /**
  * make graph
+ * 名前と(学籍番号と)出席回数
  * @param {[{student: string, ratio: number}]} attenddata
  * 学籍番号があっても良いかも
  *
@@ -24,12 +25,13 @@ function drawgraph(attenddata, filename) {
   // 棒グラフ for loop
   for (let i = 0; i < attenddata.length; i++){
     ctx.fillStyle = 'black';
-    let count = raito[Math.floor(Math.random() * raito.length)];
+    let count = raito[Math.floor(Math.random() * raito.length)];//出席回数
+    //let count = attenddata[i]['raito']
     let bar = count * W / raito.length;
     let barheight = 20 + 20 * i;
     ctx.fillRect(20, barheight, bar, 10);
     ctx.fillStyle = 'black';
-    let datatext = '名前：' + attenddata[i]['名前'] + ' 出席回数：' + count;
+    let datatext = '名前：' + attenddata[i]['name'] + ' 出席回数：' + count;
     ctx.fillText(datatext,25,barheight-1.5);
   }
 
