@@ -24,11 +24,11 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({
     width: 1080,
     height: 720,
-    // webPreferences: {
-    //   nodeIntegretion: false,
-    //   contextIsolation: false,
-    //   preload: __dirname + '/functions/preload.cjs'
-    // }
+    webPreferences: {
+      nodeIntegretion: false,
+      contextIsolation: false,
+      preload: __dirname + '/functions/preload.cjs'
+    }
   });
   mainWindow.loadURL('file://' + __dirname + '/pages/index.html');
   // ウィンドウメニューをカスタマイズ
@@ -99,3 +99,6 @@ function initWindowMenu(){
   }
   return forWin;
 };
+
+// ipc load main process functions
+require('./functions/ipc-mainprocess.cjs');
