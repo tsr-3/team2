@@ -41,9 +41,10 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
         return void 0;
       })();
       if(datastart === void 0) return;
-      console.log(datastart);
+      let temp = data.attendance;
+      data.attendance = localdat;
       if(localstart.indexOf(datastart.time.toISOString()) < 0)
-        data.attendance.push(...localdat);
+        data.attendance.push(...temp);
       data.attendance.sort((a,b)=>{
         if(a.time < b.time) return -1;
         if(a.time > b.time) return 1;
