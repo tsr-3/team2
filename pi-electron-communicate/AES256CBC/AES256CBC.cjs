@@ -21,22 +21,29 @@ exports.AES256CBC = class{
     iv = Buffer.from(iv, 'base64');
     const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
     decipher.setAutoPadding(false);
-    await new Promise((resolve, reject)=>{
+    await new Promise((resolve, reject)=>{ // 暗号文長くても大丈夫なヤツ
       decipher.on('readable', ()=>{
         let chunk;
-        while(null !== (chunk = decipher.read()))
+        while(null !== (chunk = decipher.read())){
+          // console.log(chunk.toString('utf-8'));
           plaintext += chunk.toString('utf-8');
+        }
       });
       decipher.on('end', ()=>resolve());
       decipher.write(cryptogram, 'base64');
       decipher.end();
     });
+    // (()=>{ // 一番簡単な方法だけど暗号文が長くなると動かん
+    //   plaintext += decipher.update(cryptogram, 'base64', 'utf-8');
+    //   plaintext += decipher.final('utf-8');
+    //   // console.log(plaintext);
+    // })();
     return plaintext.replace(/\x14/g,'');
   }
 };
 
 
-if(process.argv[1].match(/AES256CBC.cjs/)){
+if(process.argv[1] && process.argv[1].match(/AES256CBC.cjs/)){
   // debug
   (async ()=>{
     const plaintext = '{"list":[0,2,4,6,8,10],"obj":{"value":11,"str":"bbbaddd"},"str":"b%20is%20bad","value":1011}';
