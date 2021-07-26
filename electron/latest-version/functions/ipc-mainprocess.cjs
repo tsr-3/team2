@@ -24,7 +24,7 @@ const fs = require('fs');
 //     }
 //     // load file
 //     let filedata = fs.readFileSync(FilePath, 'utf-8');
-//     if(!filedata) filedata = '{}'; 
+//     if(!filedata) filedata = '{}';
 //     const dataobject = JSON.parse(filedata);
 //     // switch method
 //     switch(method.toLowerCase()){
@@ -79,6 +79,7 @@ const fs = require('fs');
 electron.ipcMain.on('write-local', (event, {filename, data})=>{
   event.returnValue = (()=>{
     const FilePath = LocalPath + filename + '.t2ld';
+    if (!fs.existsSync(LocalPath)) fs.mkdirSync(LocalPath);
     let response;
     if(fs.existsSync(FilePath)) response = fs.readFileSync(FilePath, {encoding: 'utf-8'});
     else response = true;
@@ -88,6 +89,7 @@ electron.ipcMain.on('write-local', (event, {filename, data})=>{
 });
 electron.ipcMain.on('read-local', (event, filename)=>{
   event.returnValue = (()=>{
+    if (!fs.existsSync(LocalPath)) fs.mkdirSync(LocalPath);
     const FilePath = LocalPath + filename + '.t2ld';
     if(!fs.existsSync(FilePath)) return false;
     return JSON.parse(fs.readFileSync(FilePath, {encoding: 'utf-8'}));
@@ -95,10 +97,18 @@ electron.ipcMain.on('read-local', (event, filename)=>{
 });
 electron.ipcMain.on('delete-local', (event, filename)=>{
   event.returnValue = (()=>{
+    if (!fs.existsSync(LocalPath)) fs.mkdirSync(LocalPath);
     const FilePath = LocalPath + filename + '.t2ld';
     if(!fs.existsSync(FilePath)) return true;
     let response =  JSON.parse(fs.readFileSync(FilePath, {encoding: 'utf-8'}));
     fs.unlinkSync(FilePath);
     return response;
+  })();
+});
+electron.ipcMain.on('exist-local', (event, filename) => {
+  event.returnValue = (() => {
+    if (!fs.existsSync(LocalPath)) fs.mkdirSync(LocalPath);
+    const FilePath = LocalPath + filename + '.t2ld';
+    return fs.existsSync(FilePath);
   })();
 });

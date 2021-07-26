@@ -1,3 +1,5 @@
+import * as Local from './SaveLocalData.mjs';
+
 let LectID = '';
 let students = {};
 let allstudent = {};
@@ -162,7 +164,9 @@ function createLectInfo() {
   if (lecture[i]['exam'] == 'なし') { exam = false; }
 
   let inlecture = {'id':LectID,'name':lecture[i]['name'],'prof':lecture[i]['prof'],'start':lecture[i]['start'],'end':lecture[i]['end'],'limit':parseInt(lecture[i]['limit'])+1,'late':parseInt(lecture[i]['late']),'exam':exam,'students':stuid};
-  lect_info = {'lecture':inlecture,'professors':professors,'students':allstudent}
+  lect_info = { 'lecture': inlecture, 'professors': professors, 'students': allstudent }
+  Local.write(lect_info.lecture.id, lect_info.lecture); // 講義データ
+  Local.write()
   //console.log(lect_info)
 
   let filename = lecture[i]['profname']+'さん専用のデータ'

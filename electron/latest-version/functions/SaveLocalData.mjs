@@ -1,8 +1,8 @@
 
 // /**
 //  * save to localdata
-//  * @param {string} lecture 
-//  * @param {object} data 
+//  * @param {string} lecture
+//  * @param {object} data
 //  */
 // export function save(lecture, data){
 //   Electron.ipcRenderer.sendSync('post-localdata', {lect: lecture, odr: data});
@@ -10,7 +10,7 @@
 
 // /**
 //  * load from localdata
-//  * @param lecture 
+//  * @param lecture
 //  */
 // export function load(lecture, data){
 //   Electron.ipcRenderer.sendSync('get-localdata', {lect: lecture, odr:data});
@@ -36,3 +36,7 @@ export function read(filename){
 export function unlink(filename){
   return Electron.ipcRenderer.sendSync('delete-local', filename);
 }
+export function exist(filename) {
+  return Electron.ipcRenderer.sendSync('exist-local', filename);
+}
+
