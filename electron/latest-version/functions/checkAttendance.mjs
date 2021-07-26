@@ -35,28 +35,25 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
       });
     }
     Local.write('attendance-' + data.lecture.id, data.attendance);
+    // marge list
+    const attendCountObj = {};
+    const attendCount = [];
+    for(const index in data.attendance){
+      const value = data.attendance[index];
+      value.name = (()=>{
+        for(const val in data.students)
+          if(val.id == value.student) return val.name;
+        return void 0;
+      })();
+      if(!attendCountObj[value.student]) attendCountObj[value.student] = 1;
+      else attendCountObj[value.student]++;
+    }
+    for(const key of Object.keys(attendCountObj))
+      attendCount.push({student: key, count: attendCountObj[key]});
+    console.log(attendCount, data);
+    // draw
     maketable(data.attendance, filename);
-    drawgraph(data.attendance, filename);
+    drawgraph(attendCount, filename);
   };
-  // reader.onload = (event) => {
-  //   const attend = SaveDataFile.parse(event.target.result);
-  //   console.log(attend);
-  //   if(!attend.attendance){
-  //     alert('this file is not contain attendance data');
-  //     return;
-  //   }
-  //   if(!attend.lecture || !attend.lecture.id)
-  //     throw new Error('data.lecture.id is not defined');
-  //   const lectid = attend.lecture.id;
-  //   const data = {};
-  //   data.lecture = Local.read(lectid);
-  //   data.attendance = Local.read('attendance-' + lectid);
-  //   data.students = Local.read('students');
-  //   data.professors = Local.read('professors');
-  //   if(!data.professors || !data.students || !data.lecture)
-  //     console.log('localdata is not exist');
-  //   maketable(attend.attendance, filename);
-  //   drawgraph(attend.attendance, filename);
-  // };
   reader.readAsText(event.target.files[0]);
 });

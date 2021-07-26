@@ -25,13 +25,13 @@ function drawgraph(attenddata, filename) {
   // 棒グラフ for loop
   for (let i = 0; i < attenddata.length; i++){
     ctx.fillStyle = 'black';
-    let count = raito[Math.floor(Math.random() * raito.length)];//出席回数
-    //let count = attenddata[i]['raito']
+    // let count = raito[Math.floor(Math.random() * raito.length)];//出席回数
+    let count = attenddata[i]['count']
     let bar = count * W / raito.length;
     let barheight = 20 + 20 * i;
     ctx.fillRect(20, barheight, bar, 10);
     ctx.fillStyle = 'black';
-    let datatext = '名前：' + attenddata[i]['name'] + ' 出席回数：' + count;
+    let datatext = '名前：' + attenddata[i]['student'] + ' 出席回数：' + count;
     ctx.fillText(datatext,25,barheight-1.5);
   }
 
