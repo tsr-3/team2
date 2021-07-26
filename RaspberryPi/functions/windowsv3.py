@@ -294,6 +294,11 @@ class WinMake(QMainWindow):
         '''UIを出席判別画面へ変更する'''
         #print("hello")
         if self.messege_warn():
+
+            return
+
+        if (ValueStorage.isFiledataExist["professors"] is None) or (ValueStorage.isFiledataExist["students"] is None) or (ValueStorage.isFiledataExist["lecture"] is None):
+            self.timetablelb.setText("出席が取れないファイルです")
             return
 
         self.status = 1
@@ -314,6 +319,9 @@ class WinMake(QMainWindow):
         self.latetime = ValueStorage.now_time + datetime.timedelta(minutes=ValueStorage.late_time)
         self.abcenttime = self.latetime + datetime.timedelta(minutes=ValueStorage.abcent_time)
         ValueStorage.attendance.append({'time': ValueStorage.now_time, 'id': 'start'})
+
+
+
 
 
     #GOwin_menuUI

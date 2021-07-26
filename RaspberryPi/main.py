@@ -105,9 +105,10 @@ def mainProcess():
                 ValueStorage.late_time =  lecture['late']
                 ValueStorage.abcent_time =  lecture['limit']
             except BaseException as e:
-                print(e)
-                raise e
-            
+                #print(e)
+                ValueStorage.filepath = None
+                #raise e
+
         elif ValueStorage.process_state == STATE_ACCEPTING:
             idm, now = cardreader.printidm()
             if second_warn(idm, ValueStorage.attendance):
