@@ -93,14 +93,16 @@ def mainProcess():
                 ValueStorage.filepath = None
                 continue
             try:
-                students = Students(dat['students']) # throw error here (invalid data type)
-                ValueStorage.isFiledataExist['students'] = True
-                professors = Professors(dat['professors'])
-                ValueStorage.isFiledataExist['professors'] = True
-                lecture = dat['lecture']
-                ValueStorage.lectID = lecture['id']
-                print('[debug] load data', dat['lecture']['id'], lecture['id'], ValueStorage.lectID)
-                ValueStorage.isFiledataExist['lecture'] = True
+                if 'student' in dat:
+                    students = Students(dat['students']) # throw error here (invalid data type)
+                    ValueStorage.isFiledataExist['students'] = True
+                if 'professors' in dat:
+                    professors = Professors(dat['professors'])
+                    ValueStorage.isFiledataExist['professors'] = True
+                if 'lecture' in dat:
+                    lecture = dat['lecture']
+                    ValueStorage.lectID = lecture['id']
+                    ValueStorage.isFiledataExist['lecture'] = True
                 ValueStorage.filepath = None
                 ValueStorage.late_time =  lecture['late']
                 ValueStorage.abcent_time =  lecture['limit']
