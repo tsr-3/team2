@@ -29,13 +29,21 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
       // marge attendance data
       let localdat = Local.read('attendance-' + data.lecture.id);
       let localstart = (()=>{
+        let startlist = [];
         for(const val of localdat)
+          if(val.student == 'start') startlist.push(val.time);
+        return startlist;
+      })();
+      let datastart = (()=>{
+        for(const val of data.attendance)
           if(val.student == 'start') return val;
         alert('this file is not contain attendance data or lecture id');
         return void 0;
       })();
-      if(localstart == void 0) return void 0;
-      data.attendance.push(...localdat);
+      if(datastart === void 0) return;
+      console.log(datastart);
+      if(localstart.indexOf(datastart.time.toISOString()) < 0)
+        data.attendance.push(...localdat);
       data.attendance.sort((a,b)=>{
         if(a.time < b.time) return -1;
         if(a.time > b.time) return 1;
@@ -43,6 +51,16 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
       });
     }
     Local.write('attendance-' + data.lecture.id, data.attendance);
+    // remove start
+    {
+      let cnt = 0;
+      while(true){
+        if(cnt > data.attendance.length - 1) break;
+        if(data.attendance[cnt].student != 'start') cnt++;
+        else
+          data.attendance.splice(cnt, 1);
+      }
+    }
     // marge list
     const attendCountObj = {};
     const attendCount = [];
