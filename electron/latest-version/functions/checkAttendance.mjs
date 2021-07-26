@@ -35,7 +35,7 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
         return void 0;
       })();
       if(localstart == void 0) return void 0;
-      data.attendance.push(localdat);
+      data.attendance.push(...localdat);
       data.attendance.sort((a,b)=>{
         if(a.time < b.time) return -1;
         if(a.time > b.time) return 1;
@@ -49,16 +49,19 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
     for(const index in data.attendance){
       const value = data.attendance[index];
       value.name = (()=>{
-        for(const val in data.students)
+        if(value.student == void 0) return;
+        for(const val of data.students){
           if(val.id == value.student) return val.name;
+        }
         return void 0;
       })();
+      console.log(value.student);
       if(!attendCountObj[value.student]) attendCountObj[value.student] = 1;
       else attendCountObj[value.student]++;
     }
+    console.log(Object.keys(attendCountObj))
     for(const key of Object.keys(attendCountObj))
       attendCount.push({student: key, count: attendCountObj[key]});
-    console.log(attendCount, data);
     // draw
     maketable(data.attendance, filename);
     drawgraph(attendCount, filename);
