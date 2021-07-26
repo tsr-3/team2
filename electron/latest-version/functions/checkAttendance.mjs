@@ -27,7 +27,16 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
     data.professors = Local.read('professors');
     if(Local.exist('attendance-' + data.lecture.id)){
       // marge attendance data
+      data.attendance.push(...Local.read('attendance-' + data.lecture.id));
+      data.attendance.sort((a,b)=>{
+        if(a.time < b.time) return -1;
+        if(a.time > b.time) return 1;
+        return 0;
+      });
     }
+    Local.write('attendance-' + data.lecture.id, data.attendance);
+    maketable(data.attendance, filename);
+    drawgraph(data.attendance, filename);
   };
   // reader.onload = (event) => {
   //   const attend = SaveDataFile.parse(event.target.result);

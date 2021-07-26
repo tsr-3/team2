@@ -1,7 +1,7 @@
 /**
  * make graph
  * 名前と(学籍番号と)出席回数
- * @param {[{student: string, ratio: number}]} attenddata
+ * @param {[{student: string, count: number}]} attenddata
  * 学籍番号があっても良いかも
  *
  * @param filename:str
