@@ -41,6 +41,8 @@ process_state: int
 
 global attendance
 attendance:list = []
+global lectID
+lectID:str = None
 
 global thread
 thread = None

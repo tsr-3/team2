@@ -81,8 +81,6 @@ def mainProcess():
         # sleep
         time.sleep(0.1)
 
-        if not flag_doMainLoop:
-            break
         if ValueStorage.process_state == STATE_BEFORE_START:
             if ValueStorage.filepath is None:
                 continue
@@ -91,18 +89,22 @@ def mainProcess():
             except BaseException as err:
                 print(err)
                 raise err
-            if students == None:
-                students = Students(dat['students'])
+            try:
+                students = Students(dat['students']) # throw error here (invalid data type)
                 ValueStorage.isFiledataExist['students'] = True
-            if professors == None:
                 professors = Professors(dat['professors'])
                 ValueStorage.isFiledataExist['professors'] = True
-            if lecture == None:
                 lecture = dat['lecture']
+                ValueStorage.lectID = lecture['id']
+                print('[debug] load data', dat['lecture']['id'], lecture['id'], ValueStorage.lectID)
                 ValueStorage.isFiledataExist['lecture'] = True
-            ValueStorage.filepath = None
-            ValueStorage.late_time =  lecture['late']
-            ValueStorage.abcent_time =  lecture['limit']
+                ValueStorage.filepath = None
+                ValueStorage.late_time =  lecture['late']
+                ValueStorage.abcent_time =  lecture['limit']
+            except BaseException as e:
+                print(e)
+                raise e
+            
         elif ValueStorage.process_state == STATE_ACCEPTING:
             idm, now = cardreader.printidm()
             if second_warn(idm, ValueStorage.attendance):

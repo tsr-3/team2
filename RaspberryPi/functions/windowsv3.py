@@ -237,7 +237,8 @@ class WinMake(QMainWindow):
         attend = []
         for dat in ValueStorage.attendance:
             attend.append(str(dat['time']) + ' ' + dat['id'])
-        SaveDataFile.write({'attendance': '\n'.join(attend)}, datetime.datetime.now().strftime('%Y-%m-%d_%H%M') + '.t2pecf')
+        print('[debug] save', ValueStorage.lectID)
+        SaveDataFile.write({'attendance': '\n'.join(attend), 'lecture': {'id': ValueStorage.lectID}}, datetime.datetime.now().strftime('%Y-%m-%d_%H%M') + '.t2pecf')
         ValueStorage.thread.shutdown(cancel_futures = True, wait = False)
         self.close()
         os._exit(0)
