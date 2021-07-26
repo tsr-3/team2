@@ -1,3 +1,3 @@
 // preload
 
-window.electron = require('electron');
+window.Electron = require('electron');
