@@ -89,6 +89,9 @@ def mainProcess():
             except BaseException as err:
                 print(err)
                 raise err
+            if dat == None:
+                ValueStorage.filepath = None
+                continue
             try:
                 students = Students(dat['students']) # throw error here (invalid data type)
                 ValueStorage.isFiledataExist['students'] = True
