@@ -35,7 +35,7 @@ app.on('ready', function() {
   initWindowMenu();
 
   // for debug
-  mainWindow.webContents.openDevTools(); // open DevTools
+  //mainWindow.webContents.openDevTools(); // open DevTools
 
   // ウィンドウが閉じられたらアプリも終了
   mainWindow.on('closed', function() {
@@ -70,7 +70,7 @@ function initWindowMenu(){
             subWindow = new BrowserWindow({ width: 1080, height:  720 });
             subWindow.loadURL(`file://${__dirname}/pages/help.html`);
             subWindow.setMenu(null);
-            subWindow.webContents.openDevTools();
+            //subWindow.webContents.openDevTools();
           }
         }
       ]
