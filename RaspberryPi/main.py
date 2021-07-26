@@ -27,42 +27,6 @@ from functions import comparsion # IDｍと生徒情報を紐づける
 
 from types import LambdaType
 
-t1 = datetime.datetime(2021, 6, 2, 16, 00)
-t2 = datetime.datetime(2021, 6, 2, 17, 00)
-t3 = datetime.datetime(2023, 6, 2, 18, 00)
-
-# -- NFCread function -- #
-def NFCread():
-
-    data = [{"学籍番号":"S001","名前":"相道森","IDm":"012E44A7A5187429"}] # テスト用データ
-
-    i = 0
-    while(True):
-        i += 1
-        time.sleep(1)
-
-        # idm, now = cardreader.printidm() #カードリーダによる読み取り
-        idm, now = cardreader.printidm() #手動ID入力
-        ValueStorage.nfcdata = str(idm) # nfcのIDをwindowsv3.pyへ渡す
-        tmp = comparsion.comp(idm, data) # IDmから生徒名を検索
-        ValueStorage.studentname = tmp[0] # IDに対応する生徒の名前をwindowsv3.pyへ渡す
-        # タッチした時刻と登録された時刻の比較を行いwindowsv3.pyへ渡す(出席/遅刻/欠席/非履修者)
-
-        check = time_attend.timeC(t1, t2, t3)
-
-        if tmp[2]:
-            if check == "出席":
-                ValueStorage.attendcheck[1] = 0
-            elif check == "遅刻":
-                ValueStorage.attendcheck[1] = 1
-            elif check == "欠席":
-                ValueStorage.attendcheck[1] = 2
-            ValueStorage.attendcheck[0] = check
-        else:
-            ValueStorage.attendcheck[0] = "非履修者"
-            ValueStorage.attendcheck[1] = 3
-
-
 # -- main loop -- #
 
 STATE_BEFORE_START:int = 1
@@ -123,8 +87,6 @@ def mainProcess():
             if second_warn(idm, ValueStorage.attendance):
                 continue # already accepting
             try:
-                print(students)
-                print(ValueStorage.isFiledataExist)
                 dat = students.find({'idm': idm})
                 if(len(dat) == 0):
                     # is not defined
