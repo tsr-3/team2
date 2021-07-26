@@ -27,7 +27,15 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
     data.professors = Local.read('professors');
     if(Local.exist('attendance-' + data.lecture.id)){
       // marge attendance data
-      data.attendance.push(...Local.read('attendance-' + data.lecture.id));
+      let localdat = Local.read('attendance-' + data.lecture.id);
+      let localstart = (()=>{
+        for(const val of localdat)
+          if(val.student == 'start') return val;
+        alert('this file is not contain attendance data or lecture id');
+        return void 0;
+      })();
+      if(localstart == void 0) return void 0;
+      data.attendance.push(localdat);
       data.attendance.sort((a,b)=>{
         if(a.time < b.time) return -1;
         if(a.time > b.time) return 1;
