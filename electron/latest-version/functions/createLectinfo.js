@@ -135,16 +135,15 @@ window.getLectID = ()=>{
   // console.log() 部分は後で createElement にする
   if (LectID == null || LectID == undefined || LectID == ''){
     alert("講義IDを入力してください");
-    return;
-  } else {
-    return;
+    return false;
   }
+  return true;
 };
 
 window.createLectInfo = ()=>{
   let lect_info = {}
   // 履修者とかのデータをまとめる処理
-  getLectID();
+  if(!getLectID()) return;
   // 講義科目ルールの個人用（講義科目ルールCSV）＋履修者の学籍番号CSV＋教員科目リスト全部CSV＋学生リスト全部CSV
   //console.log(LectID);
   //console.log(students);
