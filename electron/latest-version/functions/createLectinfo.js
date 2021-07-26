@@ -45,6 +45,7 @@ document.querySelectorAll('#csv-reader')[3].addEventListener('change', async (ev
   reader.onload = (event) => {
     csvArray = event.target.result.replace(/\r/g,'');
     let csvData = csvArray.split('\n');// 1行ごとに分割する
+    console.log(csvData)
     lecture = csv2jsonForLect(csvData);
   };
   reader.readAsText(event.target.files[0]);
@@ -138,7 +139,7 @@ function getLectID() {
   }
 };
 
-function createLectInfo() {
+window.createLectInfo = function(){
   let lect_info = {}
   // 履修者とかのデータをまとめる処理
   getLectID();
@@ -161,6 +162,7 @@ function createLectInfo() {
     }
   }
   let exam = true;
+  console.log(lecture);
   if (lecture[i]['exam'] == 'なし') { exam = false; }
 
   let inlecture = {'id':LectID,'name':lecture[i]['name'],'prof':lecture[i]['prof'],'start':lecture[i]['start'],'end':lecture[i]['end'],'limit':parseInt(lecture[i]['limit'])+1,'late':parseInt(lecture[i]['late']),'exam':exam,'students':stuid};
