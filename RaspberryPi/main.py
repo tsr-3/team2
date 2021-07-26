@@ -42,7 +42,6 @@ def mainProcess():
     lecture:dict = None
     accept_start:datetime = None
     while(True):
-        print(ValueStorage.process_state)
         # sleep
         time.sleep(0.1)
 
