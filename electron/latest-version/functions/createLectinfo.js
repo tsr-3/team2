@@ -1,5 +1,7 @@
 import * as Local from './SaveLocalData.mjs';
 
+'use strict';
+
 let LectID = '';
 let students = {};
 let allstudent = {};
@@ -10,7 +12,7 @@ document.querySelectorAll('#csv-reader')[0].addEventListener('change', async (ev
   if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
   let reader = new FileReader();
   reader.onload = (event) => {
-    csvArray = event.target.result.replace(/\r/g,'');
+    let csvArray = event.target.result.replace(/\r/g,'');
     let csvData = csvArray.split('\n');// 1行ごとに分割する
     students = csv2json(csvData);
   };
@@ -21,7 +23,7 @@ document.querySelectorAll('#csv-reader')[1].addEventListener('change', async (ev
   if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
   let reader = new FileReader();
   reader.onload = (event) => {
-    csvArray = event.target.result.replace(/\r/g,'');
+    let csvArray = event.target.result.replace(/\r/g,'');
     let csvData = csvArray.split('\n');// 1行ごとに分割する
     allstudent = csv2json(csvData);
   };
@@ -32,7 +34,7 @@ document.querySelectorAll('#csv-reader')[2].addEventListener('change', async (ev
   if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
   let reader = new FileReader();
   reader.onload = (event) => {
-    csvArray = event.target.result.replace(/\r/g,'');
+    let csvArray = event.target.result.replace(/\r/g,'');
     let csvData = csvArray.split('\n');// 1行ごとに分割する
     professors = csv2jsonForProf(csvData);
   };
@@ -43,7 +45,7 @@ document.querySelectorAll('#csv-reader')[3].addEventListener('change', async (ev
   if (!event.path[0].value.match(/.csv/)) return; // csvかどうか
   let reader = new FileReader();
   reader.onload = (event) => {
-    csvArray = event.target.result.replace(/\r/g,'');
+    let csvArray = event.target.result.replace(/\r/g,'');
     let csvData = csvArray.split('\n');// 1行ごとに分割する
     console.log(csvData)
     lecture = csv2jsonForLect(csvData);
@@ -52,7 +54,7 @@ document.querySelectorAll('#csv-reader')[3].addEventListener('change', async (ev
 });
 
 
-function csv2json(csvArray){
+window.csv2json = (csvArray)=>{
   let jsonArray = [];
 
   let items = ['id', 'name', 'yomi', 'sex', 'idm'];
@@ -105,7 +107,7 @@ function csv2jsonForProf(csvArray){
   return jsonArray;
 }
 
-function csv2jsonForLect(csvArray){
+window.csv2jsonForLect = (csvArray)=>{
   let jsonArray = [];
 
   let items = ['id','name','prof','profname','start','end','limit','late','exam','stunum'];
@@ -128,7 +130,7 @@ function csv2jsonForLect(csvArray){
   return jsonArray;
 }
 
-function getLectID() {
+window.getLectID = ()=>{
   LectID = document.querySelector('form > input#LectID').value;
   // console.log() 部分は後で createElement にする
   if (LectID == null || LectID == undefined || LectID == ''){
@@ -139,7 +141,7 @@ function getLectID() {
   }
 };
 
-window.createLectInfo = function(){
+window.createLectInfo = ()=>{
   let lect_info = {}
   // 履修者とかのデータをまとめる処理
   getLectID();
