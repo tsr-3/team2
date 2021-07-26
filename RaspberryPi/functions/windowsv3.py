@@ -297,6 +297,8 @@ class WinMake(QMainWindow):
 
             return
 
+        print(ValueStorage.isFiledataExist)
+
         if (ValueStorage.isFiledataExist["professors"] is None) or (ValueStorage.isFiledataExist["students"] is None) or (ValueStorage.isFiledataExist["lecture"] is None):
             self.timetablelb.setText("出席が取れないファイルです")
             return

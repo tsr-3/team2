@@ -93,7 +93,7 @@ def mainProcess():
                 ValueStorage.filepath = None
                 continue
             try:
-                if 'student' in dat:
+                if 'students' in dat:
                     students = Students(dat['students']) # throw error here (invalid data type)
                     ValueStorage.isFiledataExist['students'] = True
                 if 'professors' in dat:
@@ -116,6 +116,8 @@ def mainProcess():
             if second_warn(idm, ValueStorage.attendance):
                 continue # already accepting
             try:
+                print(students)
+                print(ValueStorage.isFiledataExist)
                 dat = students.find({'idm': idm})
                 if(len(dat) == 0):
                     # is not defined
