@@ -4,17 +4,28 @@ let t2pecf = {}
 import * as SaveDataFile from './SaveDataFile.mjs';
 import * as Local from './SaveLocalData.mjs';
 
+// from: https://zukucode.com/2017/04/javascript-date-format.html
+function formatDate (date, format) {
+  format = format.replace(/yyyy/g, date.getFullYear());
+  format = format.replace(/MM/g, ('0' + (date.getMonth() + 1)).slice(-2));
+  format = format.replace(/dd/g, ('0' + date.getDate()).slice(-2));
+  format = format.replace(/HH/g, ('0' + date.getHours()).slice(-2));
+  format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
+  format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
+  format = format.replace(/SSS/g, ('00' + date.getMilliseconds()).slice(-3));
+  return format;
+};
+
+
 document.querySelector('form.file-reader > input#student-reader').addEventListener('change', async (event) => {
   if (!event.path[0].value.match(/.json$|.t2pecf$/)) {
     document.querySelector('#filetype-check').innerText = 'invalid filetype "' + event.path[0].value.match(/\..+$/)[0] + '"';
     document.querySelector('#filetype-check').classList.add('error')
   }
   let reader = new FileReader();
-  console.log(event.path[0].value)
   const filename = event.path[0].value.match(/[^\/\\]+\.[^\/\\]+$/g)[0];
   reader.onload = event=>{
     const data = SaveDataFile.parse(event.target.result);
-    console.log(data);
     if(!data.attendance || !data.lecture || !data.lecture.id){
       alert('this file is not contain attendance data or lecture id');
       return;
@@ -62,7 +73,38 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
           data.attendance.splice(cnt, 1);
       }
     }
-    // marge list
+    // judge attend/late/abcent
+    {
+      const time = {};
+      time.start = data.lecture.start;
+      time.late = data.lecture.late;
+      time.limit = data.lecture.limit;
+      console.log(data);
+      for(const index in data.attendance){
+        let accept = data.attendance[index].time;
+        if(accept instanceof Date) accept = accept.toISOString();
+        let temptime = new Date(accept.split('T')[0] + time.start);
+        // set beforelate
+        temptime.setMinutes(temptime.getMinutes() + time.late);
+        if(accept < temptime){
+          data.attendance[index].attend = '出席';
+          continue;
+        }
+        temptime.setMinutes(temptime.getMinutes() + time.limit);
+        if(accept < temptime){
+          data.attendance[index].attend = '遅刻';
+          continue;
+        }
+        data.attendance[index].attend = '欠席';
+      }
+    }
+    // create time str
+    for(const index in data.attendance){
+      let time = data.attendance[index].time;
+      if(!(time instanceof Date)) time = new Date(time);
+      data.attendance[index].time = formatDate(time, 'yyyy/MM/dd HH:mm:ss');
+    }
+    // count times of attendances
     const attendCountObj = {};
     const attendCount = [];
     for(const index in data.attendance){
@@ -74,13 +116,19 @@ document.querySelector('form.file-reader > input#student-reader').addEventListen
         }
         return void 0;
       })();
-      console.log(value.student);
       if(!attendCountObj[value.student]) attendCountObj[value.student] = 1;
       else attendCountObj[value.student]++;
     }
-    console.log(Object.keys(attendCountObj))
     for(const key of Object.keys(attendCountObj))
-      attendCount.push({student: key, count: attendCountObj[key]});
+      attendCount.push({
+        student: (()=>{
+          for(const val of data.students){
+            if(val.id == key) return val.name;
+          }
+          return void 0;
+        })(),
+        count: attendCountObj[key]
+      });
     // draw
     maketable(data.attendance, filename);
     drawgraph(attendCount, filename);
