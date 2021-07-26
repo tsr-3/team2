@@ -234,12 +234,12 @@ class WinMake(QMainWindow):
 
         #ここにValueStorageに使う値を書いてね
         ValueStorage.process_state = 3
-        attend = []
-        for dat in ValueStorage.attendance:
-            attend.append(str(dat['time']) + ' ' + dat['id'])
-        print('[debug] save', ValueStorage.lectID)
-        SaveDataFile.write({'attendance': '\n'.join(attend), 'lecture': {'id': ValueStorage.lectID}}, datetime.datetime.now().strftime('%Y-%m-%d_%H%M') + '.t2pecf')
-        ValueStorage.thread.shutdown(cancel_futures = True, wait = False)
+        # attend = []
+        # for dat in ValueStorage.attendance:
+            # attend.append(str(dat['time']) + ' ' + dat['id'])
+        # print('[debug] save', ValueStorage.lectID)
+        # SaveDataFile.write({'attendance': '\n'.join(attend), 'lecture': {'id': ValueStorage.lectID}}, datetime.datetime.now().strftime('%Y-%m-%d_%H%M') + '.t2pecf')
+        # ValueStorage.thread.shutdown(cancel_futures = True, wait = False)
         self.close()
         os._exit(0)
 
@@ -343,6 +343,16 @@ class WinMake(QMainWindow):
             css = f.read()
         self.setStyleSheet(css)
 
+        ValueStorage.process_state = 1
+        ValueStorage.isFiledataExist["professors"] = None
+        ValueStorage.isFiledataExist["students"] = None
+        ValueStorage.isFiledataExist["lecture"] = None
+        attend = []
+        for dat in ValueStorage.attendance:
+            attend.append(str(dat['time']) + ' ' + dat['id'])
+        print('[debug] save', ValueStorage.lectID)
+        SaveDataFile.write({'attendance': '\n'.join(attend), 'lecture': {'id': ValueStorage.lectID}}, datetime.datetime.now().strftime('%Y-%m-%d_%H%M') + '.t2pecf')
+        ValueStorage.thread.shutdown(cancel_futures = True, wait = False)
 
     #GOwin_hide
     def win_hide(self):
