@@ -96,13 +96,19 @@ def mainProcess():
                 if 'student' in dat:
                     students = Students(dat['students']) # throw error here (invalid data type)
                     ValueStorage.isFiledataExist['students'] = True
+                else:
+                    ValueStorage.isFiledataExist['students'] = False
                 if 'professors' in dat:
                     professors = Professors(dat['professors'])
                     ValueStorage.isFiledataExist['professors'] = True
+                else:
+                    ValueStorage.isFiledataExist['students'] = False
                 if 'lecture' in dat:
                     lecture = dat['lecture']
                     ValueStorage.lectID = lecture['id']
                     ValueStorage.isFiledataExist['lecture'] = True
+                else:
+                    ValueStorage.isFiledataExist['students'] = False
                 ValueStorage.filepath = None
                 ValueStorage.late_time =  lecture['late']
                 ValueStorage.abcent_time =  lecture['limit']
