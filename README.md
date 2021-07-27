@@ -53,7 +53,7 @@
     team2> pip install -r requirements.txt
     team2> python RaspberryPi/main.py
 
-### quick start Electron
+### quick start for Electron
 
-[Read this markdown](./electron/latest-version/StartDocument.md)
+[Read this markdown](./electron/StartDocument.md)
 
