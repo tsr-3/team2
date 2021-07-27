@@ -8,9 +8,7 @@
   - node.js
 
 
-
-
-### data
+### data定義
 
 - 学生データ
   - id
@@ -32,12 +30,6 @@
 - ログイン
 - 出欠データの表示
 - 講義データの表示
-
-
-~~### お役立ち？~~
-~~- ラズパイにLANなしでSSH接続する方法~~
-
- ~~https://qiita.com/m4saka/items/09e60a929dbd5debcd3b~~
 
 ## System Start
 ### quick start Python
